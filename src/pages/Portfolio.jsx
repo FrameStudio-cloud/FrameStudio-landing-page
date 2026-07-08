@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import KeelDownload from '../components/KeelDownload'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -90,6 +91,8 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
+
+      <KeelDownload />
 
       <section className="py-20 md:py-28 bg-gray-50">
         <div ref={(el) => (sectionRefs.current[1] = el)} className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">
