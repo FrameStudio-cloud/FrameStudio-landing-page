@@ -1,0 +1,225 @@
+- generic [ref=f1e3]:
+  - navigation [ref=f1e4]:
+    - generic [ref=f1e6]:
+      - link "FrameStudio" [ref=f1e7] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f1e8]:
+        - link "Services" [ref=f1e9] [cursor=pointer]:
+          - /url: /services
+        - link "Portfolio" [ref=f1e10] [cursor=pointer]:
+          - /url: /portfolio
+        - link "Blog" [ref=f1e11] [cursor=pointer]:
+          - /url: /blog
+        - link "Pricing" [ref=f1e12] [cursor=pointer]:
+          - /url: /pricing
+        - link "About" [ref=f1e13] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=f1e14] [cursor=pointer]:
+          - /url: /contact
+        - link "Get Started" [ref=f1e15] [cursor=pointer]:
+          - /url: mailto:hello@framestudio.co.ke
+  - generic [ref=f1e21]:
+    - generic [ref=f1e22]:
+      - heading "Digital Tools for Growing Kenyan Businesses" [level=1] [ref=f1e23]
+      - paragraph [ref=f1e24]: FrameStudio builds modern websites, smart WhatsApp bots, and real-time business dashboards tailored for small and medium enterprises in Kenya.
+      - generic [ref=f1e25]:
+        - button "Start Your Project" [ref=f1e26] [cursor=pointer]:
+          - text: Start Your Project
+          - img [ref=f1e27]
+        - button "Chat on WhatsApp" [ref=f1e29] [cursor=pointer]:
+          - img [ref=f1e30]
+          - text: Chat on WhatsApp
+    - generic [ref=f1e65]: Trusted by 500+ businesses across Kenya
+  - generic [ref=f1e67]:
+    - generic [ref=f1e68]:
+      - heading "What We Build" [level=2] [ref=f1e69]
+      - paragraph [ref=f1e70]: Every solution is designed for Kenyan businesses — affordable, mobile-friendly, and built to scale.
+    - generic [ref=f1e71]:
+      - generic [ref=f1e72]:
+        - img [ref=f1e74]
+        - heading "Websites" [level=3] [ref=f1e77]
+        - list [ref=f1e78]:
+          - listitem [ref=f1e79]:
+            - img [ref=f1e80]
+            - text: E-commerce stores
+          - listitem [ref=f1e82]:
+            - img [ref=f1e83]
+            - text: Mobile-optimised designs
+          - listitem [ref=f1e85]:
+            - img [ref=f1e86]
+            - text: SEO & Google-ready
+          - listitem [ref=f1e88]:
+            - img [ref=f1e89]
+            - text: M-Pesa integration
+      - generic [ref=f1e91]:
+        - img [ref=f1e93]
+        - heading "Bots & Automation" [level=3] [ref=f1e96]
+        - list [ref=f1e97]:
+          - listitem [ref=f1e98]:
+            - img [ref=f1e99]
+            - text: WhatsApp order bots
+          - listitem [ref=f1e101]:
+            - img [ref=f1e102]
+            - text: Automated customer support
+          - listitem [ref=f1e104]:
+            - img [ref=f1e105]
+            - text: Lead generation flows
+          - listitem [ref=f1e107]:
+            - img [ref=f1e108]
+            - text: Telegram & SMS bots
+      - generic [ref=f1e110]:
+        - img [ref=f1e112]
+        - heading "Dashboards" [level=3] [ref=f1e114]
+        - list [ref=f1e115]:
+          - listitem [ref=f1e116]:
+            - img [ref=f1e117]
+            - text: Inventory tracking
+          - listitem [ref=f1e119]:
+            - img [ref=f1e120]
+            - text: Sales analytics
+          - listitem [ref=f1e122]:
+            - img [ref=f1e123]
+            - text: Real-time reporting
+          - listitem [ref=f1e125]:
+            - img [ref=f1e126]
+            - text: Multi-shop management
+      - generic [ref=f1e128]:
+        - paragraph [ref=f1e130]: Why Stop There?
+        - paragraph [ref=f1e131]: Every project is built from scratch around your specific needs. Let's talk about what you need.
+        - link "Tell us about your project →" [ref=f1e132] [cursor=pointer]:
+          - /url: mailto:hello@framestudio.co.ke
+  - generic [ref=f1e135]:
+    - heading "Why Kenyan Businesses Choose Us" [level=2] [ref=f1e137]
+    - generic [ref=f1e138]:
+      - generic [ref=f1e139]:
+        - generic [ref=f1e140]:
+          - img [ref=f1e142]
+          - generic [ref=f1e144]:
+            - heading "Affordable" [level=4] [ref=f1e145]
+            - paragraph [ref=f1e146]: Pricing built for SMEs — no enterprise budgets required.
+        - generic [ref=f1e147]:
+          - img [ref=f1e149]
+          - generic [ref=f1e151]:
+            - heading "Fast & Reliable" [level=4] [ref=f1e152]
+            - paragraph [ref=f1e153]: Optimised for M-Pesa, slow connections, and local payment methods.
+        - generic [ref=f1e154]:
+          - img [ref=f1e156]
+          - generic [ref=f1e158]:
+            - heading "Local Support" [level=4] [ref=f1e159]
+            - paragraph [ref=f1e160]: Our team is based in Nairobi — we understand your market.
+        - generic [ref=f1e161]:
+          - img [ref=f1e163]
+          - generic [ref=f1e165]:
+            - heading "Custom Solutions" [level=4] [ref=f1e166]
+            - paragraph [ref=f1e167]: Every project is built from scratch around your specific needs.
+      - generic [ref=f1e169]:
+        - generic [ref=f1e170]:
+          - generic [ref=f1e171]: 0+
+          - generic [ref=f1e172]: Projects Delivered
+        - generic [ref=f1e173]:
+          - generic [ref=f1e174]: 0+
+          - generic [ref=f1e175]: Happy Clients
+        - generic [ref=f1e176]:
+          - generic [ref=f1e177]: < 0 Weeks
+          - generic [ref=f1e178]: Average Turnaround
+  - generic [ref=f1e179]:
+    - img [ref=f1e182]
+    - generic [ref=f1e191]:
+      - heading "Ready to Transform Your Business?" [level=2] [ref=f1e192]
+      - paragraph [ref=f1e193]: Let's talk about what FrameStudio can do for you. No pressure, just a conversation.
+      - generic [ref=f1e194]:
+        - button "Email Us" [ref=f1e195] [cursor=pointer]:
+          - img [ref=f1e196]
+          - text: Email Us
+        - button "WhatsApp Us" [ref=f1e199] [cursor=pointer]:
+          - img [ref=f1e200]
+          - text: WhatsApp Us
+  - contentinfo [ref=f1e202]:
+    - generic [ref=f1e203]:
+      - generic [ref=f1e204]:
+        - generic [ref=f1e205]:
+          - link "FrameStudio" [ref=f1e206] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=f1e207]: Digital solutions
+          - paragraph [ref=f1e208]: for Kenyan SMEs.
+          - paragraph [ref=f1e209]: Nairobi, Kenya
+        - generic [ref=f1e210]:
+          - heading "Services" [level=4] [ref=f1e211]
+          - list [ref=f1e212]:
+            - listitem [ref=f1e213]:
+              - link "Websites" [ref=f1e214] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=f1e215]:
+              - link "WhatsApp Bots" [ref=f1e216] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=f1e217]:
+              - link "Dashboards" [ref=f1e218] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=f1e219]:
+              - link "Automation" [ref=f1e220] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=f1e221]:
+              - link "Blog" [ref=f1e222] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=f1e223]:
+          - heading "Contact" [level=4] [ref=f1e224]
+          - list [ref=f1e225]:
+            - listitem [ref=f1e226]:
+              - link "hello@framestudio.co.ke" [ref=f1e227] [cursor=pointer]:
+                - /url: mailto:hello@framestudio.co.ke
+            - listitem [ref=f1e228]:
+              - link "admin@framestudio.co.ke" [ref=f1e229] [cursor=pointer]:
+                - /url: mailto:admin@framestudio.co.ke
+            - listitem [ref=f1e230]:
+              - link "Nairobi, Kenya" [ref=f1e231] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=f1e232]:
+          - heading "Legal" [level=4] [ref=f1e233]
+          - list [ref=f1e234]:
+            - listitem [ref=f1e235]:
+              - link "Terms of Service" [ref=f1e236] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=f1e237]:
+              - link "Privacy Policy" [ref=f1e238] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=f1e239]:
+              - link "Refund Policy" [ref=f1e240] [cursor=pointer]:
+                - /url: /refund
+            - listitem [ref=f1e241]:
+              - link "Cookie Policy" [ref=f1e242] [cursor=pointer]:
+                - /url: /cookies
+      - generic [ref=f1e244]:
+        - generic [ref=f1e245]:
+          - link "WhatsApp" [ref=f1e246] [cursor=pointer]:
+            - /url: https://wa.me/254793302518
+            - img [ref=f1e247]
+            - generic: WhatsApp
+          - link "Instagram" [ref=f1e249] [cursor=pointer]:
+            - /url: https://www.instagram.com/frame.studio12?igsh=ZWdieTk4ZGI4cjll
+            - img [ref=f1e250]
+            - generic: Instagram
+          - link "LinkedIn" [ref=f1e253] [cursor=pointer]:
+            - /url: https://linkedin.com/company/framestudio-ke
+            - img [ref=f1e254]
+            - generic: LinkedIn
+          - link "Facebook" [ref=f1e258] [cursor=pointer]:
+            - /url: https://facebook.com/framestudio-ke
+            - img [ref=f1e259]
+            - generic: Facebook
+          - link "X (Twitter)" [ref=f1e261] [cursor=pointer]:
+            - /url: https://x.com/framestudio_ke
+            - img [ref=f1e262]
+            - generic: X (Twitter)
+          - link "YouTube" [ref=f1e264] [cursor=pointer]:
+            - /url: https://youtube.com/@framestudio_ke
+            - img [ref=f1e265]
+            - generic: YouTube
+          - link "TikTok" [ref=f1e267] [cursor=pointer]:
+            - /url: https://vm.tiktok.com/ZS9MrQG9sjXfK-jv0Wd/
+            - img [ref=f1e268]
+            - generic: TikTok
+          - link "GitHub" [ref=f1e270] [cursor=pointer]:
+            - /url: https://github.com/FrameStudio-cloud
+            - img [ref=f1e271]
+            - generic: GitHub
+        - paragraph [ref=f1e273]: © 2026 FrameStudio. All rights reserved.
