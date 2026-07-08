@@ -82,6 +82,11 @@ react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer
 - `src/components/CTA.jsx` — WhatsApp button → `wa.me/254793302518`
 - `src/pages/Contact.jsx` — 2 WhatsApp links → `wa.me/254793302518`
 
+### Terms & Privacy Pages
+- `src/pages/Terms.jsx` — Full 17-section Terms of Service from legal docx
+- `src/pages/Privacy.jsx` — Full 13-section Privacy Policy (Kenya Data Protection Act 2019)
+- Replaced "under construction" placeholders on both pages
+
 ## Known Issues
 - Portfolio tabs (All, Websites, Bots, Dashboards) still show but only "Dashboards" has content
 - Blog has no individual post pages — cards are self-contained
