@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { Mail, MessageCircle, MapPin, Send } from 'lucide-react'
 
@@ -23,6 +24,16 @@ export default function Contact() {
 
   return (
     <>
+      <Helmet>
+        <title>Contact — FrameStudio | Get in Touch</title>
+        <meta name="description" content="Get in touch with FrameStudio. Nairobi-based digital agency building websites, WhatsApp bots, and dashboards. Contact us via WhatsApp, email, or our contact form." />
+        <meta property="og:title" content="Contact — FrameStudio" />
+        <meta property="og:description" content="Get in touch with FrameStudio. Nairobi-based digital agency. Reply within 24 hours." />
+        <meta property="og:url" content="https://framestudio.co.ke/contact" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/contact" />
+      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">

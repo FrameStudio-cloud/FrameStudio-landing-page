@@ -17,43 +17,30 @@ const links = [
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [homeScrolled, setHomeScrolled] = useState(false)
   const navRef = useRef(null)
   const location = useLocation()
   const isHome = location.pathname === '/'
-  const transparent = isHome && !scrolled
+  const scrolled = !isHome || homeScrolled
+  const transparent = !scrolled
 
   useEffect(() => {
-    if (!isHome) {
-      setScrolled(true)
-      gsap.set(navRef.current, {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(12px)',
-        borderBottomColor: 'rgba(0, 0, 0, 0.05)',
+    if (isHome) {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: document.body,
+          start: '80px top',
+          onEnter: () => setHomeScrolled(true),
+          onLeaveBack: () => setHomeScrolled(false),
+        })
       })
-      return
+      return () => ctx.revert()
     }
-
-    setScrolled(false)
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: document.body,
-        start: '80px top',
-        onEnter: () => {
-          setScrolled(true)
-        },
-        onLeaveBack: () => {
-          setScrolled(false)
-        },
-      })
-    })
-
-    return () => ctx.revert()
   }, [isHome])
 
   useEffect(() => {
-    setMenuOpen(false)
-  }, [location])
+    requestAnimationFrame(() => setMenuOpen(false))
+  }, [location.pathname])
 
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors ${

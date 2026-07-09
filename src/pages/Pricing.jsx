@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -65,6 +66,16 @@ export default function Pricing() {
 
   return (
     <>
+      <Helmet>
+        <title>Pricing — FrameStudio | Affordable Digital Solutions for Kenyan SMEs</title>
+        <meta name="description" content="Transparent pricing for Kenyan SMEs. Websites from KSh 15,000, WhatsApp bots from KSh 25,000, dashboards from KSh 10,000. No hidden fees." />
+        <meta property="og:title" content="Pricing — FrameStudio" />
+        <meta property="og:description" content="Transparent pricing for Kenyan SMEs. Websites, WhatsApp bots, and dashboards at affordable rates." />
+        <meta property="og:url" content="https://framestudio.co.ke/pricing" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/pricing" />
+      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">

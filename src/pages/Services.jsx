@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Globe, Bot, BarChart3, ArrowRight, Check } from 'lucide-react'
@@ -59,6 +60,16 @@ export default function Services() {
 
   return (
     <>
+      <Helmet>
+        <title>Services — FrameStudio | Websites, Bots & Dashboards for Kenyan SMEs</title>
+        <meta name="description" content="FrameStudio builds modern websites, WhatsApp bots, and business dashboards for Kenyan businesses. Affordable, mobile-friendly, M-Pesa integration, and built for Kenya." />
+        <meta property="og:title" content="Services — FrameStudio" />
+        <meta property="og:description" content="Websites, WhatsApp bots, and business dashboards for Kenyan SMEs." />
+        <meta property="og:url" content="https://framestudio.co.ke/services" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/services" />
+      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">

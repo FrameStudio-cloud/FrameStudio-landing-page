@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -45,6 +46,16 @@ export default function Portfolio() {
 
   return (
     <>
+      <Helmet>
+        <title>Portfolio — FrameStudio | Our Work</title>
+        <meta name="description" content="See real projects built by FrameStudio — including Keel, a multi-tenant dashboard for Kenyan shop owners. Websites, WhatsApp bots, and dashboards." />
+        <meta property="og:title" content="Portfolio — FrameStudio" />
+        <meta property="og:description" content="Real projects built by FrameStudio for Kenyan businesses." />
+        <meta property="og:url" content="https://framestudio.co.ke/portfolio" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/portfolio" />
+      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">

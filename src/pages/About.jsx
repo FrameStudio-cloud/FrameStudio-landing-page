@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -57,6 +58,16 @@ export default function About() {
 
   return (
     <>
+      <Helmet>
+        <title>About — FrameStudio | Nairobi Digital Agency</title>
+        <meta name="description" content="FrameStudio is a Nairobi-based digital agency building websites, WhatsApp bots, and real-time dashboards designed for how Kenyan businesses actually operate." />
+        <meta property="og:title" content="About — FrameStudio" />
+        <meta property="og:description" content="Nairobi-based digital agency building modern websites, smart WhatsApp bots, and real-time dashboards for Kenyan businesses." />
+        <meta property="og:url" content="https://framestudio.co.ke/about" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/about" />
+      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">

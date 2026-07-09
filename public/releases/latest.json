@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "notes": "Initial release of the Keel desktop app. Inventory management, sales tracking, reporting, and website management — all native and offline-ready.",
+  "pub_date": "2026-07-08T00:00:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVReURoREtmaDBYQTE1SkE5NFR5QVhXT0NuMmw2UGxXOEFLUXVlTzVUUURBRVNwZGMrZVhUaFpHK0NKcFRHbnBrYlRvK1NhTFNNdFduZzBTR1VTWG9uSHF2ZFFyWVhIZFFzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgzNDk5NDA4CWZpbGU6S2VlbF8xLjAuMF94NjQtc2V0dXAuZXhlClU0d0NaRDh3ZmFjUUllUCs4TDZiT01ockpTVndsdWF3b25yYm9BcE5zYXd0SG1CY2lZSGlNMHdteWNZQTVxckI4bzZHQ28xMzh3bVBaWEgzYjZER0N3PT0K",
+      "url": "https://framestudio.co.ke/releases/Keel_1.0.0_x64-setup.exe"
+    }
+  }
+}

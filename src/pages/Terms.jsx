@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import PolicyLayout from './PolicyLayout'
 
 const sections = [
@@ -77,7 +78,18 @@ const sections = [
 
 export default function Terms() {
   return (
-    <PolicyLayout title="Terms of Service">
+    <>
+      <Helmet>
+        <title>Terms of Service — FrameStudio</title>
+        <meta name="description" content="FrameStudio's Terms of Service governing website design, WhatsApp bot development, dashboard projects, payments, and delivery for Kenyan businesses." />
+        <meta property="og:title" content="Terms of Service — FrameStudio" />
+        <meta property="og:description" content="Terms of Service for FrameStudio's digital solutions, payments, and project delivery." />
+        <meta property="og:url" content="https://framestudio.co.ke/terms" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://framestudio.co.ke/terms" />
+      </Helmet>
+      <PolicyLayout title="Terms of Service">
       {sections.map((s, i) => (
         <div key={i}>
           {s.title && (
@@ -92,5 +104,6 @@ export default function Terms() {
         before publishing or relying on them.
       </p>
     </PolicyLayout>
+    </>
   )
 }

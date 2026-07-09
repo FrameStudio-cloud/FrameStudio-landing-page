@@ -32,14 +32,16 @@ Vite + React 19 + React Router v7 + Tailwind CSS v3 + GSAP (ScrollTrigger).
 ## Build & Lint
 
 ```bash
-npm run dev    # Vite dev server
-npm run build  # Production build (Vite/Rolldown)
-npm run lint   # ESLint
+npm run dev            # Vite dev server
+npm run build          # Production build (Vite/Rolldown)
+npm run build:prerender # Build + prerender all routes (Puppeteer)
+npm run prerender      # Prerender only (after build)
+npm run lint           # ESLint
 ```
 
 ## Dependencies
 
-react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer Motion)
+react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer Motion), react-helmet-async
 
 ## Key Changes Made (Session July 2026)
 
@@ -82,10 +84,36 @@ react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer
 - `src/components/CTA.jsx` — WhatsApp button → `wa.me/254793302518`
 - `src/pages/Contact.jsx` — 2 WhatsApp links → `wa.me/254793302518`
 
+### Keel Desktop App Download Section (`src/components/KeelDownload.jsx`)
+- New component added to Portfolio page between project grid and CTA
+- Dark section matching site's black-bg style, GSAP scroll-triggered animation
+- Left column: "Take Keel Offline" headline, subtitle, 4 feature bullets (native, offline, faster, auto-updates), download buttons (`.exe` + `.msi`), version tag
+- Right column: app screenshot from `public/keel thumbnail.png`
+- Installers served from `public/downloads/` — direct links, no GitHub
+
+### Release Infrastructure (`public/releases/`)
+- Auto-update endpoint: `https://framestudio.co.ke/releases/latest.json`
+- Files hosted: `Keel_1.0.0_x64-setup.exe`, `.sig` (Minisign signature), `latest.json`
+- Linkers link directly to `/downloads/Keel_1.0.0_x64-setup.exe` (no GitHub)
+- Tauri updater in `src-tauri/tauri.conf.json` points to framestudio.co.ke endpoint
+- Signing key: `~/.tauri/keel.key` (password: `keel-updater-key`)
+- **New version flow**: `.\release.ps1 -Version "1.0.1" -Notes "Bug fixes"` — builds, signs, updates manifest, bumps version in KeelDownload component
+- Script path: `release.ps1` at repo root
+
 ### Terms & Privacy Pages
 - `src/pages/Terms.jsx` — Full 17-section Terms of Service from legal docx
 - `src/pages/Privacy.jsx` — Full 13-section Privacy Policy (Kenya Data Protection Act 2019)
 - Replaced "under construction" placeholders on both pages
+
+### SEO & Crawlability (July 2026)
+- `public/robots.txt` — Allows all crawlers, points to sitemap
+- `public/sitemap.xml` — Lists all 12 routes with priorities and changefreq
+- `react-helmet-async` installed — all 12 pages have unique `<Helmet>` blocks with title, description, OG tags, Twitter card, canonical URL
+- Home page also includes JSON-LD structured data (`WebSite` + `Organization` schemas)
+- Prerendering via `prerender.js` (Puppeteer) — generates static HTML for every route at build time via `npm run build:prerender`
+- GSAP ScrollTrigger handled by scrolling through the full page height during prerender capture
+- Prerender output written to `dist/<route>/index.html` for each route; the root `/` overwrites `dist/index.html`
+- `prerender.js` serves files from `dist/` via Node `http` module and renders each route with Puppeteer (`headless: true`, 1440×900 viewport)
 
 ## Known Issues
 - Portfolio tabs (All, Websites, Bots, Dashboards) still show but only "Dashboards" has content
