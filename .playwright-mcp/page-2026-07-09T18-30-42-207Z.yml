@@ -1,0 +1,216 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e6]:
+      - link "FrameStudio" [ref=e7] [cursor=pointer]:
+        - /url: /
+      - button [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - generic [ref=e12]:
+    - heading "What We Build" [level=1] [ref=e13]
+    - paragraph [ref=e14]: Every solution is designed for Kenyan businesses — affordable, mobile-friendly, and built to scale.
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - img [ref=e20]
+        - heading "Websites" [level=2] [ref=e23]
+        - paragraph [ref=e24]: Modern, mobile-optimised websites that put your business on the map. From e-commerce stores to portfolio sites — we build what you need.
+        - list [ref=e25]:
+          - listitem [ref=e26]:
+            - img [ref=e27]
+            - text: E-commerce & online stores
+          - listitem [ref=e29]:
+            - img [ref=e30]
+            - text: Mobile-optimised responsive design
+          - listitem [ref=e32]:
+            - img [ref=e33]
+            - text: SEO & Google-ready
+          - listitem [ref=e35]:
+            - img [ref=e36]
+            - text: Fast hosting & domain setup
+          - listitem [ref=e38]:
+            - img [ref=e39]
+            - text: M-Pesa integration
+        - link "Get a quote" [ref=e41] [cursor=pointer]:
+          - /url: /contact
+          - text: Get a quote
+          - img [ref=e42]
+      - generic [ref=e46]:
+        - img [ref=e47]
+        - paragraph [ref=e50]: Websites by FrameStudio
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - img [ref=e54]
+        - heading "WhatsApp Bots" [level=2] [ref=e57]
+        - paragraph [ref=e58]: Automate your customer conversations. Handle orders, answer FAQs, and capture leads — all through WhatsApp, where your customers already are.
+        - list [ref=e59]:
+          - listitem [ref=e60]:
+            - img [ref=e61]
+            - text: Automated order processing
+          - listitem [ref=e63]:
+            - img [ref=e64]
+            - text: 24/7 customer support
+          - listitem [ref=e66]:
+            - img [ref=e67]
+            - text: Lead qualification flows
+          - listitem [ref=e69]:
+            - img [ref=e70]
+            - text: Broadcast & marketing campaigns
+          - listitem [ref=e72]:
+            - img [ref=e73]
+            - text: Multi-agent handoff
+        - link "Get a quote" [ref=e75] [cursor=pointer]:
+          - /url: /contact
+          - text: Get a quote
+          - img [ref=e76]
+      - generic [ref=e80]:
+        - img [ref=e81]
+        - paragraph [ref=e84]: WhatsApp Bots by FrameStudio
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - img [ref=e88]
+        - heading "Business Dashboards" [level=2] [ref=e90]
+        - paragraph [ref=e91]: See your business in real time. Track inventory, analyse sales trends, and make data-driven decisions from a single dashboard.
+        - list [ref=e92]:
+          - listitem [ref=e93]:
+            - img [ref=e94]
+            - text: Real-time inventory tracking
+          - listitem [ref=e96]:
+            - img [ref=e97]
+            - text: Sales analytics & reporting
+          - listitem [ref=e99]:
+            - img [ref=e100]
+            - text: Expense & profit tracking
+          - listitem [ref=e102]:
+            - img [ref=e103]
+            - text: Staff performance metrics
+          - listitem [ref=e105]:
+            - img [ref=e106]
+            - text: Export to PDF & Excel
+        - link "Get a quote" [ref=e108] [cursor=pointer]:
+          - /url: /contact
+          - text: Get a quote
+          - img [ref=e109]
+      - generic [ref=e113]:
+        - img [ref=e114]
+        - paragraph [ref=e116]: Business Dashboards by FrameStudio
+  - generic [ref=e118]:
+    - generic [ref=e119]:
+      - heading "How We Work" [level=2] [ref=e120]
+      - paragraph [ref=e121]: From idea to launch in weeks, not months.
+    - generic [ref=e122]:
+      - generic [ref=e123]:
+        - generic [ref=e124]: "01"
+        - heading "Discovery" [level=3] [ref=e125]
+        - paragraph [ref=e126]: We learn about your business, goals, and audience.
+      - generic [ref=e127]:
+        - generic [ref=e128]: "02"
+        - heading "Design" [level=3] [ref=e129]
+        - paragraph [ref=e130]: We create wireframes and mockups for your approval.
+      - generic [ref=e131]:
+        - generic [ref=e132]: "03"
+        - heading "Build" [level=3] [ref=e133]
+        - paragraph [ref=e134]: We develop and test your solution.
+      - generic [ref=e135]:
+        - generic [ref=e136]: "04"
+        - heading "Launch" [level=3] [ref=e137]
+        - paragraph [ref=e138]: We deploy and hand over with training.
+      - generic [ref=e139]:
+        - generic [ref=e140]: "05"
+        - heading "Support" [level=3] [ref=e141]
+        - paragraph [ref=e142]: Ongoing maintenance and updates as needed.
+  - generic [ref=e144]:
+    - heading "Ready to Start?" [level=2] [ref=e145]
+    - paragraph [ref=e146]: Tell us what you need and we'll take it from there.
+    - link "Start Your Project" [ref=e147] [cursor=pointer]:
+      - /url: /contact
+      - text: Start Your Project
+      - img [ref=e148]
+  - contentinfo [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - generic [ref=e153]:
+          - link "FrameStudio" [ref=e154] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e155]: Digital solutions
+          - paragraph [ref=e156]: for Kenyan SMEs.
+          - paragraph [ref=e157]: Nairobi, Kenya
+        - generic [ref=e158]:
+          - heading "Services" [level=4] [ref=e159]
+          - list [ref=e160]:
+            - listitem [ref=e161]:
+              - link "Websites" [ref=e162] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e163]:
+              - link "WhatsApp Bots" [ref=e164] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e165]:
+              - link "Dashboards" [ref=e166] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e167]:
+              - link "Automation" [ref=e168] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e169]:
+              - link "Blog" [ref=e170] [cursor=pointer]:
+                - /url: /blog
+        - generic [ref=e171]:
+          - heading "Contact" [level=4] [ref=e172]
+          - list [ref=e173]:
+            - listitem [ref=e174]:
+              - link "hello@framestudio.co.ke" [ref=e175] [cursor=pointer]:
+                - /url: mailto:hello@framestudio.co.ke
+            - listitem [ref=e176]:
+              - link "admin@framestudio.co.ke" [ref=e177] [cursor=pointer]:
+                - /url: mailto:admin@framestudio.co.ke
+            - listitem [ref=e178]:
+              - link "Nairobi, Kenya" [ref=e179] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e180]:
+          - heading "Legal" [level=4] [ref=e181]
+          - list [ref=e182]:
+            - listitem [ref=e183]:
+              - link "Terms of Service" [ref=e184] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e185]:
+              - link "Privacy Policy" [ref=e186] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e187]:
+              - link "Refund Policy" [ref=e188] [cursor=pointer]:
+                - /url: /refund
+            - listitem [ref=e189]:
+              - link "Cookie Policy" [ref=e190] [cursor=pointer]:
+                - /url: /cookies
+      - generic [ref=e192]:
+        - generic [ref=e193]:
+          - link "WhatsApp" [ref=e194] [cursor=pointer]:
+            - /url: https://wa.me/254793302518
+            - img [ref=e195]
+            - generic: WhatsApp
+          - link "Instagram" [ref=e197] [cursor=pointer]:
+            - /url: https://www.instagram.com/frame.studio12?igsh=ZWdieTk4ZGI4cjll
+            - img [ref=e198]
+            - generic: Instagram
+          - link "LinkedIn" [ref=e201] [cursor=pointer]:
+            - /url: https://linkedin.com/company/framestudio-ke
+            - img [ref=e202]
+            - generic: LinkedIn
+          - link "Facebook" [ref=e206] [cursor=pointer]:
+            - /url: https://facebook.com/framestudio-ke
+            - img [ref=e207]
+            - generic: Facebook
+          - link "X (Twitter)" [ref=e209] [cursor=pointer]:
+            - /url: https://x.com/framestudio_ke
+            - img [ref=e210]
+            - generic: X (Twitter)
+          - link "YouTube" [ref=e212] [cursor=pointer]:
+            - /url: https://youtube.com/@framestudio_ke
+            - img [ref=e213]
+            - generic: YouTube
+          - link "TikTok" [ref=e215] [cursor=pointer]:
+            - /url: https://vm.tiktok.com/ZS9MrQG9sjXfK-jv0Wd/
+            - img [ref=e216]
+            - generic: TikTok
+          - link "GitHub" [ref=e218] [cursor=pointer]:
+            - /url: https://github.com/FrameStudio-cloud
+            - img [ref=e219]
+            - generic: GitHub
+        - paragraph [ref=e221]: © 2026 FrameStudio. All rights reserved.

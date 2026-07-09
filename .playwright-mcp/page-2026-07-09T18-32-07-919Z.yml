@@ -1,0 +1,13 @@
+- generic [ref=f1e3]:
+  - generic [ref=f1e4]: "[plugin:vite:oxc] Transform failed with 1 error: [PARSE_ERROR] Expected `,` or `)` but found `Identifier` ╭─[ src/components/Nav.jsx:127:7 ] │ 85 │ return ( │ ┬ │ ╰── Opened here │ 127 │ ref={overlayRef} │ ─┬─ │ ╰─── `,` or `)` expected ─────╯"
+  - generic [ref=f1e5]: C:/Users/Administrator/projects/framestudio-landing/src/components/Nav.jsx
+  - generic [ref=f1e7]: at transformWithOxc (file:///C:/Users/Administrator/projects/framestudio-landing/node_modules/vite/dist/node/chunks/node.js:3344:19) at TransformPluginContext.transform (file:///C:/Users/Administrator/projects/framestudio-landing/node_modules/vite/dist/node/chunks/node.js:3415:26) at EnvironmentPluginContainer.transform (file:///C:/Users/Administrator/projects/framestudio-landing/node_modules/vite/dist/node/chunks/node.js:30387:51) at async loadAndTransform (file:///C:/Users/Administrator/projects/framestudio-landing/node_modules/vite/dist/node/chunks/node.js:24646:26) at async viteTransformMiddleware (file:///C:/Users/Administrator/projects/framestudio-landing/node_modules/vite/dist/node/chunks/node.js:24440:20)
+  - generic [ref=f1e8]:
+    - text: Click outside, press Esc key, or fix the code to dismiss.
+    - text: You can also disable this overlay by setting
+    - code [ref=f1e9]: server.hmr.overlay
+    - text: to
+    - code [ref=f1e10]: "false"
+    - text: in
+    - code [ref=f1e11]: vite.config.js
+    - text: .
