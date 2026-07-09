@@ -63,7 +63,7 @@ export default function Hero() {
       <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
       <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-white/[0.03] rounded-full blur-[100px]" />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 min-h-[100dvh] flex items-center">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 min-h-[100dvh] flex items-center pt-16 md:pt-[72px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 w-full items-center pb-16">
           <div ref={textRef} className="lg:col-span-7">
             <h1

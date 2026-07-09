@@ -19,6 +19,8 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [homeScrolled, setHomeScrolled] = useState(false)
   const navRef = useRef(null)
+  const overlayRef = useRef(null)
+  const tlRef = useRef(null)
   const location = useLocation()
   const isHome = location.pathname === '/'
   const scrolled = !isHome || homeScrolled
@@ -42,6 +44,41 @@ export default function Nav() {
     requestAnimationFrame(() => setMenuOpen(false))
   }, [location.pathname])
 
+  useEffect(() => {
+    if (!overlayRef.current) return
+
+    const overlay = overlayRef.current
+    const items = overlay.querySelectorAll('.mobile-link')
+
+    if (menuOpen) {
+      tlRef.current = gsap.timeline()
+        .fromTo(overlay,
+          { opacity: 0, visibility: 'hidden', pointerEvents: 'none' },
+          { opacity: 1, visibility: 'visible', pointerEvents: 'auto', duration: 0.3, ease: 'power2.out' }
+        )
+        .fromTo(items,
+          { y: -24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power3.out' },
+          '-=0.1'
+        )
+    } else {
+      gsap.to(overlay, {
+        opacity: 0, visibility: 'hidden', pointerEvents: 'none',
+        duration: 0.2, ease: 'power2.in',
+      })
+      gsap.set(items, { y: -24, opacity: 0 })
+    }
+
+    return () => {
+      gsap.killTweensOf(overlay)
+      gsap.killTweensOf(items)
+      if (tlRef.current) {
+        tlRef.current.kill()
+        tlRef.current = null
+      }
+    }
+  }, [menuOpen])
+
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors ${
       isActive
@@ -49,7 +86,7 @@ export default function Nav() {
         : transparent ? 'text-white/70 hover:text-white' : 'text-gray-600 hover:text-black'
     }`
 
-  return (
+  return (<>
     <nav
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
@@ -82,32 +119,41 @@ export default function Nav() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`md:hidden p-2 transition-colors ${transparent ? 'text-white/80' : 'text-gray-600'}`}
+            className={`md:hidden p-2 relative z-50 transition-colors ${transparent ? 'text-white/80' : 'text-gray-600'}`}
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-
-        {menuOpen && (
-          <div className={`md:hidden pb-4 pt-4 flex flex-col gap-3 border-t ${transparent ? 'border-white/10' : 'border-gray-100'}`}>
-            {links.map((link) => (
-              <NavLink key={link.to} to={link.to} className={linkClass}>
-                {link.label}
-              </NavLink>
-            ))}
-            <NavLink
-              to="/contact"
-              className={`text-sm font-semibold px-5 py-2.5 rounded-lg w-fit ${
-                transparent
-                  ? 'bg-white/10 border border-white/20 text-white'
-                  : 'bg-black text-white'
-              }`}
-            >
-              Get Started
-            </NavLink>
-          </div>
-        )}
       </div>
     </nav>
-  )
+
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-40 flex flex-col md:hidden"
+      style={{ opacity: 0, visibility: 'hidden', pointerEvents: 'none' }}
+    >
+      <div className="absolute inset-0 bg-black/95 backdrop-blur-md" />
+      <div className="relative z-10 flex flex-col items-center justify-center h-full gap-8 px-6">
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) =>
+              `mobile-link text-2xl sm:text-3xl font-semibold transition-colors ${
+                isActive ? 'text-white' : 'text-white/60 hover:text-white'
+              }`
+            }
+          >
+            {link.label}
+          </NavLink>
+        ))}
+        <NavLink
+          to="/contact"
+          className="mobile-link mt-6 bg-white text-black font-semibold px-10 py-4 rounded-xl text-lg hover:bg-gray-100 transition-all"
+        >
+          Get Started
+        </NavLink>
+      </div>
+    </div>
+  </>)
 }

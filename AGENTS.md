@@ -115,6 +115,14 @@ react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer
 - Prerender output written to `dist/<route>/index.html` for each route; the root `/` overwrites `dist/index.html`
 - `prerender.js` serves files from `dist/` via Node `http` module and renders each route with Puppeteer (`headless: true`, 1440×900 viewport)
 
+### Mobile Nav Redesign & Hero Fix (`src/components/Nav.jsx`, `src/components/Hero.jsx`)
+- Hero: Added `pt-16 md:pt-[72px]` so content clears the fixed nav on mobile viewports
+- Nav: Replaced basic conditional mobile menu with full-screen overlay
+- Overlay: `bg-black/95 backdrop-blur-md`, GSAP open animation (fade in + stagger links), GSAP close (fade out)
+- Overlay placed as sibling outside `<nav>` to avoid `backdrop-filter` containing-block bug that trapped `position: fixed` elements
+- Hamburger button: `relative z-50` to stay clickable above overlay
+- Close animation: `gsap.to()` + `gsap.set()` instead of `timeline.reverse()` to avoid cleanup race condition
+
 ## Known Issues
 - Portfolio tabs (All, Websites, Bots, Dashboards) still show but only "Dashboards" has content
 - Blog has no individual post pages — cards are self-contained
