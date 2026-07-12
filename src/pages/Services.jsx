@@ -14,6 +14,7 @@ const services = [
     desc: 'Modern, mobile-optimised websites that put your business on the map. From e-commerce stores to portfolio sites — we build what you need.',
     features: ['E-commerce & online stores', 'Mobile-optimised responsive design', 'SEO & Google-ready', 'Fast hosting & domain setup', 'M-Pesa integration'],
     gradient: 'from-gray-100/50 to-transparent',
+    image: '/services-websites.jpg',
   },
   {
     icon: Bot,
@@ -21,6 +22,7 @@ const services = [
     desc: 'Automate your customer conversations. Handle orders, answer FAQs, and capture leads — all through WhatsApp, where your customers already are.',
     features: ['Automated order processing', '24/7 customer support', 'Lead qualification flows', 'Broadcast & marketing campaigns', 'Multi-agent handoff'],
     gradient: 'from-gray-100/30 to-transparent',
+    image: '/services-bots.png',
   },
   {
     icon: BarChart3,
@@ -28,6 +30,7 @@ const services = [
     desc: 'See your business in real time. Track inventory, analyse sales trends, and make data-driven decisions from a single dashboard.',
     features: ['Real-time inventory tracking', 'Sales analytics & reporting', 'Expense & profit tracking', 'Staff performance metrics', 'Export to PDF & Excel'],
     gradient: 'from-gray-100/30 to-transparent',
+    image: '/services-dashboard.png',
   },
 ]
 
@@ -112,11 +115,8 @@ export default function Services() {
                 </Link>
               </div>
               <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
-                <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <service.icon size={48} className="text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-400 text-sm">{service.title} by FrameStudio</p>
-                  </div>
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 bg-gray-50">
+                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
                 </div>
               </div>
             </div>
