@@ -54,22 +54,22 @@ export default function KeelDownload() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 md:py-32 bg-black overflow-hidden">
+    <section ref={sectionRef} className="relative py-24 overflow-hidden bg-black md:py-32">
       <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
       <div className="absolute top-1/3 -left-48 w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[120px]" />
       <div className="absolute bottom-0 -right-48 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px]" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <div ref={contentRef}>
               <span className="inline-block text-xs uppercase tracking-[0.15em] text-gray-500 mb-4">
                 Desktop App
               </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight text-balance">
+              <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl text-balance">
                 Take Keel Offline
               </h2>
-              <p className="text-gray-400 text-lg max-w-lg mt-5 leading-relaxed">
+              <p className="max-w-lg mt-5 text-lg leading-relaxed text-gray-400">
                 The full Keel experience as a native Windows app. Manage inventory, track sales, and run your shop even without internet.
               </p>
             </div>
@@ -79,9 +79,9 @@ export default function KeelDownload() {
                 <div
                   key={f.text}
                   ref={(el) => (featuresRef.current[i] = el)}
-                  className="flex items-center gap-3 text-gray-300 text-sm"
+                  className="flex items-center gap-3 text-sm text-gray-300"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-lg bg-white/5 border-white/10 shrink-0">
                     <f.icon size={15} className="text-gray-400" />
                   </div>
                   {f.text}
@@ -90,11 +90,11 @@ export default function KeelDownload() {
             </div>
 
             <div ref={buttonsRef} className="mt-10 space-y-3">
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <a
                   href="/downloads/Keel_1.0.0_x64-setup.exe"
                   download
-                  className="group bg-white text-black hover:bg-gray-100 font-semibold px-8 py-4 rounded-xl transition-all text-base inline-flex items-center justify-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-black transition-all bg-white group hover:bg-gray-100 rounded-xl"
                 >
                   <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
                   Download .exe Installer
@@ -102,13 +102,13 @@ export default function KeelDownload() {
                 <a
                   href="/downloads/Keel_1.0.0_x64_en-US.msi"
                   download
-                  className="group border border-white/20 text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-xl transition-all text-base inline-flex items-center justify-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white transition-all border group border-white/20 hover:bg-white/10 rounded-xl"
                 >
                   Download .msi
                 </a>
               </div>
               <p className="text-xs text-gray-500">
-                Windows 10 or later &bull; v1.0.0 &bull; ~5 MB
+                Windows 10 or later &bull; v1.1.0 &bull; 
               </p>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function KeelDownload() {
               <img
                 src="/keel thumbnail.png"
                 alt="Keel Desktop App"
-                className="w-full h-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           </div>
