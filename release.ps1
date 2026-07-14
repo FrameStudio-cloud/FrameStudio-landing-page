@@ -3,8 +3,8 @@ param(
   [string]$Version,
   [string]$Notes = "",
   [string]$KeelDir = "C:\Users\Administrator\projects\keel",
-  [string]$KeyPath = "$env:USERPROFILE\.tauri\keel.key",
-  [string]$KeyPass = "keel-updater-key"
+  [string]$KeyPath = "$env:USERPROFILE\.tauri\keel",
+  [string]$KeyPass = "l3w151rungu"
 )
 
 $ErrorActionPreference = "Stop"
@@ -35,10 +35,8 @@ Copy-Item -Path $builtExe -Destination "$releaseDir\$installer" -Force
 
 # 4. Sign it
 Write-Host "=== Signing installer ===" -ForegroundColor Cyan
-$env:TAURI_SIGNING_PRIVATE_KEY_PATH = $KeyPath
-$env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD = $KeyPass
 $sigFile = "$releaseDir\$installer.sig"
-npx tauri signer sign "$releaseDir\$installer" 2>&1
+npx tauri signer sign --private-key-path "$KeyPath" --password "$KeyPass" "$releaseDir\$installer" 2>&1
 if ($LASTEXITCODE -ne 0) { throw "Signing failed" }
 
 # 5. Read signature

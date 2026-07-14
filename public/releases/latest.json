@@ -1,11 +1,11 @@
 {
-  "version": "1.0.0",
-  "notes": "Initial release of the Keel desktop app. Inventory management, sales tracking, reporting, and website management — all native and offline-ready.",
-  "pub_date": "2026-07-08T00:00:00Z",
+  "version": "1.1.0",
+  "notes": "Desktop app v1.1.0 — full Keel dashboard. Inventory, sales, finance, reports, marketing, social, bots, storefront deployment, website management, and settings. Packaged with Tauri v2 + WebView2.",
+  "pub_date": "2026-07-14T00:00:00Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVReURoREtmaDBYQTE1SkE5NFR5QVhXT0NuMmw2UGxXOEFLUXVlTzVUUURBRVNwZGMrZVhUaFpHK0NKcFRHbnBrYlRvK1NhTFNNdFduZzBTR1VTWG9uSHF2ZFFyWVhIZFFzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgzNDk5NDA4CWZpbGU6S2VlbF8xLjAuMF94NjQtc2V0dXAuZXhlClU0d0NaRDh3ZmFjUUllUCs4TDZiT01ockpTVndsdWF3b25yYm9BcE5zYXd0SG1CY2lZSGlNMHdteWNZQTVxckI4bzZHQ28xMzh3bVBaWEgzYjZER0N3PT0K",
-      "url": "https://framestudio.co.ke/releases/Keel_1.0.0_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRc3lFd3lxa29oWEdyL21WRTEzREo5aXgrYzFISFlubnhROHNHZzZ0VFFVYTJDQmRHR0hpdGdhWUYwTGNKRU9TV2JadzBLcDBpbGk2aVRUN3I0NWdZOW1Wc1hLVU1md1FJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg0MDU2NzEwCWZpbGU6S2VlbF8xLjEuMF94NjQtc2V0dXAuZXhlClhnSU5GdldzNERkdHl3SzhRVEsxNXRETDkwQUw4cDZHZGd1M0hOcCtGNVJoMktLZHgwd1pleGY2Z2UzZ092WERjanE1TFZwWEhMZFFwV1VZSE5lTkJBPT0K",
+      "url": "https://framestudio.co.ke/downloads/Keel_1.1.0_x64-setup.exe"
     }
   }
 }
