@@ -5,7 +5,8 @@ import { Mail, MessageCircle, MapPin, Send } from 'lucide-react'
 
 export default function Contact() {
   const sectionRef = useRef(null)
-  const [submitted, setSubmitted] = useState(false)
+  const [state, setState] = useState('idle')
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -17,9 +18,32 @@ export default function Contact() {
     return () => ctx.revert()
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    setState('sending')
+    setError(null)
+
+    const fd = new FormData(e.target)
+    const body = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      service: fd.get('service'),
+      message: fd.get('message'),
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) throw new Error('Failed to send')
+      setState('submitted')
+    } catch {
+      setError('Something went wrong. Try WhatsApp or email instead.')
+      setState('idle')
+    }
   }
 
   return (
@@ -50,7 +74,7 @@ export default function Contact() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-5 gap-16">
             <div className="lg:col-span-3">
-              {submitted ? (
+              {state === 'submitted' ? (
                 <div className="p-12 rounded-2xl bg-gray-50 border border-gray-200 text-center">
                   <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mx-auto mb-6">
                     <Send size={24} className="text-white" />
@@ -63,35 +87,38 @@ export default function Contact() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-900 mb-2">Name</label>
-                      <input type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="Your name" />
+                      <input name="name" type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="Your name" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-900 mb-2">Email</label>
-                      <input type="email" required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="you@example.com" />
+                      <input name="email" type="email" required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="you@example.com" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-2">Phone (optional)</label>
-                    <input type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="+254 7XX XXX XXX" />
+                    <input name="phone" type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all" placeholder="+254 7XX XXX XXX" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-2">Service Needed</label>
-                    <select className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all">
+                    <select name="service" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all">
                       <option value="">Select a service</option>
-                      <option value="website">Website</option>
-                      <option value="bot">WhatsApp Bot</option>
-                      <option value="dashboard">Business Dashboard</option>
-                      <option value="automation">Custom Automation</option>
-                      <option value="other">Other</option>
+                      <option value="Website">Website</option>
+                      <option value="WhatsApp Bot">WhatsApp Bot</option>
+                      <option value="Business Dashboard">Business Dashboard</option>
+                      <option value="Custom Automation">Custom Automation</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-2">Project Details</label>
-                    <textarea rows={5} required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all resize-none" placeholder="Tell us about your project..." />
+                    <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all resize-none" placeholder="Tell us about your project..." />
                   </div>
-                  <button type="submit" className="inline-flex items-center gap-2 bg-black text-white font-semibold px-8 py-4 rounded-xl hover:bg-gray-800 transition-all text-base">
+                  {error && (
+                    <p className="text-sm text-red-500">{error}</p>
+                  )}
+                  <button type="submit" disabled={state === 'sending'} className="inline-flex items-center gap-2 bg-black text-white font-semibold px-8 py-4 rounded-xl hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-base">
                     <Send size={18} />
-                    Send Message
+                    {state === 'sending' ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               )}

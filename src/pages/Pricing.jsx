@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
-import { Check, ArrowRight } from 'lucide-react'
+import { Check, ArrowRight, ExternalLink, Star, Shield } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -131,8 +131,100 @@ export default function Pricing() {
         </div>
       </section>
 
+      <section className="py-20 md:py-28 bg-black">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <h2 ref={(el) => (sectionRefs.current[4] = el)} className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              Keel — Own Our Dashboard
+            </h2>
+            <p className="text-gray-400 text-lg mt-4 leading-relaxed">
+              The same multi-tenant dashboard we build for clients is available as a subscription.
+              Sales, inventory, social media, bots, storefront — all in one place.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {[
+              {
+                id: 'basic',
+                name: 'Basic',
+                price: '500',
+                icon: Shield,
+                desc: 'Everything you need to run your shop day-to-day.',
+                features: [
+                  'Sales & inventory tracking',
+                  'Service orders & expenses',
+                  'Customer management',
+                  'Stock alerts & basic reports',
+                  'Social media management',
+                ],
+              },
+              {
+                id: 'pro',
+                name: 'Pro',
+                price: '1,000',
+                icon: Star,
+                desc: 'Everything in Basic plus a website, bots, and advanced tools.',
+                features: [
+                  'Custom website & storefront',
+                  'WhatsApp & Telegram bots',
+                  'AI caption generator',
+                  'P&L reports & data export',
+                  'M-Pesa reconciliation',
+                  'QR codes & print catalogue',
+                  'Website analytics',
+                ],
+                featured: true,
+              },
+            ].map((plan, i) => {
+              const Icon = plan.icon
+              return (
+                <div
+                  key={plan.id}
+                  ref={(el) => (sectionRefs.current[5 + i] = el)}
+                  className={`rounded-2xl p-8 flex flex-col ${
+                    plan.featured
+                      ? 'bg-white/5 border border-amber-500/30 ring-1 ring-amber-500/10'
+                      : 'bg-white/5 border border-white/10'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icon size={18} className={plan.featured ? 'text-amber-400' : 'text-blue-400'} />
+                    <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
+                  </div>
+                  <div className="mt-4 flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-white">KSh {plan.price}</span>
+                    <span className="text-gray-400">/month</span>
+                  </div>
+                  <p className="text-sm text-gray-400 mt-2">{plan.desc}</p>
+                  <ul className="mt-6 space-y-3 flex-1">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm text-gray-300">
+                        <Check size={16} className="text-gray-500 mt-0.5 shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href="https://keel.framestudio.co.ke"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`mt-8 inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-xl transition-all ${
+                      plan.featured
+                        ? 'bg-amber-500 text-black hover:bg-amber-400'
+                        : 'bg-white/10 text-white hover:bg-white/20'
+                    }`}
+                  >
+                    Visit Keel <ExternalLink size={16} />
+                  </a>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 md:py-28 bg-gray-50">
-        <div ref={(el) => (sectionRefs.current[4] = el)} className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
+        <div ref={(el) => (sectionRefs.current[7] = el)} className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight text-center">Frequently Asked</h2>
             <div className="mt-12 space-y-6">
