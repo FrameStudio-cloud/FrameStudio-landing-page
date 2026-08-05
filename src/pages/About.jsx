@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -27,15 +26,16 @@ function Counter({ value, suffix, prefix }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    el.textContent = (prefix || '') + 0 + (suffix || '')
     const obj = { val: 0 }
     gsap.to(obj, {
       val: value, duration: 2, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' },
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
       onUpdate: () => { el.textContent = (prefix || '') + Math.round(obj.val) + (suffix || '') },
     })
   }, [value, prefix, suffix])
 
-  return <span ref={ref} className="text-4xl md:text-5xl font-bold text-white">{prefix || ''}0{suffix || ''}</span>
+  return <span ref={ref} className="text-4xl md:text-5xl font-bold text-white">{prefix || ''}{value}{suffix || ''}</span>
 }
 
 export default function About() {
@@ -58,7 +58,6 @@ export default function About() {
 
   return (
     <>
-      <Helmet>
         <title>About — FrameStudio | Nairobi Digital Agency</title>
         <meta name="description" content="FrameStudio is a Nairobi-based digital agency building websites, WhatsApp bots, and real-time dashboards designed for how Kenyan businesses actually operate." />
         <meta property="og:title" content="About — FrameStudio" />
@@ -67,7 +66,6 @@ export default function About() {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://framestudio.co.ke/about" />
-      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">

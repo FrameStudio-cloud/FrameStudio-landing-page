@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async'
 import PolicyLayout from './PolicyLayout'
 
 const sections = [
@@ -63,7 +62,6 @@ const sections = [
 export default function Privacy() {
   return (
     <>
-      <Helmet>
         <title>Privacy Policy — FrameStudio</title>
         <meta name="description" content="FrameStudio's Privacy Policy. How we handle personal data in compliance with the Kenya Data Protection Act 2019. Nairobi-based digital agency." />
         <meta property="og:title" content="Privacy Policy — FrameStudio" />
@@ -72,7 +70,6 @@ export default function Privacy() {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://framestudio.co.ke/privacy" />
-      </Helmet>
       <PolicyLayout title="Privacy Policy">
       {sections.map((s, i) => (
         <div key={i}>

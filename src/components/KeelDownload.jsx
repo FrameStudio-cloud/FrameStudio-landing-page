@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Download, Monitor, Wifi, Zap, RefreshCw } from 'lucide-react'
+import { Monitor, Wifi, Zap, Smartphone, ExternalLink } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const features = [
-  { icon: Monitor, text: 'Runs natively — no browser tabs needed' },
+  { icon: Monitor, text: 'Installs like a native app — no store needed' },
+  { icon: Smartphone, text: 'Works on desktop and mobile browsers' },
   { icon: Wifi, text: 'Works offline, syncs when connected' },
-  { icon: Zap, text: 'Faster than the web version' },
-  { icon: RefreshCw, text: 'Auto-updates when new versions ship' },
+  { icon: Zap, text: 'Faster loads with cached assets' },
 ]
 
 export default function KeelDownload() {
@@ -64,13 +64,13 @@ export default function KeelDownload() {
           <div className="lg:col-span-6">
             <div ref={contentRef}>
               <span className="inline-block text-xs uppercase tracking-[0.15em] text-gray-500 mb-4">
-                Desktop App
+                Progressive Web App
               </span>
               <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl text-balance">
-                Take Keel Offline
+                Install Keel Anywhere
               </h2>
               <p className="max-w-lg mt-5 text-lg leading-relaxed text-gray-400">
-                The full Keel experience as a native Windows app. Manage inventory, track sales, and run your shop even without internet.
+                Keel is now a PWA — install it directly from your browser on any device. No app store, no downloads, no updates to manage.
               </p>
             </div>
 
@@ -89,26 +89,18 @@ export default function KeelDownload() {
               ))}
             </div>
 
-            <div ref={buttonsRef} className="mt-10 space-y-3">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="/downloads/Keel_1.0.0_x64-setup.exe"
-                  download
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-black transition-all bg-white group hover:bg-gray-100 rounded-xl"
-                >
-                  <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
-                  Download .exe Installer
-                </a>
-                <a
-                  href="/downloads/Keel_1.0.0_x64_en-US.msi"
-                  download
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white transition-all border group border-white/20 hover:bg-white/10 rounded-xl"
-                >
-                  Download .msi
-                </a>
-              </div>
-              <p className="text-xs text-gray-500">
-                Windows 10 or later &bull; v1.1.0 &bull; 
+            <div ref={buttonsRef} className="mt-10">
+              <a
+                href="https://keel.framestudio.co.ke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-black transition-all bg-white group hover:bg-gray-100 rounded-xl"
+              >
+                <ExternalLink size={18} />
+                Open Keel & Install
+              </a>
+              <p className="mt-3 text-xs text-gray-500">
+                Then tap "Install" or "Add to Home Screen" in your browser &bull; Chrome &bull; Edge &bull; Safari
               </p>
             </div>
           </div>
@@ -118,7 +110,9 @@ export default function KeelDownload() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent" />
               <img
                 src="/keel thumbnail.png"
-                alt="Keel Desktop App"
+                alt="Keel App"
+                loading="lazy"
+                decoding="async"
                 className="object-cover w-full h-full"
               />
             </div>

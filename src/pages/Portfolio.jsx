@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -46,7 +45,6 @@ export default function Portfolio() {
 
   return (
     <>
-      <Helmet>
         <title>Portfolio — FrameStudio | Our Work</title>
         <meta name="description" content="See real projects built by FrameStudio — including Keel, a multi-tenant dashboard for Kenyan shop owners. Websites, WhatsApp bots, and dashboards." />
         <meta property="og:title" content="Portfolio — FrameStudio" />
@@ -55,7 +53,6 @@ export default function Portfolio() {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://framestudio.co.ke/portfolio" />
-      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">
@@ -87,10 +84,19 @@ export default function Portfolio() {
           </div>
 
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.length === 0 && (
+              <div className="md:col-span-2 lg:col-span-3 text-center py-16 px-6 rounded-2xl border border-dashed border-gray-300 bg-gray-50">
+                <p className="text-gray-500 font-medium">No {activeTab === 'All' ? 'projects' : `${activeTab.toLowerCase()} projects`} showcased yet.</p>
+                <p className="text-gray-400 text-sm mt-2">We're currently building something great in this category.</p>
+                <Link to="/contact" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-black hover:text-gray-600 transition-colors border-b border-black pb-0.5">
+                  Request this service <ArrowRight size={14} />
+                </Link>
+              </div>
+            )}
             {filtered.map((project) => (
               <div key={project.title} className="group rounded-2xl border border-gray-200 p-6 hover:border-gray-300 transition-all">
                 <div className="aspect-[16/10] rounded-xl overflow-hidden mb-5 bg-gray-100">
-                  <img src="/keel thumbnail.png" alt="Keel dashboard" className="w-full h-full object-cover" />
+                  <img src="/keel thumbnail.png" alt="Keel dashboard" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">{project.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed mb-4">{project.desc}</p>

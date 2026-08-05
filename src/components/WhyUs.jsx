@@ -25,6 +25,7 @@ function Counter({ value, suffix, prefix }) {
     const el = ref.current
     if (!el) return
 
+    el.textContent = (prefix || '') + 0 + (suffix || '')
     const obj = { val: 0 }
     gsap.to(obj, {
       val: value,
@@ -33,7 +34,7 @@ function Counter({ value, suffix, prefix }) {
       scrollTrigger: {
         trigger: el,
         start: 'top 90%',
-        toggleActions: 'play none none reverse',
+        toggleActions: 'play none none none',
       },
       onUpdate: () => {
         el.textContent = (prefix || '') + Math.round(obj.val) + (suffix || '')
@@ -43,7 +44,7 @@ function Counter({ value, suffix, prefix }) {
 
   return (
     <span ref={ref} className="text-4xl md:text-5xl font-bold text-white">
-      {prefix || ''}0{suffix || ''}
+      {prefix || ''}{value}{suffix || ''}
     </span>
   )
 }

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
@@ -65,7 +64,6 @@ export default function FAQ() {
 
   return (
     <>
-      <Helmet>
         <title>FAQ — FrameStudio | Frequently Asked Questions</title>
         <meta name="description" content="Frequently asked questions about FrameStudio's services, pricing, timelines, M-Pesa payments, and ongoing support for Kenyan businesses." />
         <meta property="og:title" content="FAQ — FrameStudio" />
@@ -74,7 +72,6 @@ export default function FAQ() {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://framestudio.co.ke/faq" />
-      </Helmet>
       <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 text-center">

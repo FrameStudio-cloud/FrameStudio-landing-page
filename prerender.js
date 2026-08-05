@@ -6,11 +6,40 @@ import puppeteer from 'puppeteer'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.join(__dirname, 'dist')
+
 const routes = [
   '/', '/services', '/about', '/portfolio', '/pricing',
   '/contact', '/faq', '/blog', '/terms', '/privacy',
   '/refund', '/cookies',
 ]
+
+async function getBlogSlugs() {
+  try {
+    const envPath = path.join(__dirname, '.env')
+    let url = ''
+    let key = ''
+    if (fs.existsSync(envPath)) {
+      const env = fs.readFileSync(envPath, 'utf-8')
+      url = env.match(/^VITE_SUPABASE_URL=(.+)$/m)?.[1]?.trim() || ''
+      key = env.match(/^VITE_SUPABASE_ANON_KEY=(.+)$/m)?.[1]?.trim() || ''
+    }
+    if (!url || !key) return []
+    const res = await fetch(
+      `${url}/rest/v1/blogs?select=slug,date&published=eq.true&site=in.(framestudio,all)&order=date.desc`,
+      {
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+      }
+    )
+    if (!res.ok) return []
+    const data = await res.json()
+    return (Array.isArray(data) ? data : []).map((r) => ({
+      slug: `/blog/${r.slug}`,
+      date: (r.date || '').slice(0, 10),
+    }))
+  } catch {
+    return []
+  }
+}
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -83,11 +112,49 @@ async function getAvailablePort(startPort) {
   })
 }
 
+function writeSitemap(blogPosts) {
+  const today = new Date().toISOString().slice(0, 10)
+  const base = 'https://framestudio.co.ke'
+  const staticRoutes = [
+    { path: '/', priority: '1.0' },
+    { path: '/services', priority: '0.9' },
+    { path: '/about', priority: '0.7' },
+    { path: '/portfolio', priority: '0.8' },
+    { path: '/pricing', priority: '0.8' },
+    { path: '/contact', priority: '0.7' },
+    { path: '/faq', priority: '0.6' },
+    { path: '/blog', priority: '0.9' },
+    { path: '/terms', priority: '0.3' },
+    { path: '/privacy', priority: '0.3' },
+    { path: '/refund', priority: '0.3' },
+    { path: '/cookies', priority: '0.3' },
+  ]
+
+  const urls = staticRoutes
+    .map((r) => {
+      const lastmod = r.path === '/blog' && blogPosts.length
+        ? blogPosts[0].date
+        : today
+      return `  <url>\n    <loc>${base}${r.path}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${r.priority}</priority>\n  </url>`
+    })
+    .concat(
+      blogPosts.map((p) => `  <url>\n    <loc>${base}${p.slug}</loc>\n    <lastmod>${p.date || today}</lastmod>\n    <priority>0.8</priority>\n  </url>`)
+    )
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`
+  fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap)
+  console.log(`Sitemap written with ${urls.length} URLs`)
+}
+
 async function prerender() {
   if (!fs.existsSync(distDir)) {
     console.error('dist directory not found. Run `vite build` first.')
     process.exit(1)
   }
+
+  const blogPosts = await getBlogSlugs()
+  const allRoutes = [...routes, ...blogPosts.map((p) => p.slug)]
+  console.log(`Prerendering ${allRoutes.length} routes (${blogPosts.length} blog posts)...`)
 
   const indexPath = path.join(distDir, 'index.html')
   const originalIndex = path.join(distDir, '_index.original.html')
@@ -115,7 +182,7 @@ async function prerender() {
   console.log('Launching Puppeteer...')
   const browser = await puppeteer.launch({ headless: true })
 
-  for (const route of routes) {
+  for (const route of allRoutes) {
     console.log(`Prerendering ${route}...`)
     const page = await browser.newPage()
     page.setDefaultNavigationTimeout(30000)
@@ -138,7 +205,7 @@ async function prerender() {
           scrolled += scrollStep
         }
         window.scrollTo(0, 0)
-        await new Promise((r) => setTimeout(r, 300))
+        await new Promise((r) => setTimeout(r, 2500))
       })
 
       const html = await page.content()
@@ -159,6 +226,9 @@ async function prerender() {
 
   await browser.close()
   server.close()
+
+  writeSitemap(blogPosts)
+
   console.log('Prerendering complete!')
 }
 

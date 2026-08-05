@@ -1,10 +1,8 @@
-import { Helmet } from 'react-helmet-async'
 import PolicyLayout from './PolicyLayout'
 
 export default function Refund() {
   return (
     <>
-      <Helmet>
         <title>Refund Policy — FrameStudio</title>
         <meta name="description" content="FrameStudio's refund and cancellation policy. Information about deposits, milestone payments, and refund terms for digital services." />
         <meta property="og:title" content="Refund Policy — FrameStudio" />
@@ -13,7 +11,6 @@ export default function Refund() {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://framestudio.co.ke/refund" />
-      </Helmet>
       <PolicyLayout title="Refund & Cancellation Policy">
       <p className="text-gray-600">
         This page is under construction. In the meantime, if you have any questions
