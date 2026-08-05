@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build:prerender",
+  "buildCommand": "npx puppeteer browsers install chrome && npm run build:prerender",
   "outputDirectory": "dist",
   "env": {
     "NODE_ENV": "production"

@@ -16,12 +16,12 @@ const routes = [
 async function getBlogSlugs() {
   try {
     const envPath = path.join(__dirname, '.env')
-    let url = ''
-    let key = ''
-    if (fs.existsSync(envPath)) {
+    let url = process.env.VITE_SUPABASE_URL || ''
+    let key = process.env.VITE_SUPABASE_ANON_KEY || ''
+    if (fs.existsSync(envPath) && (!url || !key)) {
       const env = fs.readFileSync(envPath, 'utf-8')
-      url = env.match(/^VITE_SUPABASE_URL=(.+)$/m)?.[1]?.trim() || ''
-      key = env.match(/^VITE_SUPABASE_ANON_KEY=(.+)$/m)?.[1]?.trim() || ''
+      url = url || env.match(/^VITE_SUPABASE_URL=(.+)$/m)?.[1]?.trim() || ''
+      key = key || env.match(/^VITE_SUPABASE_ANON_KEY=(.+)$/m)?.[1]?.trim() || ''
     }
     if (!url || !key) return []
     const res = await fetch(
@@ -180,7 +180,19 @@ async function prerender() {
   console.log(`Server running on http://localhost:${port}`)
 
   console.log('Launching Puppeteer...')
-  const browser = await puppeteer.launch({ headless: true })
+  let browser
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
+  } catch (err) {
+    console.warn(`Puppeteer could not launch a browser (${err.message}). Skipping prerender; serving SPA fallback.`)
+    server.close()
+    writeSitemap(blogPosts)
+    console.log('Prerender skipped.')
+    return
+  }
 
   for (const route of allRoutes) {
     console.log(`Prerendering ${route}...`)
