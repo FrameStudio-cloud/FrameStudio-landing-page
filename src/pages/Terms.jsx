@@ -82,10 +82,10 @@ export default function Terms() {
         <meta name="description" content="FrameStudio's Terms of Service governing website design, WhatsApp bot development, dashboard projects, payments, and delivery for Kenyan businesses." />
         <meta property="og:title" content="Terms of Service — FrameStudio" />
         <meta property="og:description" content="Terms of Service for FrameStudio's digital solutions, payments, and project delivery." />
-        <meta property="og:url" content="https://framestudio.co.ke/terms" />
+        <meta property="og:url" content="https://www.framestudio.co.ke/terms" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://framestudio.co.ke/terms" />
+        <link rel="canonical" href="https://www.framestudio.co.ke/terms" />
       <PolicyLayout title="Terms of Service">
       {sections.map((s, i) => (
         <div key={i}>

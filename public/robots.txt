@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://framestudio.co.ke/sitemap.xml
+Sitemap: https://www.framestudio.co.ke/sitemap.xml

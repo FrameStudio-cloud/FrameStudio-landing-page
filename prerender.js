@@ -14,18 +14,26 @@ const routes = [
 ]
 
 async function getBlogSlugs() {
+  return getTable('blogs', 'published=eq.true', 'order=date.desc')
+}
+
+async function getProjectSlugs() {
+  return getTable('portfolio_projects', 'published=eq.true', 'order=sort_order.asc')
+}
+
+async function getTableSlugList(table, siteFilter, orderClause) {
+  const envPath = path.join(__dirname, '.env')
+  let url = process.env.VITE_SUPABASE_URL || ''
+  let key = process.env.VITE_SUPABASE_ANON_KEY || ''
+  if (fs.existsSync(envPath) && (!url || !key)) {
+    const env = fs.readFileSync(envPath, 'utf-8')
+    url = url || env.match(/^VITE_SUPABASE_URL=(.+)$/m)?.[1]?.trim() || ''
+    key = key || env.match(/^VITE_SUPABASE_ANON_KEY=(.+)$/m)?.[1]?.trim() || ''
+  }
+  if (!url || !key) return []
   try {
-    const envPath = path.join(__dirname, '.env')
-    let url = process.env.VITE_SUPABASE_URL || ''
-    let key = process.env.VITE_SUPABASE_ANON_KEY || ''
-    if (fs.existsSync(envPath) && (!url || !key)) {
-      const env = fs.readFileSync(envPath, 'utf-8')
-      url = url || env.match(/^VITE_SUPABASE_URL=(.+)$/m)?.[1]?.trim() || ''
-      key = key || env.match(/^VITE_SUPABASE_ANON_KEY=(.+)$/m)?.[1]?.trim() || ''
-    }
-    if (!url || !key) return []
     const res = await fetch(
-      `${url}/rest/v1/blogs?select=slug,date&published=eq.true&site=in.(framestudio,all)&order=date.desc`,
+      `${url}/rest/v1/${table}?select=slug,date&${siteFilter}&site=in.(framestudio,all)&${orderClause}`,
       {
         headers: { apikey: key, Authorization: `Bearer ${key}` },
       }
@@ -33,12 +41,20 @@ async function getBlogSlugs() {
     if (!res.ok) return []
     const data = await res.json()
     return (Array.isArray(data) ? data : []).map((r) => ({
-      slug: `/blog/${r.slug}`,
+      slug: r.slug,
       date: (r.date || '').slice(0, 10),
     }))
   } catch {
     return []
   }
+}
+
+async function getTable(table, siteFilter, orderClause) {
+  const rows = await getTableSlugList(table, siteFilter, orderClause)
+  return rows.map((r) => ({
+    slug: `/${table === 'blogs' ? 'blog' : 'portfolio'}/${r.slug}`,
+    date: r.date,
+  }))
 }
 
 const MIME_TYPES = {
@@ -112,9 +128,9 @@ async function getAvailablePort(startPort) {
   })
 }
 
-function writeSitemap(blogPosts) {
+function writeSitemap(blogPosts, projectPosts) {
   const today = new Date().toISOString().slice(0, 10)
-  const base = 'https://framestudio.co.ke'
+  const base = 'https://www.framestudio.co.ke'
   const staticRoutes = [
     { path: '/', priority: '1.0' },
     { path: '/services', priority: '0.9' },
@@ -140,6 +156,9 @@ function writeSitemap(blogPosts) {
     .concat(
       blogPosts.map((p) => `  <url>\n    <loc>${base}${p.slug}</loc>\n    <lastmod>${p.date || today}</lastmod>\n    <priority>0.8</priority>\n  </url>`)
     )
+    .concat(
+      projectPosts.map((p) => `  <url>\n    <loc>${base}${p.slug}</loc>\n    <lastmod>${p.date || today}</lastmod>\n    <priority>0.7</priority>\n  </url>`)
+    )
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`
   fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap)
@@ -153,8 +172,9 @@ async function prerender() {
   }
 
   const blogPosts = await getBlogSlugs()
-  const allRoutes = [...routes, ...blogPosts.map((p) => p.slug)]
-  console.log(`Prerendering ${allRoutes.length} routes (${blogPosts.length} blog posts)...`)
+  const projectPosts = await getProjectSlugs()
+  const allRoutes = [...routes, ...blogPosts.map((p) => p.slug), ...projectPosts.map((p) => p.slug)]
+  console.log(`Prerendering ${allRoutes.length} routes (${blogPosts.length} blog posts, ${projectPosts.length} projects)...`)
 
   const indexPath = path.join(distDir, 'index.html')
   const originalIndex = path.join(distDir, '_index.original.html')
@@ -189,7 +209,7 @@ async function prerender() {
   } catch (err) {
     console.warn(`Puppeteer could not launch a browser (${err.message}). Skipping prerender; serving SPA fallback.`)
     server.close()
-    writeSitemap(blogPosts)
+    writeSitemap(blogPosts, projectPosts)
     console.log('Prerender skipped.')
     return
   }
@@ -239,7 +259,7 @@ async function prerender() {
   await browser.close()
   server.close()
 
-  writeSitemap(blogPosts)
+  writeSitemap(blogPosts, projectPosts)
 
   console.log('Prerendering complete!')
 }

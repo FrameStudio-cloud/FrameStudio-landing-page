@@ -7,10 +7,10 @@ export default function Cookies() {
         <meta name="description" content="FrameStudio's Cookie Policy. Learn about the cookies we use for analytics and functionality on our website." />
         <meta property="og:title" content="Cookie Policy — FrameStudio" />
         <meta property="og:description" content="How FrameStudio uses cookies for analytics and site functionality." />
-        <meta property="og:url" content="https://framestudio.co.ke/cookies" />
+        <meta property="og:url" content="https://www.framestudio.co.ke/cookies" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://framestudio.co.ke/cookies" />
+        <link rel="canonical" href="https://www.framestudio.co.ke/cookies" />
       <PolicyLayout title="Cookie Policy">
       <p className="text-gray-600">
         This page is under construction. In the meantime, if you have any questions

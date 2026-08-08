@@ -45,11 +45,21 @@ react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer
 
 ## Key Changes Made (Session July 2026)
 
-### Portfolio Page (`src/pages/Portfolio.jsx`)
-- Removed all 9 fake/placeholder projects
-- Only real project remains: **Keel** (Dashboard — multi-tenant shop management)
-- Added thumbnail image from `/keel thumbnail.png`
-- Added "Visit Site" link to `https://keel.framestudio.co.ke`
+### Portfolio Page (`src/pages/Portfolio.jsx`, `src/pages/ProjectDetail.jsx`)
+- DB-driven, same architecture as the blog: `portfolio_projects` table in the FrameStudio Supabase project → `src/lib/projects.js` → list + detail pages
+- Removed all 9 fake/placeholder projects — only real work is shown
+- **Table `portfolio_projects`** (RLS: anon can read `published=true`, authenticated full access):
+  - `slug`, `title`, `category` (Websites / Bots / Dashboards), `excerpt`, `date`, `tags[]`
+  - `live_url`, `cover_palette`, `published`, `site` (framestudio/all), `sort_order`
+  - `screenshots jsonb` — `[{title, caption, url}]` for per-page screenshots
+  - `palette jsonb` — `[{name, hex, role}]` colour swatches
+  - `fonts jsonb` — `[{name, role, specimen}]` typography specimens
+  - `stack jsonb` — tech tags; `story jsonb` — `{type: heading|paragraph, text}` blocks
+- Portfolio list cards link to `/portfolio/:slug` (no external links on cards)
+- `ProjectDetail.jsx` shows: hero + live-site button, Screens section, "The system" (palette + typography + stack), "The story" blocks, next-project nav
+- Seeded project: `keel` (Dashboards)
+- `prerender.js` now pulls project slugs too — `/portfolio/<slug>` is prerendered and added to `sitemap.xml`
+- Keel thumbnail at `/keel thumbnail.png`; Keel live at `https://keel.framestudio.co.ke`
 
 ### Blog Page (`src/pages/Blog.jsx`)
 - Added featured post block: **"We Built Keel — A Multi-Tenant Dashboard for Kenyan Shop Owners"**
@@ -124,7 +134,6 @@ react 19, react-dom 19, react-router-dom 7, gsap 3, lucide-react, motion (Framer
 - Close animation: `gsap.to()` + `gsap.set()` instead of `timeline.reverse()` to avoid cleanup race condition
 
 ## Known Issues
-- Portfolio tabs (All, Websites, Bots, Dashboards) still show but only "Dashboards" has content
 - Blog has no individual post pages — cards are self-contained
 - Contact form has no backend — just a submitted state toggle
 - Keel project lives at `C:\Users\Administrator\projects\keel` (separate repo)

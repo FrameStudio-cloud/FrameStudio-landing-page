@@ -8,11 +8,11 @@ const siteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "FrameStudio",
-  "url": "https://framestudio.co.ke",
+  "url": "https://www.framestudio.co.ke",
   "description": "Digital solutions for Kenyan businesses — websites, WhatsApp bots, and business dashboards.",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://framestudio.co.ke/?q={search_term_string}",
+    "target": "https://www.framestudio.co.ke/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }
@@ -21,7 +21,7 @@ const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "FrameStudio",
-  "url": "https://framestudio.co.ke",
+  "url": "https://www.framestudio.co.ke",
   "email": "hello@framestudio.co.ke",
   "location": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Nairobi", "addressCountry": "KE" } }
 }
@@ -37,10 +37,10 @@ export default function Home() {
         <meta name="description" content="FrameStudio builds websites, WhatsApp bots, and business dashboards for growing Kenyan businesses. Affordable, mobile-friendly, built for Kenya." />
         <meta property="og:title" content="FrameStudio — Digital Solutions for Kenyan Businesses" />
         <meta property="og:description" content="Websites, WhatsApp bots, and business dashboards for Kenyan SMEs. M-Pesa integration, real-time inventory, automated customer replies." />
-        <meta property="og:url" content="https://framestudio.co.ke/" />
+        <meta property="og:url" content="https://www.framestudio.co.ke/" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://framestudio.co.ke/" />
+        <link rel="canonical" href="https://www.framestudio.co.ke/" />
         <script type="application/ld+json">{JSON.stringify(siteSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
       <Hero />

@@ -7,10 +7,10 @@ export default function Refund() {
         <meta name="description" content="FrameStudio's refund and cancellation policy. Information about deposits, milestone payments, and refund terms for digital services." />
         <meta property="og:title" content="Refund Policy — FrameStudio" />
         <meta property="og:description" content="Refund policy for FrameStudio's digital services and project payments." />
-        <meta property="og:url" content="https://framestudio.co.ke/refund" />
+        <meta property="og:url" content="https://www.framestudio.co.ke/refund" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://framestudio.co.ke/refund" />
+        <link rel="canonical" href="https://www.framestudio.co.ke/refund" />
       <PolicyLayout title="Refund & Cancellation Policy">
       <p className="text-gray-600">
         This page is under construction. In the meantime, if you have any questions

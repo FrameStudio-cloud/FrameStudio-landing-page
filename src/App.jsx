@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Services from './pages/Services'
 import About from './pages/About'
 import Portfolio from './pages/Portfolio'
+import ProjectDetail from './pages/ProjectDetail'
 import Pricing from './pages/Pricing'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio/:slug" element={<ProjectDetail />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />

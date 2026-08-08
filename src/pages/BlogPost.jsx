@@ -81,7 +81,7 @@ export default function BlogPost() {
         {post.tags.map((tag) => (
           <meta key={tag} property="article:tag" content={tag} />
         ))}
-        <link rel="canonical" href={`https://framestudio.co.ke/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://www.framestudio.co.ke/blog/${post.slug}`} />
 
       <div className="bg-white">
         <div
