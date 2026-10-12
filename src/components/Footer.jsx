@@ -124,8 +124,7 @@ export default function Footer() {
           <div ref={(el) => (colRefs.current[2] = el)}>
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Contact</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><a href="mailto:hello@framestudio.co.ke" className="text-gray-500 hover:text-gray-300 transition-colors">hello@framestudio.co.ke</a></li>
-              <li><a href="mailto:admin@framestudio.co.ke" className="text-gray-500 hover:text-gray-300 transition-colors">admin@framestudio.co.ke</a></li>
+              <li><a href="mailto:email.framestudio@gmail.com" className="text-gray-500 hover:text-gray-300 transition-colors">email.framestudio@gmail.com</a></li>
               <li><Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Nairobi, Kenya</Link></li>
             </ul>
           </div>

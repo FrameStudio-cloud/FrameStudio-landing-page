@@ -71,7 +71,7 @@ const sections = [
   },
   {
     title: '17. Contact Information',
-    content: 'Questions about these Terms should be directed to: FrameStudio, Nairobi, Kenya. Email: hello@framestudio.co.ke. Website: framestudio.co.ke. WhatsApp: +254 793 302 518.',
+    content: 'Questions about these Terms should be directed to: FrameStudio, Nairobi, Kenya. Email: email.framestudio@gmail.com. Website: framestudio.co.ke. WhatsApp: +254 793 302 518.',
   },
 ]
 

@@ -125,13 +125,13 @@ export default function Contact() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-6">Contact Info</h3>
                 <div className="space-y-5">
-                  <a href="mailto:hello@framestudio.co.ke" className="flex items-center gap-4 text-gray-600 hover:text-black transition-colors group">
+                  <a href="mailto:email.framestudio@gmail.com" className="flex items-center gap-4 text-gray-600 hover:text-black transition-colors group">
                     <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
                       <Mail size={18} className="text-gray-700" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">Email</p>
-                      <p className="text-sm text-gray-500">hello@framestudio.co.ke</p>
+                      <p className="text-sm text-gray-500">email.framestudio@gmail.com</p>
                     </div>
                   </a>
                   <a href="https://wa.me/254793302518" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-600 hover:text-black transition-colors group">

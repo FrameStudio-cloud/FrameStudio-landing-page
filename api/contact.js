@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     await resend.emails.send({
       from: 'FrameStudio <noreply@keel.framestudio.co.ke>',
-      to: 'hello@framestudio.co.ke',
+      to: 'email.framestudio@gmail.com',
       replyTo: email,
       subject: `New Contact: ${name} — ${service || 'General'}`,
       html: `

@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { Mail, MessageCircle } from 'lucide-react'
 
 const handleEmailClick = () => {
-  window.location.href = 'mailto:hello@framestudio.co.ke'
+  window.location.href = 'mailto:email.framestudio@gmail.com'
 }
 
 const handleWhatsAppClick = () => {

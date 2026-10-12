@@ -51,7 +51,7 @@ const sections = [
   },
   {
     title: '12. Contact Us',
-    content: 'For questions about this Policy or to exercise your data protection rights, contact: FrameStudio, Nairobi, Kenya. Email: hello@framestudio.co.ke. Website: framestudio.co.ke. WhatsApp: +254 793 302 518.',
+    content: 'For questions about this Policy or to exercise your data protection rights, contact: FrameStudio, Nairobi, Kenya. Email: email.framestudio@gmail.com. Website: framestudio.co.ke. WhatsApp: +254 793 302 518.',
   },
   {
     title: '13. Changes to This Policy',

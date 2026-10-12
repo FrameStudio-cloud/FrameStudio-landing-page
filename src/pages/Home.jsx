@@ -22,7 +22,7 @@ const orgSchema = {
   "@type": "Organization",
   "name": "FrameStudio",
   "url": "https://www.framestudio.co.ke",
-  "email": "hello@framestudio.co.ke",
+  "email": "email.framestudio@gmail.com",
   "location": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": "Nairobi", "addressCountry": "KE" } }
 }
 

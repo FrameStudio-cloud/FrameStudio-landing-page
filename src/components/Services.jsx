@@ -146,7 +146,7 @@ export default function Services() {
               Every project is built from scratch around your specific needs. Let's talk about what you need.
             </p>
             <a
-              href="mailto:hello@framestudio.co.ke"
+              href="mailto:email.framestudio@gmail.com"
               className="mt-6 text-sm text-gray-400 hover:text-gray-300 transition-colors font-medium"
             >
               Tell us about your project →

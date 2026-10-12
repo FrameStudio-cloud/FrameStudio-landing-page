@@ -15,7 +15,7 @@ export default function Refund() {
       <p className="text-gray-600">
         This page is under construction. In the meantime, if you have any questions
         about payments or refunds, please{' '}
-        <a href="mailto:hello@framestudio.co.ke" className="text-gray-900 underline underline-offset-2 hover:no-underline">
+        <a href="mailto:email.framestudio@gmail.com" className="text-gray-900 underline underline-offset-2 hover:no-underline">
           email us
         </a>.
       </p>
