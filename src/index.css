@@ -25,3 +25,37 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Printing an invoice: the customer is printing the document, not the page.
+   Everything with `data-invoice-chrome` is dashboard/checkout furniture and is
+   removed; the dark page goes white so a printer does not ink a full sheet of
+   near-black. */
+@media print {
+  html,
+  body,
+  [data-invoice-page] {
+    background: #fff !important;
+  }
+  [data-invoice-chrome],
+  [data-invoice-chrome] * {
+    display: none !important;
+  }
+  [data-invoice-canvas] {
+    display: block !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+  [data-invoice-document] {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page {
+    margin: 12mm;
+  }
+}

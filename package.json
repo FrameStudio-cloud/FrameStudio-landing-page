@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "node scripts/dev-api.mjs",
     "build": "vite build",
     "build:prerender": "vite build && node prerender.js",
     "prerender": "node prerender.js",

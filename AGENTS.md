@@ -20,6 +20,90 @@ Vite + React 19 + React Router v7 + Tailwind CSS v3 + GSAP (ScrollTrigger).
 | `/privacy` | Privacy | `src/pages/Privacy.jsx` |
 | `/refund` | Refund | `src/pages/Refund.jsx` |
 | `/cookies` | Cookies | `src/pages/Cookies.jsx` |
+| `/invoice/:token` | Public Invoice | `src/pages/Invoice.jsx` — outside `Layout` (no nav/footer) |
+| `/invoice/demo` | Public Invoice (demo) | same page, `?state=sent\|partial\|paid\|overdue\|cancelled\|draft\|just-paid\|not-found` |
+
+## Public Invoice Page (`/invoice/:token`)
+
+The page a customer lands on from an emailed invoice link, to see it and pay it.
+Dark ambient shell with a light "paper" document — the paper is what prints.
+
+- `src/pages/Invoice.jsx` — routing/state machine. 8 states: loading, awaiting
+  payment, part paid, paid, overdue, cancelled, draft, not found (plus the
+  "just paid" confirmation banner after returning from Paystack). Only
+  `sent`/`partial`/`overdue` with a balance show the pay panel.
+- `src/lib/invoice.js` — **deliberate mirror** of
+  `framestudio-dashboard/src/lib/invoiceDoc.js` (balance maths, `effectiveStatus`,
+  `computeTotals`, `formatKES`, number formatting). The two repos share no build,
+  so the rules are copied; **change both together**. "Overdue" is always derived
+  at render time, never read from the row.
+- `src/lib/invoiceApi.js` — the only data door. Demo tokens resolve from
+  `src/data/invoiceDemo.js`; a real token calls the `get_invoice_by_token`
+  Supabase RPC and a missing RPC is treated as "invalid link", not "retry".
+  Payments go through the `/api/invoice-pay-*` functions below.
+- `src/components/invoice/` — `InvoicePaper` (the document, fixed light palette
+  so screen/print/dark mode agree), `InvoiceItemsTable`, `InvoiceTotals`,
+  `StatusChip` (dark-page tones).
+- `/invoice/demo` renders sample data with a state switcher; it says "Demo" out
+  loud so a fixture can never be mistaken for a real invoice.
+
+### Invoice API (`api/`)
+
+Vercel functions. They hold the service role key and the Paystack secret — never
+the browser, never the dashboard bundle.
+
+| File | What it does |
+|------|--------------|
+| `api/_invoice.js` | Shared plumbing (service-role Supabase client, `get_invoice_by_token`, Paystack fetch, CORS, payable rules). Underscore = not a route. |
+| `api/invoice-pay-init.js` | `POST { token }` → re-reads the invoice, charges its **current balance** (never trusts a browser-sent amount), returns Paystack `authorization_url`. |
+| `api/invoice-pay-verify.js` | `POST { token, reference }` → verifies with Paystack, checks the reference belongs to this invoice, then records the payment. Idempotent. |
+| `api/paystack-webhook.js` | `charge.success` handler. Validates the `x-paystack-signature` HMAC over the raw body, records the payment the same idempotent way. This is the durable path — a closed tab can't lose a payment. |
+| `api/invoice-send.js` | `POST { invoiceId }` + `Authorization: Bearer <supabase access token>` → emails the invoice via Resend, then flips draft → sent and stamps `sent_at`. Only patches after the email actually left. |
+
+Payment flow: `invoice-pay-init` → Paystack checkout → back to
+`/invoice/<token>?reference=…` → `invoice-pay-verify` records it → page shows the
+paid invoice. The webhook races the redirect on purpose; the unique index on
+`invoice_payments.reference` makes the loser a no-op.
+
+Server env vars (Vercel → Project → Settings → Environment Variables):
+
+| Var | Notes |
+|-----|-------|
+| `SUPABASE_URL` | Falls back to `VITE_SUPABASE_URL` if unset |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only. Never prefix with `VITE_`. |
+| `PAYSTACK_SECRET_KEY` | `sk_test_…` until go-live, then `sk_live_…` |
+| `RESEND_API_KEY` | Already set for the contact form |
+| `INVOICE_BASE_URL` | Optional, defaults to `https://www.framestudio.co.ke` |
+| `INVOICE_FROM` / `INVOICE_REPLY_TO` | Optional sender overrides |
+
+Paystack dashboard → Settings → API Keys & Webhooks → Webhook URL:
+`https://www.framestudio.co.ke/api/paystack-webhook`.
+
+### Local API (`scripts/dev-api.mjs`)
+
+`vite dev` does not run `api/`, so `npm run dev:api` mounts the same handlers on
+`http://localhost:5200` (Node http, tiny req/res shim, loads `.env`). Point the
+app at it with `VITE_INVOICE_API_BASE=http://localhost:5200` in `.env.local`.
+
+Gotchas:
+
+- **`noindex`**: the page sets `<meta name="robots" content="noindex, nofollow">`
+  and `vercel.json` also sends `X-Robots-Tag: noindex, nofollow` +
+  `Cache-Control: private, no-store` for `/invoice/(.*)`. Invoice URLs are never
+  added to `prerender.js` routes or `sitemap.xml`.
+- **Print**: `index.css` hides everything marked `data-invoice-chrome`, blanks the
+  dark background, drops the canvas max-width and strips the paper's ring/shadow.
+  If you add page furniture, mark it `data-invoice-chrome` or it will print.
+- **Mobile CTA**: the in-flow pay button is `hidden sm:inline-flex` — below `sm`
+  the sticky bottom bar owns the primary action (with safe-area padding).
+- **Demo tokens never charge**: `startPayment()` short-circuits `demo*` tokens to
+  the honest M-Pesa/WhatsApp fallback. Real invoices go to Paystack.
+- **Registering the payments**: `invoice_payments.reference` is unique on purpose
+  (a plain, not partial, index so `on conflict (reference)` can infer it). Two
+  retries of the same webhook record one payment.
+- **Cloudflare on checkout**: `checkout.paystack.com` blocks headless browsers, so
+  end-to-end payments are tested with Paystack's `/charge` test card instead of
+  the hosted page.
 
 ## Site Structure
 

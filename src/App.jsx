@@ -14,6 +14,7 @@ import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
 import Refund from './pages/Refund'
 import Cookies from './pages/Cookies'
+import Invoice from './pages/Invoice'
 
 export default function App() {
   return (
@@ -35,6 +36,12 @@ export default function App() {
           <Route path="/refund" element={<Refund />} />
           <Route path="/cookies" element={<Cookies />} />
         </Route>
+
+        {/* Outside Layout on purpose: an invoice is a transactional page, not a
+            marketing page. No nav, no footer, no cookie banner competing with
+            the pay button. */}
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/invoice/:token" element={<Invoice />} />
       </Routes>
     </BrowserRouter>
   )
