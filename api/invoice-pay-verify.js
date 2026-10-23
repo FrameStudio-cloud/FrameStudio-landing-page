@@ -39,7 +39,12 @@ export default async function handler(req, res) {
     transaction = await paystack(`/transaction/verify/${encodeURIComponent(reference)}`)
   } catch (err) {
     console.error('invoice-pay-verify: verify failed', err?.payload || err)
-    return sendJson(res, 502, { error: 'We could not confirm the payment with Paystack yet.' })
+    return sendJson(res, 502, {
+      error: 'We could not confirm the payment with Paystack yet.',
+      // Safe to expose: a Paystack status code or transport error, never a key.
+      detail: String(err?.message || err).slice(0, 160),
+      upstream: err?.status || null,
+    })
   }
 
   if (transaction.status !== 'success') {
