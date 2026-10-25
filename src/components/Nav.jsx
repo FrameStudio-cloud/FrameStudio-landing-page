@@ -95,7 +95,8 @@ export default function Nav() {
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="flex items-center justify-between h-16 md:h-[72px]">
-          <NavLink to="/" className={`text-xl font-bold tracking-tight transition-colors duration-300 ${transparent ? 'text-white' : 'text-black'}`}>
+          <NavLink to="/" className={`flex items-center gap-2 text-xl font-bold tracking-tight transition-colors duration-300 ${transparent ? 'text-white' : 'text-black'}`}>
+            <img src="/logo-emblem.png" alt="FrameStudio emblem" className="w-5 h-5 sm:w-6 sm:h-6" />
             Frame<span className={transparent ? 'text-gray-400' : 'text-gray-500'}>Studio</span>
           </NavLink>
 

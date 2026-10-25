@@ -101,31 +101,12 @@ export default function Hero() {
             </div>
           </div>
 
-          <div ref={decorRef} className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-white/[0.03] rounded-2xl border border-white/10 backdrop-blur" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="grid grid-cols-6 gap-3 p-8 w-full h-full">
-                  {Array.from({ length: 24 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="rounded-lg bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
-                      style={{
-                        gridColumn: i < 12 ? 'span 2' : 'span 3',
-                        gridRow: i < 12 ? 'span 1' : 'span 1',
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="flex items-center gap-3 text-gray-400 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                  <span>Trusted by 500+ businesses across Kenya</span>
-                </div>
-              </div>
-            </div>
+          <div ref={decorRef} className="lg:col-span-5 relative flex items-center justify-center">
+            <img
+              src="/portal-logo.png"
+              alt="FrameStudio portal logo"
+              className="w-full max-w-[420px] h-auto object-contain drop-shadow-lg"
+            />
           </div>
         </div>
       </div>

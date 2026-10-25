@@ -25,7 +25,12 @@ const services = [
     iconBg: 'bg-gray-100',
     iconColor: 'text-gray-700',
     checkColor: 'text-gray-500',
-    items: ['WhatsApp order bots', 'Automated customer support', 'Lead generation flows', 'Telegram & SMS bots'],
+    items: [
+      'Table availability bots — restaurants, cafés & shops never miss a booking',
+      'Appointment bots — reservations taken 24/7 while you focus on service',
+      'FAQ bots — instant answers to the questions customers ask most',
+      'Live on Telegram, SMS, and your website',
+    ],
     size: 'medium',
   },
   {

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Hero from '../components/Hero'
 import Services from '../components/Services'
+import FeaturedWork from '../components/FeaturedWork'
 import WhyUs from '../components/WhyUs'
 import CTA from '../components/CTA'
 
@@ -45,6 +46,7 @@ export default function Home() {
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
       <Hero />
       <Services />
+      <FeaturedWork />
       <WhyUs />
       <CTA />
     </>

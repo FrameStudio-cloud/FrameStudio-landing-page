@@ -17,9 +17,9 @@ const services = [
   },
   {
     icon: Bot,
-    title: 'WhatsApp Bots',
-    desc: 'Automate your customer conversations. Handle orders, answer FAQs, and capture leads — all through WhatsApp, where your customers already are.',
-    features: ['Automated order processing', '24/7 customer support', 'Lead qualification flows', 'Broadcast & marketing campaigns', 'Multi-agent handoff'],
+    title: 'Automation Bots',
+    desc: "Smart bots that handle the back-and-forth so you don't have to. Table availability for restaurants and cafés, 24/7 appointment booking, and instant answers to the questions your customers ask most — live on Telegram, SMS, and your website.",
+    features: ['Table availability bots — never miss a booking', 'Appointment bots — reservations taken around the clock', 'FAQ bots — instant answers to common customer questions', 'Live on Telegram, SMS, and your website'],
     gradient: 'from-gray-100/30 to-transparent',
     image: '/services-bots.png',
   },
@@ -63,9 +63,9 @@ export default function Services() {
   return (
     <>
         <title>Services — FrameStudio | Websites, Bots & Dashboards for Kenyan SMEs</title>
-        <meta name="description" content="FrameStudio builds modern websites, WhatsApp bots, and business dashboards for Kenyan businesses. Affordable, mobile-friendly, M-Pesa integration, and built for Kenya." />
+        <meta name="description" content="FrameStudio builds modern websites, automation bots, and business dashboards for Kenyan businesses. Affordable, mobile-friendly, M-Pesa integration, and built for Kenya." />
         <meta property="og:title" content="Services — FrameStudio" />
-        <meta property="og:description" content="Websites, WhatsApp bots, and business dashboards for Kenyan SMEs." />
+        <meta property="og:description" content="Websites, automation bots, and business dashboards for Kenyan SMEs." />
         <meta property="og:url" content="https://www.framestudio.co.ke/services" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />

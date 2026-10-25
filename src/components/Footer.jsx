@@ -23,35 +23,7 @@ const socials = [
       </svg>
     ),
   },
-  {
-    label: 'LinkedIn',
-    url: 'https://linkedin.com/company/framestudio-ke',
-    icon: (props) => (
-      <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect x="2" y="9" width="4" height="12" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Facebook',
-    url: 'https://facebook.com/framestudio-ke',
-    icon: (props) => (
-      <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'X (Twitter)',
-    url: 'https://x.com/framestudio_ke',
-    icon: (props) => (
-      <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
+
   {
     label: 'YouTube',
     url: 'https://youtube.com/@framestudio_ke',
@@ -104,7 +76,8 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div ref={(el) => (colRefs.current[0] = el)}>
-            <Link to="/" className="text-white font-bold text-lg mb-4 block">
+            <Link to="/" className="flex items-center gap-2 text-white font-bold text-lg mb-4 block">
+              <img src="/logo-emblem.png" alt="FrameStudio emblem" className="w-5 h-5" />
               Frame<span className="text-gray-400">Studio</span>
             </Link>
             <p className="text-sm leading-relaxed text-gray-500">Digital solutions</p>
@@ -115,7 +88,7 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Services</h4>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Websites</Link></li>
-              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">WhatsApp Bots</Link></li>
+              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Bots & Automation</Link></li>
               <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Dashboards</Link></li>
               <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Automation</Link></li>
               <li><Link to="/blog" className="text-gray-500 hover:text-gray-300 transition-colors">Blog</Link></li>

@@ -11,8 +11,14 @@ const plans = [
     name: 'Mini Catalogue',
     price: '7,000',
     period: '/project',
-    desc: 'Perfect for showcasing products online.',
-    features: ['Up to 20 product listings', 'Product catalogue with images', 'Contact form & WhatsApp link', 'Mobile-optimised design', 'Basic SEO setup'],
+    desc: 'For businesses that want to showcase products online.',
+    features: [
+      'Up to 20 product listings, each with an image, name, price and short description.',
+      'Product catalogue with category organization, if included in your build.',
+      'WhatsApp enquiry links for customers to ask about products.',
+      'Mobile-friendly layout and basic SEO setup.',
+      'Contact details and social media links.',
+    ],
     cta: 'Get Started',
     featured: false,
   },
@@ -20,8 +26,14 @@ const plans = [
     name: 'Starter',
     price: '15,000',
     period: '/project',
-    desc: 'Perfect for getting your business online.',
-    features: ['5-page responsive website', 'Mobile-optimised design', 'Contact form & WhatsApp link', 'Basic SEO setup', '1 month support'],
+    desc: 'For businesses that need a complete online presence.',
+    features: [
+      'Up to five agreed pages, such as Home, About, Services, Gallery and Contact.',
+      'Responsive design for phones, tablets and desktops.',
+      'Contact form and WhatsApp enquiry link.',
+      'Basic on-page SEO, including page titles and descriptions.',
+      'One month of post-launch support.',
+    ],
     cta: 'Get Started',
     featured: false,
   },
@@ -29,8 +41,15 @@ const plans = [
     name: 'Business',
     price: '35,000',
     period: '/project',
-    desc: 'For businesses ready to scale with automation.',
-    features: ['10-page website or dashboard', 'WhatsApp bot integration', 'M-Pesa payment setup', 'Advanced SEO & analytics', '3 months support', 'Priority email support'],
+    desc: 'For businesses ready to automate and improve their online operations.',
+    features: [
+      'Up to 10 agreed pages, or a defined dashboard-based application.',
+      'Telegram bot integration for an agreed business workflow.',
+      'M-Pesa payment integration, subject to the required account and payment provider setup.',
+      'Advanced SEO configuration and analytics integration.',
+      'Three months of post-launch support.',
+      'Priority email support.',
+    ],
     cta: 'Most Popular',
     featured: true,
   },
@@ -113,7 +132,7 @@ export default function Pricing() {
                   ))}
                 </ul>
                 <Link
-                  to={plan.name === 'Custom' ? '/contact' : '/contact'}
+                  to={`/contact?plan=${plan.name.toLowerCase().replace(' ', '-')}`}
                   className={`mt-8 inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-xl transition-all ${
                     plan.featured
                       ? 'bg-white text-black hover:bg-gray-100'
