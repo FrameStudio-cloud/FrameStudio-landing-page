@@ -75,9 +75,9 @@ export default function Footer() {
   return (
     <footer ref={footerRef} className="bg-black text-gray-400 py-16 md:py-20">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-12">
           <div ref={(el) => (colRefs.current[0] = el)}>
-            <Link to="/" className="flex items-center gap-2 text-white font-bold text-lg mb-4 block">
+            <Link to="/" className="flex items-center gap-2 text-white font-bold text-lg mb-4">
               <LogoMark className="w-5 h-5 shrink-0" />
               Frame<span className="text-gray-400">Studio</span>
             </Link>
@@ -98,7 +98,7 @@ export default function Footer() {
           <div ref={(el) => (colRefs.current[2] = el)}>
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Contact</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><a href="mailto:email.framestudio@gmail.com" className="text-gray-500 hover:text-gray-300 transition-colors">email.framestudio@gmail.com</a></li>
+              <li><a href="mailto:email.framestudio@gmail.com" className="break-words text-gray-500 hover:text-gray-300 transition-colors">email.framestudio@gmail.com</a></li>
               <li><Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Nairobi, Kenya</Link></li>
             </ul>
           </div>
