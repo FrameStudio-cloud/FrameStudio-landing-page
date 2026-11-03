@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ArrowRight, MessageCircle } from 'lucide-react'
+import LogoReveal from './LogoReveal'
 
 const handleEmailClick = () => {
   window.location.href = 'mailto:email.framestudio@gmail.com'
@@ -35,11 +36,6 @@ export default function Hero() {
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
         '-=0.3'
-      )
-      .fromTo(decorRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.2, ease: 'power2.out' },
-        '-=1'
       )
 
       gsap.to(decorRef.current, {
@@ -102,11 +98,7 @@ export default function Hero() {
           </div>
 
           <div ref={decorRef} className="lg:col-span-5 relative flex items-center justify-center">
-            <img
-              src="/portal-logo.png"
-              alt="FrameStudio portal logo"
-              className="w-full max-w-[420px] h-auto object-contain drop-shadow-lg"
-            />
+            <LogoReveal wordmark={false} className="w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[330px] text-white drop-shadow-lg" />
           </div>
         </div>
       </div>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FrameStudio — Logo Reveal</title>
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050505" media="(prefers-color-scheme: dark)">
+<style>
+  :root {
+    --bg: #f4f4f2;
+    --ink: #050505;
+    --ease-draw: cubic-bezier(.6, 0, .2, 1);
+    --ease-door: cubic-bezier(.2, .8, .2, 1);
+    --ease-wipe: cubic-bezier(.65, 0, .35, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #050505; --ink: #f4f4f2; }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--bg);
+  }
+
+  /* The whole screen is the button — tap anywhere to replay. */
+  .stage {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    border: 0;
+    padding:
+      calc(24px + env(safe-area-inset-top))
+      calc(24px + env(safe-area-inset-right))
+      calc(24px + env(safe-area-inset-bottom))
+      calc(24px + env(safe-area-inset-left));
+    width: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 5vw, 34px);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, system-ui, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    border-radius: 0;
+  }
+
+  /* Visible keyboard focus ring, drawn around the lockup rather than the
+     full-bleed button edge so it is actually readable. */
+  .lockup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 3.5vw, 26px);
+    border-radius: 18px;
+  }
+  .stage:focus-visible { outline: none; }
+  .stage:focus-visible .lockup {
+    outline: 2px solid currentColor;
+    outline-offset: clamp(14px, 4vw, 26px);
+  }
+  .stage:focus:not(:focus-visible) { outline: none; }
+
+  .mark {
+    display: block;
+    width: min(52vw, 300px);
+    height: auto;
+    overflow: visible;
+    color: var(--ink);
+  }
+
+  .shape {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 5;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    fill-opacity: 0;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    /* keep the panel paint isolated so the slide can't bleed into the fill */
+    will-change: stroke-dashoffset, fill-opacity, transform;
+  }
+
+  .shape.p {
+    transform: translateX(-90px);
+  }
+
+  .wordmark {
+    font-size: clamp(1.5rem, 7vw, 2.15rem);
+    font-weight: 600;
+    letter-spacing: 0.015em;
+    line-height: 1;
+    white-space: nowrap;
+    /* odd padding keeps descender-free type from looking cropped mid-wipe */
+    padding: 0.04em 0.02em 0.1em;
+    -webkit-clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .hint {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── keyframes ─────────────────────────────────────────────── */
+
+  @keyframes draw-main {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes fill-main {
+    from { fill-opacity: 0; }
+    to   { fill-opacity: 1; }
+  }
+  @keyframes draw-panel {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes fill-panel {
+    from { fill-opacity: 0; }
+    to   { fill-opacity: 1; }
+  }
+  @keyframes slide-panel {
+    from { transform: translateX(-90px); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes wipe-wordmark {
+    from {
+      -webkit-clip-path: inset(0 100% 0 0);
+              clip-path: inset(0 100% 0 0);
+    }
+    to {
+      -webkit-clip-path: inset(0 0 0 0);
+              clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes hint-in {
+    from { opacity: 0; }
+    to   { opacity: .55; }
+  }
+
+  /* ── timeline ──────────────────────────────────────────────── */
+
+  .play .shape.c {
+    animation:
+      draw-main 1.5s var(--ease-draw) .2s forwards,
+      fill-main .7s ease-out 1.2s forwards;
+  }
+
+  .play .shape.p {
+    animation:
+      draw-panel 1.2s var(--ease-draw) .7s forwards,
+      fill-panel .6s ease-out 1.7s forwards,
+      slide-panel 1s var(--ease-door) 1.4s forwards;
+  }
+
+  .play .wordmark {
+    animation: wipe-wordmark .9s var(--ease-wipe) 2.3s forwards;
+  }
+
+  .play .hint {
+    animation: hint-in .5s ease-out 3.6s forwards;
+  }
+
+  /* ── reduced motion: final state, immediately ──────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .play .shape,
+    .play .wordmark,
+    .play .hint { animation: none; }
+
+    .shape { fill-opacity: 1; stroke-dashoffset: 0; }
+    .shape.p { transform: none; }
+    .wordmark {
+      -webkit-clip-path: inset(0 0 0 0);
+      clip-path: inset(0 0 0 0);
+    }
+    .hint { opacity: .55; }
+  }
+</style>
+</head>
+<body>
+
+<button class="stage play" id="stage" type="button" aria-label="Replay the FrameStudio logo animation">
+  <span class="lockup">
+    <svg class="mark" viewBox="250 140 750 1050" role="img" aria-label="FrameStudio logo">
+      <polygon class="shape p" pathLength="1" points="770,500 983,398 987,959 770,850"/>
+      <polygon class="shape c" pathLength="1" points="269,421 907,157 909,332 443,523 445,1011 760,899 933,985 479,1168 269,1060"/>
+    </svg>
+    <span class="wordmark" aria-hidden="true">FrameStudio</span>
+  </span>
+  <span class="hint" aria-hidden="true">Tap to replay</span>
+</button>
+
+<script>
+  (function () {
+    var stage = document.getElementById('stage');
+
+    stage.addEventListener('click', function () {
+      stage.classList.remove('play');
+      // force reflow so the animation can restart from the top
+      void stage.offsetWidth;
+      stage.classList.add('play');
+    });
+  })();
+</script>
+
+</body>
+</html>
