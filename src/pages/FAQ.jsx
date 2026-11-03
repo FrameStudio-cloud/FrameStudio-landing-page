@@ -67,6 +67,8 @@ export default function FAQ() {
         <title>FAQ — FrameStudio | Frequently Asked Questions</title>
         <meta name="description" content="Frequently asked questions about FrameStudio's services, pricing, timelines, M-Pesa payments, and ongoing support for Kenyan businesses." />
         <meta property="og:title" content="FAQ — FrameStudio" />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content="Everything you need to know about working with FrameStudio. Pricing, timelines, M-Pesa, and support." />
         <meta property="og:url" content="https://www.framestudio.co.ke/faq" />
         <meta property="og:type" content="website" />

@@ -74,6 +74,8 @@ export default function BlogPost() {
         <title>{`${post.title} | The FrameStudio Journal`}</title>
         <meta name="description" content={post.excerpt} />
         <meta property="og:title" content={`${post.title} | The FrameStudio Journal`} />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={post.date} />

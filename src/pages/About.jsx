@@ -66,6 +66,8 @@ export default function About() {
       <title>About — Frame Studio | Building Digital Tools for Kenyan Businesses</title>
       <meta name="description" content="Frame Studio builds websites and digital tools that help Kenyan businesses establish their online presence, connect with customers and work smarter." />
       <meta property="og:title" content="About — Frame Studio" />
+      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
       <meta property="og:description" content="Technology should work for your business. Practical digital solutions for Kenyan SMEs." />
       <meta property="og:url" content="https://www.framestudio.co.ke/about" />
       <meta property="og:type" content="website" />

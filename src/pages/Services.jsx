@@ -65,6 +65,8 @@ export default function Services() {
         <title>Services — FrameStudio | Websites, Bots & Dashboards for Kenyan SMEs</title>
         <meta name="description" content="FrameStudio builds modern websites, automation bots, and business dashboards for Kenyan businesses. Affordable, mobile-friendly, M-Pesa integration, and built for Kenya." />
         <meta property="og:title" content="Services — FrameStudio" />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content="Websites, automation bots, and business dashboards for Kenyan SMEs." />
         <meta property="og:url" content="https://www.framestudio.co.ke/services" />
         <meta property="og:type" content="website" />

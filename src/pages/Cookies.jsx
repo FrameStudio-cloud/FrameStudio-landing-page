@@ -6,6 +6,8 @@ export default function Cookies() {
       <title>Cookie Policy — FrameStudio</title>
       <meta name="description" content="FrameStudio Cookie Policy. We do not use cookies, tracking pixels, or similar technologies on framestudio.co.ke." />
       <meta property="og:title" content="Cookie Policy — FrameStudio" />
+      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
       <meta property="og:description" content="How FrameStudio uses cookies on our website." />
       <meta property="og:url" content="https://www.framestudio.co.ke/cookies" />
       <meta property="og:type" content="website" />

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254">
+  <!-- Black on transparent for light chrome, white for dark chrome. -->
+  <style>
+    .fs-favicon-ink { fill: #050505; }
+    @media (prefers-color-scheme: dark) {
+      .fs-favicon-ink { fill: #f4f4f2; }
+    }
+  </style>
+  <polygon class="fs-favicon-ink" points="770,500 983,398 987,959 770,850"/>
+  <polygon class="fs-favicon-ink" points="269,421 907,157 909,332 443,523 445,1011 760,899 933,985 479,1168 269,1060"/>
+</svg>

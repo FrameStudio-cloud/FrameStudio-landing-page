@@ -87,6 +87,8 @@ export default function Pricing() {
         <title>Pricing — FrameStudio | Affordable Digital Solutions for Kenyan SMEs</title>
         <meta name="description" content="Transparent pricing for Kenyan SMEs. Websites from KSh 15,000, WhatsApp bots from KSh 25,000, dashboards from KSh 10,000. No hidden fees." />
         <meta property="og:title" content="Pricing — FrameStudio" />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content="Transparent pricing for Kenyan SMEs. Websites, WhatsApp bots, and dashboards at affordable rates." />
         <meta property="og:url" content="https://www.framestudio.co.ke/pricing" />
         <meta property="og:type" content="website" />

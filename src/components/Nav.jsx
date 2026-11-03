@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Menu, X } from 'lucide-react'
+import LogoMark from './LogoMark'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -96,7 +97,7 @@ export default function Nav() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="flex items-center justify-between h-16 md:h-[72px]">
           <NavLink to="/" className={`flex items-center gap-2 text-xl font-bold tracking-tight transition-colors duration-300 ${transparent ? 'text-white' : 'text-black'}`}>
-            <img src="/logo-emblem.png" alt="FrameStudio emblem" className="w-5 h-5 sm:w-6 sm:h-6" />
+            <LogoMark className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
             Frame<span className={transparent ? 'text-gray-400' : 'text-gray-500'}>Studio</span>
           </NavLink>
 

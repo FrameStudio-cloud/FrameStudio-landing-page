@@ -6,6 +6,8 @@ export default function Refund() {
       <title>Refund Policy — FrameStudio</title>
       <meta name="description" content="FrameStudio's refund and cancellation policy. Information about deposits, milestone payments, and refund terms for digital services." />
       <meta property="og:title" content="Refund Policy — FrameStudio" />
+      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
       <meta property="og:description" content="Refund policy for FrameStudio's digital services and project payments." />
       <meta property="og:url" content="https://www.framestudio.co.ke/refund" />
       <meta property="og:type" content="website" />

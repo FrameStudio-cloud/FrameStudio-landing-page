@@ -63,6 +63,8 @@ export default function Portfolio() {
       <title>Portfolio — FrameStudio | Our Work</title>
       <meta name="description" content="Real projects built by FrameStudio — dashboards, websites, and WhatsApp bots for Kenyan businesses. See how each one was built." />
       <meta property="og:title" content="Portfolio — FrameStudio" />
+      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
       <meta property="og:description" content="Real projects built by FrameStudio for Kenyan businesses." />
       <meta property="og:url" content="https://www.framestudio.co.ke/portfolio" />
       <meta property="og:type" content="website" />

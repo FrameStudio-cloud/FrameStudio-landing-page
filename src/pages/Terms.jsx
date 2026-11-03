@@ -81,6 +81,8 @@ export default function Terms() {
         <title>Terms of Service — FrameStudio</title>
         <meta name="description" content="FrameStudio's Terms of Service governing website design, WhatsApp bot development, dashboard projects, payments, and delivery for Kenyan businesses." />
         <meta property="og:title" content="Terms of Service — FrameStudio" />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content="Terms of Service for FrameStudio's digital solutions, payments, and project delivery." />
         <meta property="og:url" content="https://www.framestudio.co.ke/terms" />
         <meta property="og:type" content="website" />

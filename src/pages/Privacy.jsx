@@ -65,6 +65,8 @@ export default function Privacy() {
         <title>Privacy Policy — FrameStudio</title>
         <meta name="description" content="FrameStudio's Privacy Policy. How we handle personal data in compliance with the Kenya Data Protection Act 2019. Nairobi-based digital agency." />
         <meta property="og:title" content="Privacy Policy — FrameStudio" />
+        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <meta property="og:description" content="How FrameStudio handles your data in compliance with the Kenya Data Protection Act 2019." />
         <meta property="og:url" content="https://www.framestudio.co.ke/privacy" />
         <meta property="og:type" content="website" />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MessageCircle } from 'lucide-react'
+import LogoMark from './LogoMark'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -77,7 +78,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div ref={(el) => (colRefs.current[0] = el)}>
             <Link to="/" className="flex items-center gap-2 text-white font-bold text-lg mb-4 block">
-              <img src="/logo-emblem.png" alt="FrameStudio emblem" className="w-5 h-5" />
+              <LogoMark className="w-5 h-5 shrink-0" />
               Frame<span className="text-gray-400">Studio</span>
             </Link>
             <p className="text-sm leading-relaxed text-gray-500">Digital solutions</p>

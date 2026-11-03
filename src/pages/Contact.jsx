@@ -91,6 +91,8 @@ export default function Contact() {
       <title>Contact — FrameStudio | Get in Touch</title>
       <meta name="description" content="Get in touch with FrameStudio. Nairobi-based digital agency building websites, WhatsApp bots, and dashboards. Start your project with our guided enquiry wizard." />
       <meta property="og:title" content="Contact — FrameStudio" />
+      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
+      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
       <meta property="og:description" content="Guided enquiry wizard — choose your plan, enter your details, and send your message." />
       <meta property="og:url" content="https://www.framestudio.co.ke/contact" />
       <meta property="og:type" content="website" />
