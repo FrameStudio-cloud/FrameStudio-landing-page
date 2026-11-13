@@ -76,9 +76,9 @@ export default function Privacy() {
       {sections.map((s, i) => (
         <div key={i}>
           {s.title && (
-            <h2 className="text-lg font-bold text-gray-900 mt-8 mb-2">{s.title}</h2>
+            <h2 className="font-display text-lg font-semibold text-ink mt-8 mb-2">{s.title}</h2>
           )}
-          <p className="text-gray-600 leading-relaxed">{s.content}</p>
+          <p className="text-ink-soft leading-relaxed">{s.content}</p>
         </div>
       ))}
       <p className="text-gray-400 text-sm mt-10 pt-6 border-t border-gray-100">

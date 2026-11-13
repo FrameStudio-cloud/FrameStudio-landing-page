@@ -4,6 +4,91 @@
 
 Vite + React 19 + React Router v7 + Tailwind CSS v3 + GSAP (ScrollTrigger).
 
+## Design System
+
+Tokens live in `tailwind.config.js` (colors, fonts, marquee keyframes) and
+`src/index.css` (base surface, selection, focus ring, `accent-italic`,
+`marquee-mask`). Change a value there, not in a component.
+
+**Colour.** Black stays the base; cream replaces sterile white; one loud voice.
+
+| Token | Value | Use |
+|---|---|---|
+| `ink` | `#0B0B0B` | Dark sections, text on light |
+| `ink-soft` / `ink-faint` | `#52524B` / `#8A8A80` | Secondary / tertiary text |
+| `paper` | `#FBF8F0` | Default page surface, light sections |
+| `cream` | `#F3EDDF` | Alternating warm section |
+| `accent` | themed (see below) | **Action + emphasis only** |
+
+**The accent is themeable.** Values are CSS channels in `src/index.css`:
+`:root` is lime `198 242 78`, `.theme-vermilion` is `255 90 54`. Tailwind's
+`accent` colour reads those vars, so `bg-accent`, `text-accent`,
+`border-accent/40` all follow the active theme. `src/components/Layout.jsx`
+maps a route to a theme class (`ACCENT_THEMES`); the class sits on the Layout
+root so nav, page and footer switch together. To change the site accent, change
+`:root`. To add a challenger, add a `.theme-*` block and a route entry.
+Current state: `/` is lime, **`/pricing` is vermilion for comparison**.
+
+Rules that keep it from looking cheap:
+
+- The accent is for: primary buttons, active nav, eyebrows, stat suffixes, one
+  italic word per headline, hover on dark links. Never body copy, never a large
+  fill outside a button.
+- On cream/paper, an accent-coloured word is too low-contrast. Use
+  `accent-italic` in `ink` there, or put ink text on an accent fill.
+- Never mix the accent with a second colour accent (no amber/blue/purple
+  highlights on the same screen).
+- Selection and focus rings follow the accent too. That is the whole budget.
+
+**Type.** Four fonts, four jobs. Do not borrow a font for another job.
+
+| Role | Font | Class | Where |
+|---|---|---|---|
+| Display | Bricolage Grotesque | `font-display` (600) | h1, h2, card titles, wordmarks |
+| Editorial accent | Instrument Serif *italic* | `accent-italic` | one word inside a display headline, pull quotes |
+| Body / UI | General Sans | `font-sans` (root, via Layout) | paragraphs, buttons, forms |
+| Labels / data | Space Mono | `font-mono`, uppercase + `tracking-[0.22em]` | eyebrows, stats, tags, hex codes, legal micro-copy |
+
+Headline recipe: `font-display font-semibold tracking-[-0.03em] leading-[1.02]`
+with one `<span className="accent-italic">word</span>` in it. More than one
+italic word per headline cancels the charm.
+
+Fonts load in `index.html` from Fontshare (General Sans) and Google Fonts (the
+other three). Satoshi is gone; if you see `font-['Satoshi']` anywhere, it is a
+regression.
+
+**Status.** Every marketing route is on the new system: home, Services,
+Portfolio, ProjectDetail, Blog, BlogPost, Pricing, About, Contact, FAQ and the
+four policy pages via `PolicyLayout`. The accent is vermilion. The old
+`gray-*`/`white` palette should not appear on any of these pages — if you see
+it, it is a leftover. `src/pages/Invoice.jsx` and `src/components/invoice/*`
+are exempt: the invoice is a document with a deliberate fixed light palette for
+print, so do not restyle it to match the marketing site.
+
+### LiveDemo (home, `#demo`)
+
+The "Watch a shop run" section is a **scripted product demo**, not video and not
+a card grid: one screen with a recording chrome (REC dot, timecode, chapter
+rail), a 24-second GSAP timeline that loops, and real DOM inside. Edit the
+timeline, not a video file.
+
+Rules that must survive edits:
+
+- Keep the **Pause** button. Moving content that runs >5s beside other content
+  needs a visible, keyboard-reachable control (WCAG 2.2.2). Do not add
+  `aria-pressed` while the label switches between Pause and Play.
+- `prefers-reduced-motion` must skip the timeline entirely — the JSX is written
+  as the **final state**, so a reduced-motion or no-JS visitor sees a complete
+  dashboard and a "static preview" note, not an empty frame.
+- An IntersectionObserver pauses the timeline off-screen; keep it, or an idle
+  tab animates forever.
+- Tween `transform`/`opacity` only, and write numbers via `textContent` (never
+  React state) so the loop never re-renders.
+- Data is **sample data**, stated in the copy and in the caption. Do not put
+  real client names, sales or phone numbers in it.
+- Mobile shows the bot reply inline because the floating chat is hidden below
+  `sm`; keep both paths in sync if you change the scene.
+
 ## Routes
 
 | Path | Component | File |

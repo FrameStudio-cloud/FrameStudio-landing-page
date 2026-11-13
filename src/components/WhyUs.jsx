@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 const stats = [
   { value: 100, suffix: '+', label: 'Projects Delivered' },
   { value: 500, suffix: '+', label: 'Happy Clients' },
-  { value: 2, suffix: ' Weeks', prefix: '< ', label: 'Average Turnaround' },
+  { value: 2, suffix: 'Weeks', prefix: '<', label: 'Average Turnaround' },
 ]
 
 const reasons = [
@@ -25,7 +25,7 @@ function Counter({ value, suffix, prefix }) {
     const el = ref.current
     if (!el) return
 
-    el.textContent = (prefix || '') + 0 + (suffix || '')
+    el.textContent = 0
     const obj = { val: 0 }
     gsap.to(obj, {
       val: value,
@@ -37,14 +37,16 @@ function Counter({ value, suffix, prefix }) {
         toggleActions: 'play none none none',
       },
       onUpdate: () => {
-        el.textContent = (prefix || '') + Math.round(obj.val) + (suffix || '')
+        el.textContent = Math.round(obj.val)
       },
     })
-  }, [value, prefix, suffix])
+  }, [value])
 
   return (
-    <span ref={ref} className="text-4xl md:text-5xl font-bold text-white">
-      {prefix || ''}{value}{suffix || ''}
+    <span className="flex items-baseline gap-1.5 font-display text-4xl md:text-5xl font-semibold text-paper tracking-[-0.03em]">
+      {prefix && <span className="text-paper/30">{prefix}</span>}
+      <span ref={ref}>{value}</span>
+      {suffix && <span className="text-accent">{suffix}</span>}
     </span>
   )
 }
@@ -88,30 +90,34 @@ export default function WhyUs() {
   }, [])
 
   return (
-    <section id="why-us" ref={sectionRef} className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gray-100/50 rounded-full blur-[120px]" />
+    <section id="why-us" ref={sectionRef} className="relative py-24 md:py-32 bg-cream overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-[420px] h-[420px] bg-accent/[0.12] rounded-full blur-[130px] pointer-events-none" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div ref={headerRef}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight text-balance">
-            Why Kenyan Businesses Choose Us
+        <div ref={headerRef} className="max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink/45 mb-5 flex items-center gap-2.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-ink/30" />
+            Why us
+          </p>
+          <h2 className="font-display text-[2rem] md:text-4xl lg:text-[3.25rem] font-semibold text-ink tracking-[-0.03em] leading-[1.02] text-balance">
+            Why Kenyan businesses choose <span className="accent-italic">us</span>
           </h2>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          <div className="lg:col-span-7 space-y-6">
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="lg:col-span-7 space-y-2">
             {reasons.map((reason, i) => (
               <div
                 key={reason.title}
                 ref={(el) => (reasonsRef.current[i] = el)}
-                className="flex gap-4 items-start p-4 -mx-4 rounded-xl hover:bg-white/50 transition-colors"
+                className="flex gap-4 items-start p-4 -mx-4 rounded-2xl hover:bg-white/60 transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center shrink-0 mt-0.5">
-                  <Check size={14} className="text-white" />
+                <div className="w-6 h-6 rounded-full bg-ink flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={13} className="text-accent" strokeWidth={3} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">{reason.title}</h4>
-                  <p className="text-gray-600 text-sm mt-1 leading-relaxed">{reason.desc}</p>
+                  <h4 className="font-display font-semibold text-ink text-lg">{reason.title}</h4>
+                  <p className="text-ink-soft text-sm mt-1 leading-relaxed">{reason.desc}</p>
                 </div>
               </div>
             ))}
@@ -120,12 +126,13 @@ export default function WhyUs() {
           <div className="lg:col-span-5">
             <div
               ref={statsRef}
-              className="bg-gradient-to-br from-black to-neutral-900 rounded-3xl p-8 md:p-12 grid grid-cols-2 gap-8 md:gap-10"
+              className="relative bg-ink rounded-4xl p-8 md:p-11 grid grid-cols-2 gap-8 md:gap-10 overflow-hidden"
             >
+              <div className="absolute -top-16 -right-16 w-48 h-48 bg-accent/[0.15] rounded-full blur-[70px] pointer-events-none" />
               {stats.map((stat) => (
                 <div key={stat.label} className={stat.label === 'Average Turnaround' ? 'col-span-2' : ''}>
                   <Counter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
-                  <div className="text-gray-400 text-sm mt-2">{stat.label}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper/40 mt-3">{stat.label}</div>
                 </div>
               ))}
             </div>

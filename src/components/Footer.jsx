@@ -73,47 +73,48 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer ref={footerRef} className="bg-black text-gray-400 py-16 md:py-20">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-12">
+    <footer ref={footerRef} className="relative bg-ink text-paper/60 pt-16 md:pt-20 overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-12">
           <div ref={(el) => (colRefs.current[0] = el)}>
-            <Link to="/" className="flex items-center gap-2 text-white font-bold text-lg mb-4">
-              <LogoMark className="w-5 h-5 shrink-0" />
-              Frame<span className="text-gray-400">Studio</span>
+            <Link to="/" className="flex items-center gap-2 text-paper font-display font-semibold text-lg mb-4 tracking-[-0.02em]">
+              <LogoMark className="w-5 h-5 shrink-0 text-accent" />
+              Frame<span className="text-paper/40">Studio</span>
             </Link>
-            <p className="text-sm leading-relaxed text-gray-500">Digital solutions</p>
-            <p className="text-sm leading-relaxed text-gray-500">for Kenyan SMEs.</p>
-            <p className="text-sm text-gray-500 mt-3">Nairobi, Kenya</p>
+            <p className="text-sm leading-relaxed text-paper/45">
+              Digital solutions for <span className="accent-italic text-paper/70">Kenyan</span> SMEs.
+            </p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/30 mt-3">Nairobi, Kenya</p>
           </div>
           <div ref={(el) => (colRefs.current[1] = el)}>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Services</h4>
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/35 mb-4">Services</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Websites</Link></li>
-              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Bots & Automation</Link></li>
-              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Dashboards</Link></li>
-              <li><Link to="/services" className="text-gray-500 hover:text-gray-300 transition-colors">Automation</Link></li>
-              <li><Link to="/blog" className="text-gray-500 hover:text-gray-300 transition-colors">Blog</Link></li>
+              <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Websites</Link></li>
+              <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Bots & Automation</Link></li>
+              <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Dashboards</Link></li>
+              <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Automation</Link></li>
+              <li><Link to="/blog" className="text-paper/50 hover:text-accent transition-colors">Blog</Link></li>
             </ul>
           </div>
           <div ref={(el) => (colRefs.current[2] = el)}>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Contact</h4>
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/35 mb-4">Contact</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><a href="mailto:email.framestudio@gmail.com" className="break-words text-gray-500 hover:text-gray-300 transition-colors">email.framestudio@gmail.com</a></li>
-              <li><Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Nairobi, Kenya</Link></li>
+              <li><a href="mailto:email.framestudio@gmail.com" className="break-words text-paper/50 hover:text-accent transition-colors">email.framestudio@gmail.com</a></li>
+              <li><Link to="/contact" className="text-paper/50 hover:text-accent transition-colors">Nairobi, Kenya</Link></li>
             </ul>
           </div>
           <div ref={(el) => (colRefs.current[3] = el)}>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-[0.1em]">Legal</h4>
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/35 mb-4">Legal</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link to="/terms" className="text-gray-500 hover:text-gray-300 transition-colors">Terms of Service</Link></li>
-              <li><Link to="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/refund" className="text-gray-500 hover:text-gray-300 transition-colors">Refund Policy</Link></li>
-              <li><Link to="/cookies" className="text-gray-500 hover:text-gray-300 transition-colors">Cookie Policy</Link></li>
+              <li><Link to="/terms" className="text-paper/50 hover:text-accent transition-colors">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="text-paper/50 hover:text-accent transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/refund" className="text-paper/50 hover:text-accent transition-colors">Refund Policy</Link></li>
+              <li><Link to="/cookies" className="text-paper/50 hover:text-accent transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
+        <div className="border-t border-paper/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex items-center gap-4">
               {socials.map((s) => (
@@ -123,19 +124,40 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="group relative w-5 h-5 text-gray-500 hover:text-white transition-colors"
+                  className="group relative w-5 h-5 text-paper/40 hover:text-accent transition-colors"
                 >
                   <s.icon size={20} />
-                  <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black border border-gray-800 text-gray-300 text-[11px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-ink border border-paper/10 text-paper/70 font-mono text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                     {s.label}
                   </span>
                 </a>
               ))}
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="font-mono text-[11px] text-paper/30">
               &copy; {new Date().getFullYear()} FrameStudio. All rights reserved.
             </p>
           </div>
+        </div>
+
+        {/* Oversized sign-off. Drawn as SVG text with `textLength` so it fits the
+            container exactly at every width instead of clipping on the right.
+            Decoration only: aria-hidden, and tinted to read as texture. */}
+        <div aria-hidden="true" className="pointer-events-none select-none mt-10 overflow-hidden">
+          <svg viewBox="0 0 1000 148" className="w-full h-auto text-paper/[0.05]" preserveAspectRatio="xMidYMax meet">
+            <text
+              x="0"
+              y="118"
+              textLength="1000"
+              lengthAdjust="spacingAndGlyphs"
+              fontSize="150"
+              fontWeight="600"
+              letterSpacing="-6"
+              fill="currentColor"
+              fontFamily="Bricolage Grotesque, General Sans, sans-serif"
+            >
+              FrameStudio
+            </text>
+          </svg>
         </div>
       </div>
     </footer>

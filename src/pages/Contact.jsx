@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Mail, MessageCircle, MapPin, Send, ArrowRight, X } from 'lucide-react'
 
 const STEPS = [
@@ -14,34 +14,26 @@ const PLAN_OPTIONS = [
   { value: 'custom', label: 'Custom', price: "Let's Talk" },
 ]
 
+// Field styling shared by inputs, selects and the textarea.
+const fieldClass =
+  'w-full px-4 py-3 rounded-xl border border-ink/15 bg-paper text-ink text-sm placeholder:text-ink/35 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/25 transition-all'
+
 export default function Contact() {
-  const sectionRef = useRef(null)
   const [step, setStep] = useState(0)
   const [state, setState] = useState('idle') // idle | sending | success | error
-  const [error, setError] = useState(null)
 
-  // Form data across steps
-  const [form, setForm] = useState({
-    plan: '',
+  // Coming from a pricing card: prefill the plan from the URL. Initialised
+  // lazily so there is no post-mount setState (and no extra render).
+  const [form, setForm] = useState(() => ({
+    plan: new URLSearchParams(window.location.search).get('plan') || '',
     name: '',
     email: '',
     phone: '',
     service: '',
     message: '',
-  })
+  }))
 
-  // Prefill plan from URL query param when coming from pricing cards
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const plan = params.get('plan')
-    if (plan && !form.plan) {
-      setForm((prev) => ({ ...prev, plan }))
-    }
-  }, [])
-
-  const currentStep = STEPS[step]
-  const isLastStep = step === STEPS.length - 1
-  const progress = ((step) / (STEPS.length - 1)) * 100
+  const progress = (step / (STEPS.length - 1)) * 100
 
   const goNext = () => {
     if (step < STEPS.length - 1) setStep((s) => s + 1)
@@ -58,7 +50,6 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setState('sending')
-    setError(null)
 
     try {
       const res = await fetch('/api/contact', {
@@ -82,7 +73,6 @@ export default function Contact() {
   const restart = () => {
     setStep(0)
     setState('idle')
-    setError(null)
     setForm({ plan: '', name: '', email: '', phone: '', service: '', message: '' })
   }
 
@@ -99,59 +89,63 @@ export default function Contact() {
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="canonical" href="https://www.framestudio.co.ke/contact" />
 
-      <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-black" />
+      <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-ink overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(110%_90%_at_20%_0%,#1a0e0a_0%,#0b0b0b_55%)]" />
+        <div className="absolute top-0 right-0 w-[560px] h-[380px] bg-accent/[0.12] rounded-full blur-[140px]" />
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight text-balance max-w-3xl">
-            Let's Build Something Together
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent mb-5 flex items-center gap-2.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent" />
+            Start a project
+          </p>
+          <h1 className="font-display text-[2.6rem] md:text-6xl lg:text-[4.2rem] font-semibold text-paper tracking-[-0.03em] leading-[0.98] text-balance max-w-3xl">
+            Let's build something <span className="accent-italic text-accent">together</span>
           </h1>
-          <p className="text-gray-400 text-lg mt-5 max-w-xl leading-relaxed">
+          <p className="text-paper/55 text-lg mt-6 max-w-xl leading-relaxed">
             Choose your plan, fill in your details, and send your enquiry. We'll get back to you within 24 hours.
           </p>
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-20 md:py-28 bg-paper">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-          <div ref={sectionRef} className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-14 lg:gap-16">
 
             {/* Wizard column */}
             <div className="lg:col-span-3">
-              {/* Completion modal overlay */}
               {state === 'success' || state === 'error' ? (
-                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center">
-                  <div className="w-full max-w-md p-6 rounded-2xl bg-white text-center shadow-2xl">
+                <div className="fixed inset-0 z-50 bg-ink/80 backdrop-blur-sm flex items-center justify-center px-6">
+                  <div className="w-full max-w-md p-8 rounded-3xl bg-paper text-center">
                     <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 ${
-                      state === 'success' ? 'bg-green-100' : 'bg-red-100'
+                      state === 'success' ? 'bg-accent' : 'bg-red-100'
                     }`}>
                       {state === 'success' ? (
-                        <Send size={24} className="text-green-600" />
+                        <Send size={24} className="text-ink" />
                       ) : (
                         <X size={24} className="text-red-600" />
                       )}
                     </div>
-                    <h2 className={`text-2xl font-bold mb-3 ${state === 'success' ? 'text-green-700' : 'text-red-700'}`}>
-                      {state === 'success' ? 'Message Sent!' : 'Something Went Wrong'}
+                    <h2 className="font-display text-2xl font-semibold mb-3 text-ink">
+                      {state === 'success' ? 'Message sent!' : 'Something went wrong'}
                     </h2>
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-ink-soft mb-7">
                       {state === 'success'
                         ? 'Thanks! Your enquiry has been sent and we’ll get back to you within 24 hours.'
                         : 'Your message couldn’t be sent. Please try again or reach us on WhatsApp.'}
                     </p>
-                    <div className="flex gap-3 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <button
                         onClick={restart}
-                        className="px-6 py-3 rounded-xl bg-black text-white font-semibold hover:bg-gray-800 transition-all"
+                        className="px-6 py-3 rounded-full bg-ink text-paper font-semibold hover:bg-accent hover:text-ink transition-all"
                       >
-                        {state === 'success' ? 'Start Again' : 'Try Again'}
+                        {state === 'success' ? 'Start again' : 'Try again'}
                       </button>
                       <a
                         href="https://wa.me/254793302518"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                        className="px-6 py-3 rounded-full border border-ink/20 text-ink font-semibold hover:border-ink/50 transition-all"
                       >
-                        WhatsApp Instead
+                        WhatsApp instead
                       </a>
                     </div>
                   </div>
@@ -160,32 +154,32 @@ export default function Contact() {
 
               {state === 'idle' && (
                 <>
-                  {/* Progress bar */}
+                  {/* Progress */}
                   <div className="mb-10">
-                    <div className="flex justify-between text-xs uppercase tracking-wider font-semibold text-gray-400 mb-3">
+                    <div className="flex justify-between font-mono text-[10px] uppercase tracking-[0.18em] mb-3">
                       {STEPS.map((s, i) => (
                         <span
                           key={s.id}
                           className={`transition-colors ${
-                            i < step ? 'text-gray-900' : i === step ? 'text-black' : 'text-gray-400'
+                            i < step ? 'text-ink/70' : i === step ? 'text-accent' : 'text-ink/30'
                           }`}
                         >
                           {s.label}
                         </span>
                       ))}
                     </div>
-                    <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-ink/10 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-black transition-all duration-500 ease-out"
+                        className="h-full bg-accent transition-all duration-500 ease-out"
                         style={{ width: `${progress}%` }}
                       />
                     </div>
-                    <div className="flex justify-between mt-2 text-[10px] text-gray-500 font-medium">
+                    <div className="flex justify-between mt-2">
                       {STEPS.map((_, i) => (
                         <span
                           key={i}
                           className={`w-2 h-2 rounded-full transition-all ${
-                            i < step ? 'bg-black' : i === step ? 'bg-black/40' : 'bg-gray-300'
+                            i < step ? 'bg-accent' : i === step ? 'bg-accent/50' : 'bg-ink/15'
                           }`}
                         />
                       ))}
@@ -195,50 +189,46 @@ export default function Contact() {
                   {/* Step content */}
                   <div className="space-y-6">
                     {/* Step 1: Choose Plan */}
-                    <div
-                      className={`opacity-100 transition-opacity duration-300 ${
-                        step !== 0 ? 'hidden' : ''
-                      }`}
-                    >
-                      <h2 className="text-xl font-bold text-gray-900 mb-2">Choose Your Plan</h2>
-                      <p className="text-gray-600 text-sm mb-6">Pick the package that fits your project.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className={step !== 0 ? 'hidden' : ''}>
+                      <h2 className="font-display text-xl font-semibold text-ink mb-2">Choose your plan</h2>
+                      <p className="text-ink-soft text-sm mb-6">Pick the package that fits your project.</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {PLAN_OPTIONS.map((p) => {
                           const isSelected = form.plan === p.value
                           return (
                             <button
                               key={p.value}
                               onClick={() => handleInput('plan', p.value)}
-                              className={`flex items-center gap-3 p-4 rounded-xl border transition-all ${
+                              className={`flex items-center gap-3 p-4 rounded-2xl border transition-all text-left ${
                                 isSelected
-                                  ? 'bg-black border-black text-white'
-                                  : 'bg-white border-gray-200 text-gray-900 hover:border-gray-300 hover:bg-gray-50'
+                                  ? 'bg-ink border-ink text-paper'
+                                  : 'bg-paper border-ink/15 text-ink hover:border-ink/35'
                               }`}
                             >
-                              <div className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center ${
-                                isSelected ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-300'
+                              <div className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center text-[10px] ${
+                                isSelected ? 'bg-accent text-ink border-accent' : 'bg-transparent text-transparent border-ink/25'
                               }`}>
-                                {isSelected ? '✓' : ''}
+                                ✓
                               </div>
                               <div>
-                                <div className="font-semibold">{p.label}</div>
-                                <div className="text-xs text-gray-500">{p.price}</div>
+                                <div className="font-display font-semibold">{p.label}</div>
+                                <div className={`font-mono text-[10px] ${isSelected ? 'text-paper/45' : 'text-ink/45'}`}>{p.price}</div>
                               </div>
                             </button>
                           )
                         })}
                       </div>
                       {!form.plan && (
-                        <p className="mt-4 text-xs text-red-500">Please select a plan to continue.</p>
+                        <p className="mt-4 text-xs text-red-600">Please select a plan to continue.</p>
                       )}
                       <div className="mt-8 flex justify-between">
                         <button
                           onClick={goNext}
                           disabled={!form.plan}
-                          className={`inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
+                          className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all ${
                             form.plan
-                              ? 'bg-black text-white hover:bg-gray-800'
-                              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                              ? 'bg-accent text-ink hover:bg-accent-deep'
+                              : 'bg-ink/10 text-ink/35 cursor-not-allowed'
                           }`}
                         >
                           Next <ArrowRight size={16} />
@@ -247,38 +237,34 @@ export default function Contact() {
                     </div>
 
                     {/* Step 2: Your Details */}
-                    <div
-                      className={`opacity-100 transition-opacity duration-300 ${
-                        step !== 1 ? 'hidden' : ''
-                      }`}
-                    >
-                      <h2 className="text-xl font-bold text-gray-900 mb-2">Your Details</h2>
-                      <p className="text-gray-600 text-sm mb-6">So we know who we’re replying to.</p>
+                    <div className={step !== 1 ? 'hidden' : ''}>
+                      <h2 className="font-display text-xl font-semibold text-ink mb-2">Your details</h2>
+                      <p className="text-ink-soft text-sm mb-6">So we know who we’re replying to.</p>
                       <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                         <div>
-                          <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+                          <label className="block text-sm font-medium text-ink mb-2">Full Name</label>
                           <input
                             name="name"
                             type="text"
                             value={form.name}
                             onChange={(e) => handleInput('name', e.target.value)}
                             placeholder="Your name"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all"
+                            className={fieldClass}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-900 mb-2">Email</label>
+                          <label className="block text-sm font-medium text-ink mb-2">Email</label>
                           <input
                             name="email"
                             type="email"
                             value={form.email}
                             onChange={(e) => handleInput('email', e.target.value)}
                             placeholder="you@example.com"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all"
+                            className={fieldClass}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-900 mb-2">Phone</label>
+                          <label className="block text-sm font-medium text-ink mb-2">Phone</label>
                           <input
                             name="phone"
                             type="tel"
@@ -286,55 +272,51 @@ export default function Contact() {
                             onChange={(e) => handleInput('phone', e.target.value)}
                             placeholder="+254 7XX XXX XXX"
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all"
+                            className={fieldClass}
                           />
                         </div>
                       </form>
                       <div className="mt-8 flex justify-between">
                         <button
                           onClick={goBack}
-                          className="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                          className="px-6 py-3.5 rounded-full border border-ink/15 text-ink/70 font-semibold hover:border-ink/40 hover:text-ink transition-all"
                         >
                           Back
                         </button>
                         <button
                           onClick={goNext}
                           disabled={!form.name || !form.email || !form.phone}
-                          className={`inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
+                          className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all ${
                             form.name && form.email && form.phone
-                              ? 'bg-black text-white hover:bg-gray-800'
-                              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                              ? 'bg-accent text-ink hover:bg-accent-deep'
+                              : 'bg-ink/10 text-ink/35 cursor-not-allowed'
                           }`}
                         >
                           Next <ArrowRight size={16} />
                         </button>
                       </div>
                       {!form.name || !form.email || !form.phone ? (
-                        <p className="mt-3 text-xs text-red-500">Please fill in your name, email, and phone to continue.</p>
+                        <p className="mt-3 text-xs text-red-600">Please fill in your name, email, and phone to continue.</p>
                       ) : null}
                     </div>
 
                     {/* Step 3: Project Message */}
-                    <div
-                      className={`opacity-100 transition-opacity duration-300 ${
-                        step !== 2 ? 'hidden' : ''
-                      }`}
-                    >
-                      <h2 className="text-xl font-bold text-gray-900 mb-2">Tell Us About Your Project</h2>
-                      <p className="text-gray-600 text-sm mb-6">A few details help us give you an accurate reply.</p>
+                    <div className={step !== 2 ? 'hidden' : ''}>
+                      <h2 className="font-display text-xl font-semibold text-ink mb-2">Tell us about your project</h2>
+                      <p className="text-ink-soft text-sm mb-6">A few details help us give you an accurate reply.</p>
                       <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Plan Selected</label>
-                        <div className="px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-900">
+                        <label className="block text-sm font-medium text-ink mb-2">Plan Selected</label>
+                        <div className="px-4 py-3 rounded-xl border border-ink/10 bg-cream text-sm text-ink">
                           {PLAN_OPTIONS.find((p) => p.value === form.plan)?.label || form.plan}
                         </div>
                       </div>
-                      <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Service Needed</label>
+                      <div className="space-y-2 mb-4">
+                        <label className="block text-sm font-medium text-ink mb-2">Service Needed</label>
                         <select
                           name="service"
                           value={form.service}
                           onChange={(e) => handleInput('service', e.target.value)}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all"
+                          className={fieldClass}
                         >
                           <option value="">Select a service</option>
                           <option value="Website">Website</option>
@@ -345,28 +327,28 @@ export default function Contact() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Project Details</label>
+                        <label className="block text-sm font-medium text-ink mb-2">Project Details</label>
                         <textarea
                           name="message"
                           rows={5}
                           value={form.message}
                           onChange={(e) => handleInput('message', e.target.value)}
                           placeholder="Tell us about your project, timeline, and any specific requirements..."
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-black/20 transition-all resize-none"
+                          className={`${fieldClass} resize-none`}
                         />
                       </div>
                       <div className="mt-8 flex justify-between">
                         <button
                           onClick={goBack}
-                          className="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-all"
+                          className="px-6 py-3.5 rounded-full border border-ink/15 text-ink/70 font-semibold hover:border-ink/40 hover:text-ink transition-all"
                         >
                           Back
                         </button>
                         <button
                           onClick={handleSubmit}
                           disabled={state === 'sending'}
-                          className={`inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all ${
-                            state === 'sending' ? 'opacity-60 cursor-not-allowed' : 'bg-black text-white hover:bg-gray-800'
+                          className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all ${
+                            state === 'sending' ? 'opacity-60 cursor-not-allowed bg-accent text-ink' : 'bg-accent text-ink hover:bg-accent-deep'
                           }`}
                         >
                           <Send size={16} />
@@ -382,54 +364,54 @@ export default function Contact() {
             {/* Info column */}
             <div className="lg:col-span-2 space-y-8">
               <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-6">Contact Info</h3>
+                <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/40 mb-6">Contact info</h3>
                 <div className="space-y-5">
                   <a
                     href="mailto:email.framestudio@gmail.com"
-                    className="flex items-center gap-4 text-gray-600 hover:text-black transition-colors group"
+                    className="flex items-center gap-4 text-ink-soft hover:text-ink transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                      <Mail size={18} className="text-gray-700" />
+                    <div className="w-10 h-10 rounded-xl bg-ink text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-ink transition-colors">
+                      <Mail size={17} />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">Email</p>
-                      <p className="text-sm text-gray-500">email.framestudio@gmail.com</p>
+                      <p className="text-sm font-medium text-ink">Email</p>
+                      <p className="text-sm text-ink-soft break-all">email.framestudio@gmail.com</p>
                     </div>
                   </a>
                   <a
                     href="https://wa.me/254793302518"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 text-gray-600 hover:text-black transition-colors group"
+                    className="flex items-center gap-4 text-ink-soft hover:text-ink transition-colors group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                      <MessageCircle size={18} className="text-gray-700" />
+                    <div className="w-10 h-10 rounded-xl bg-ink text-accent flex items-center justify-center group-hover:bg-accent group-hover:text-ink transition-colors">
+                      <MessageCircle size={17} />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">WhatsApp</p>
-                      <p className="text-sm text-gray-500">Chat with us directly</p>
+                      <p className="text-sm font-medium text-ink">WhatsApp</p>
+                      <p className="text-sm text-ink-soft">Chat with us directly</p>
                     </div>
                   </a>
-                  <div className="flex items-center gap-4 text-gray-600">
-                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
-                      <MapPin size={18} className="text-gray-700" />
+                  <div className="flex items-center gap-4 text-ink-soft">
+                    <div className="w-10 h-10 rounded-xl bg-ink text-accent flex items-center justify-center">
+                      <MapPin size={17} />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">Location</p>
-                      <p className="text-sm text-gray-500">Nairobi, Kenya</p>
+                      <p className="text-sm font-medium text-ink">Location</p>
+                      <p className="text-sm text-ink-soft">Nairobi, Kenya</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200">
-                <h4 className="font-bold text-gray-900 mb-2">Prefer WhatsApp?</h4>
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">Most Kenyan businesses hear back fastest on WhatsApp. Tap the button below to start a chat.</p>
+              <div className="p-6 rounded-3xl bg-cream border border-ink/10">
+                <h4 className="font-display font-semibold text-ink mb-2">Prefer WhatsApp?</h4>
+                <p className="text-sm text-ink-soft leading-relaxed mb-5">Most Kenyan businesses hear back fastest on WhatsApp. Tap the button below to start a chat.</p>
                 <a
                   href="https://wa.me/254793302518"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-gray-800 transition-all"
+                  className="inline-flex items-center gap-2 bg-ink text-paper text-sm font-semibold px-5 py-3 rounded-full hover:bg-accent hover:text-ink transition-all"
                 >
                   <MessageCircle size={16} />
                   Chat on WhatsApp

@@ -2,27 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* ---- accent -----------------------------------------------------------
+     Channels, not hex, because Tailwind needs `<alpha-value>` to build
+     bg-accent/10, border-accent/70… To re-theme a subtree, override both
+     vars in a class (`.theme-x { --fs-accent: … }`) — nothing else changes. */
+  --fs-accent: 255 90 54; /* vermilion #FF5A36 */
+  --fs-accent-deep: 232 70 31; /* #E8461F */
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  background-color: #fbf8f0; /* paper */
+  color: #0b0b0b; /* ink */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Accent selection: the one place the accent touches plain text. */
 ::selection {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(var(--fs-accent));
+  color: #0b0b0b;
 }
 
 .dark ::selection {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgb(var(--fs-accent));
+  color: #0b0b0b;
+}
+
+/* Accent ring for keyboard users, invisible for mouse users. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--fs-accent));
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Instrument Serif set inside a Bricolage headline. The optical size of the
+     serif runs smaller, so nudge it up or it looks like a mistake. */
+  .accent-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-size: 1.06em;
+    line-height: 0.9;
+  }
+
+  /* Marker-pen highlight behind a word. Sits under the text, not over it. */
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
   }
 }
 
