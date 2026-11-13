@@ -201,19 +201,60 @@ async function prerender() {
 
   console.log('Launching Puppeteer...')
   let browser
+  let launchError
   try {
     browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     })
   } catch (err) {
-    console.warn(`Puppeteer could not launch a browser (${err.message}). Skipping prerender; serving SPA fallback.`)
+    launchError = err
+    // Vercel's build image often cannot launch the browser Puppeteer downloaded,
+    // even after `puppeteer browsers install chrome`. Try a system binary before
+    // giving up, so a deploy can still ship real HTML.
+    const candidates = [
+      process.env.PUPPETEER_EXECUTABLE_PATH,
+      '/usr/bin/google-chrome',
+      '/usr/bin/chromium',
+      '/usr/bin/chromium-browser',
+      'C:/Program Files/Google/Chrome/Application/chrome.exe',
+      'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+    ].filter(Boolean)
+
+    for (const executablePath of candidates) {
+      try {
+        browser = await puppeteer.launch({
+          headless: true,
+          executablePath,
+          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+        })
+        console.log(`  launched with ${executablePath}`)
+        break
+      } catch {
+        // try the next candidate
+      }
+    }
+  }
+
+  if (!browser) {
+    // Loud on purpose: a skipped prerender used to only emit a warning, so
+    // deploys shipped an empty shell (no title, no OG tags) for weeks.
+    console.error('')
+    console.error('==================================================================')
+    console.error('  PRERENDER SKIPPED — deploying SPA shell for every route.')
+    console.error('  Link previews and crawlable HTML will fall back to the static')
+    console.error('  tags in index.html.')
+    console.error(`  Reason: ${launchError?.message}`)
+    console.error('  On Vercel: set PUPPETEER_EXECUTABLE_PATH, or install the')
+    console.error('  system Chrome/Chromium the build image expects.')
+    console.error('==================================================================')
+    console.error('')
     server.close()
     writeSitemap(blogPosts, projectPosts)
-    console.log('Prerender skipped.')
     return
   }
 
+  let written = 0
   for (const route of allRoutes) {
     console.log(`Prerendering ${route}...`)
     const page = await browser.newPage()
@@ -248,6 +289,7 @@ async function prerender() {
 
       fs.mkdirSync(path.dirname(outputPath), { recursive: true })
       fs.writeFileSync(outputPath, html)
+      written++
       console.log(`  -> ${path.relative(distDir, outputPath)}`)
     } catch (err) {
       console.error(`  Failed: ${err.message}`)
@@ -260,6 +302,16 @@ async function prerender() {
   server.close()
 
   writeSitemap(blogPosts, projectPosts)
+
+  // A prerender that "succeeds" without writing anything is the exact failure
+  // that shipped an empty shell for weeks. Say it out loud in the build log.
+  const samplePath = path.join(distDir, 'pricing', 'index.html')
+  const sampleHtml = fs.existsSync(samplePath) ? fs.readFileSync(samplePath, 'utf8') : ''
+  if (written > 0 && /<title>/i.test(sampleHtml)) {
+    console.log(`[prerender] ${written}/${allRoutes.length} routes written with real head tags ✓`)
+  } else {
+    console.error(`[prerender] WARNING: only ${written}/${allRoutes.length} routes written — crawlers may get the shell.`)
+  }
 
   console.log('Prerendering complete!')
 }

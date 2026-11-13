@@ -57,12 +57,6 @@ export default function ProjectDetail() {
     <>
       <title>{`${project.title} | The FrameStudio Work`}</title>
       <meta name="description" content={heroShot?.caption || project.excerpt} />
-      <meta property="og:title" content={`${project.title} | The FrameStudio Work`} />
-      <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
-      <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
-      <meta property="og:description" content={project.excerpt} />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
       <link rel="canonical" href={`https://www.framestudio.co.ke/portfolio/${project.slug}`} />
 
       <div className="bg-paper">

@@ -9,6 +9,7 @@
     "build": "vite build",
     "build:prerender": "vite build && node prerender.js",
     "prerender": "node prerender.js",
+    "og": "node scripts/og-image.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

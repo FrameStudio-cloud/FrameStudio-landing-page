@@ -89,6 +89,31 @@ Rules that must survive edits:
 - Mobile shows the bot reply inline because the floating chat is hidden below
   `sm`; keep both paths in sync if you change the scene.
 
+## Link previews & crawlers
+
+Social crawlers (WhatsApp, Facebook, X, Slack, LinkedIn) **do not run JavaScript**.
+Anything React renders is invisible to them, so the share tags must exist in the
+HTML the server returns.
+
+- `index.html` holds the shell-level `og:*` / `twitter:*` block and the
+  `og:image` (1200×630). This is the safety net when prerendering fails.
+- `index.html` deliberately does **not** contain `<title>`, `meta description`,
+  `canonical` or `og:url`. Pages own those. A static copy here wins in document
+  order and silently overrides the page's own value (this once made every tab
+  read "FrameStudio" and every canonical point at the homepage).
+- Pages keep `<title>`, `<meta name="description">` and `<link rel="canonical">`
+  only. Do not add per-page `og:*` — the shell already provides it, and
+  duplicates are ambiguous.
+- `npm run og` rebuilds `public/og-image.png` from `scripts/og-card.html`
+  (HTML → Puppeteer, so the card uses the real fonts and tokens). Edit the HTML,
+  not the PNG.
+- `npm run build:prerender` must log `24/24 routes written with real head tags`.
+  If it logs `PRERENDER SKIPPED`, deploys fall back to the shell tags and Google
+  gets an empty page — fix the browser launch, don't ignore it.
+- After changing the image, re-scrape: Facebook Sharing Debugger, X Card
+  Validator, and WhatsApp (which caches aggressively — bump the filename or add
+  a query string to force a new fetch).
+
 ## Routes
 
 | Path | Component | File |

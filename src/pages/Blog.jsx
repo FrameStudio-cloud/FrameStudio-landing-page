@@ -121,13 +121,6 @@ export default function Blog() {
     <>
         <title>The FrameStudio Journal — Builders' Notes, Guides & Kenya Tech</title>
         <meta name="description" content="Build notes, honest guides, and on-the-ground insight from FrameStudio. Websites, WhatsApp bots, dashboards, and going digital in Kenya." />
-        <meta property="og:title" content="The FrameStudio Journal" />
-        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
-        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
-        <meta property="og:description" content="Build notes, honest guides, and on-the-ground insight from FrameStudio." />
-        <meta property="og:url" content="https://www.framestudio.co.ke/blog" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.framestudio.co.ke/blog" />
 
       <section ref={heroRef} className="relative pt-28 pb-16 md:pt-40 md:pb-24 bg-ink overflow-hidden">

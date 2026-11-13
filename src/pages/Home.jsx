@@ -39,16 +39,6 @@ export default function Home() {
     <>
       <title>FrameStudio — Digital Solutions for Kenyan Businesses</title>
         <meta name="description" content="FrameStudio builds websites, WhatsApp bots, and business dashboards for growing Kenyan businesses. Affordable, mobile-friendly, built for Kenya." />
-        <meta property="og:title" content="FrameStudio — Digital Solutions for Kenyan Businesses" />
-        <meta property="og:image" content="https://www.framestudio.co.ke/og-image.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="FrameStudio portal logo on a black background" />
-        <meta property="og:description" content="Websites, WhatsApp bots, and business dashboards for Kenyan SMEs. M-Pesa integration, real-time inventory, automated customer replies." />
-        <meta property="og:url" content="https://www.framestudio.co.ke/" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://www.framestudio.co.ke/og-image.png" />
         <link rel="canonical" href="https://www.framestudio.co.ke/" />
         <script type="application/ld+json">{JSON.stringify(siteSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
