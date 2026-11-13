@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Mail, MessageCircle, MapPin, Send, ArrowRight, X } from 'lucide-react'
 
 const STEPS = [
@@ -24,18 +24,35 @@ export default function Contact() {
 
   // Coming from a pricing card: prefill the plan from the URL. Initialised
   // lazily so there is no post-mount setState (and no extra render).
-  const [form, setForm] = useState(() => ({
-    plan: new URLSearchParams(window.location.search).get('plan') || '',
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: '',
-  }))
+  const [plan, setPlan] = useState(() => new URLSearchParams(window.location.search).get('plan') || '')
+  const [detailsError, setDetailsError] = useState(false)
+
+  // The detail fields are UNCONTROLLED on purpose. A browser autofill or a
+  // password manager can write a value without firing an input event; React
+  // would then re-render a controlled input with its stale state and wipe the
+  // address the user just filled. Reading from the DOM at the moment of truth
+  // (validate / submit) is immune to that, and still validates correctly.
+  const nameRef = useRef(null)
+  const emailRef = useRef(null)
+  const phoneRef = useRef(null)
+  const serviceRef = useRef(null)
+  const messageRef = useRef(null)
+
+  const detailsComplete = () =>
+    Boolean(
+      nameRef.current?.value.trim() &&
+      emailRef.current?.value.trim() &&
+      phoneRef.current?.value.trim()
+    )
 
   const progress = (step / (STEPS.length - 1)) * 100
 
   const goNext = () => {
+    if (step === 1 && !detailsComplete()) {
+      setDetailsError(true)
+      return
+    }
+    setDetailsError(false)
     if (step < STEPS.length - 1) setStep((s) => s + 1)
   }
 
@@ -43,12 +60,13 @@ export default function Contact() {
     if (step > 0) setStep((s) => s - 1)
   }
 
-  const handleInput = (key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }))
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!detailsComplete()) {
+      setDetailsError(true)
+      setStep(1)
+      return
+    }
     setState('sending')
 
     try {
@@ -56,11 +74,11 @@ export default function Contact() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          service: form.service || form.plan,
-          message: form.message || `Interested in the ${form.plan} plan.`,
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+          phone: phoneRef.current.value,
+          service: serviceRef.current?.value || plan,
+          message: messageRef.current?.value || `Interested in the ${plan} plan.`,
         }),
       })
       if (!res.ok) throw new Error('Failed to send')
@@ -73,7 +91,11 @@ export default function Contact() {
   const restart = () => {
     setStep(0)
     setState('idle')
-    setForm({ plan: '', name: '', email: '', phone: '', service: '', message: '' })
+    setPlan('')
+    setDetailsError(false)
+    for (const ref of [nameRef, emailRef, phoneRef, serviceRef, messageRef]) {
+      if (ref.current) ref.current.value = ''
+    }
   }
 
   return (
@@ -187,11 +209,11 @@ export default function Contact() {
                       <p className="text-ink-soft text-sm mb-6">Pick the package that fits your project.</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {PLAN_OPTIONS.map((p) => {
-                          const isSelected = form.plan === p.value
+                          const isSelected = plan === p.value
                           return (
                             <button
                               key={p.value}
-                              onClick={() => handleInput('plan', p.value)}
+                              onClick={() => setPlan(p.value)}
                               className={`flex items-center gap-3 p-4 rounded-2xl border transition-all text-left ${
                                 isSelected
                                   ? 'bg-ink border-ink text-paper'
@@ -211,15 +233,15 @@ export default function Contact() {
                           )
                         })}
                       </div>
-                      {!form.plan && (
+                      {!plan && (
                         <p className="mt-4 text-xs text-red-600">Please select a plan to continue.</p>
                       )}
                       <div className="mt-8 flex justify-between">
                         <button
                           onClick={goNext}
-                          disabled={!form.plan}
+                          disabled={!plan}
                           className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all ${
-                            form.plan
+                            plan
                               ? 'bg-accent text-ink hover:bg-accent-deep'
                               : 'bg-ink/10 text-ink/35 cursor-not-allowed'
                           }`}
@@ -235,34 +257,39 @@ export default function Contact() {
                       <p className="text-ink-soft text-sm mb-6">So we know who we’re replying to.</p>
                       <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                         <div>
-                          <label className="block text-sm font-medium text-ink mb-2">Full Name</label>
+                          <label htmlFor="contact-name" className="block text-sm font-medium text-ink mb-2">Full Name</label>
                           <input
+                            id="contact-name"
                             name="name"
                             type="text"
-                            value={form.name}
-                            onChange={(e) => handleInput('name', e.target.value)}
+                            ref={nameRef}
+                            autoComplete="name"
                             placeholder="Your name"
                             className={fieldClass}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-ink mb-2">Email</label>
+                          <label htmlFor="contact-email" className="block text-sm font-medium text-ink mb-2">Email</label>
                           <input
+                            id="contact-email"
                             name="email"
                             type="email"
-                            value={form.email}
-                            onChange={(e) => handleInput('email', e.target.value)}
+                            ref={emailRef}
+                            autoComplete="email"
+                            inputMode="email"
                             placeholder="you@example.com"
                             className={fieldClass}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-ink mb-2">Phone</label>
+                          <label htmlFor="contact-phone" className="block text-sm font-medium text-ink mb-2">Phone</label>
                           <input
+                            id="contact-phone"
                             name="phone"
                             type="tel"
-                            value={form.phone}
-                            onChange={(e) => handleInput('phone', e.target.value)}
+                            ref={phoneRef}
+                            autoComplete="tel"
+                            inputMode="tel"
                             placeholder="+254 7XX XXX XXX"
                             required
                             className={fieldClass}
@@ -278,17 +305,12 @@ export default function Contact() {
                         </button>
                         <button
                           onClick={goNext}
-                          disabled={!form.name || !form.email || !form.phone}
-                          className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all ${
-                            form.name && form.email && form.phone
-                              ? 'bg-accent text-ink hover:bg-accent-deep'
-                              : 'bg-ink/10 text-ink/35 cursor-not-allowed'
-                          }`}
+                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold transition-all bg-accent text-ink hover:bg-accent-deep"
                         >
                           Next <ArrowRight size={16} />
                         </button>
                       </div>
-                      {!form.name || !form.email || !form.phone ? (
+                      {detailsError ? (
                         <p className="mt-3 text-xs text-red-600">Please fill in your name, email, and phone to continue.</p>
                       ) : null}
                     </div>
@@ -300,15 +322,16 @@ export default function Contact() {
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-ink mb-2">Plan Selected</label>
                         <div className="px-4 py-3 rounded-xl border border-ink/10 bg-cream text-sm text-ink">
-                          {PLAN_OPTIONS.find((p) => p.value === form.plan)?.label || form.plan}
+                          {PLAN_OPTIONS.find((p) => p.value === plan)?.label || plan}
                         </div>
                       </div>
                       <div className="space-y-2 mb-4">
-                        <label className="block text-sm font-medium text-ink mb-2">Service Needed</label>
+                        <label htmlFor="contact-service" className="block text-sm font-medium text-ink mb-2">Service Needed</label>
                         <select
+                          id="contact-service"
                           name="service"
-                          value={form.service}
-                          onChange={(e) => handleInput('service', e.target.value)}
+                          ref={serviceRef}
+                          defaultValue=""
                           className={fieldClass}
                         >
                           <option value="">Select a service</option>
@@ -320,12 +343,13 @@ export default function Contact() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-ink mb-2">Project Details</label>
+                        <label htmlFor="contact-message" className="block text-sm font-medium text-ink mb-2">Project Details</label>
                         <textarea
+                          id="contact-message"
                           name="message"
                           rows={5}
-                          value={form.message}
-                          onChange={(e) => handleInput('message', e.target.value)}
+                          ref={messageRef}
+                          defaultValue=""
                           placeholder="Tell us about your project, timeline, and any specific requirements..."
                           className={`${fieldClass} resize-none`}
                         />

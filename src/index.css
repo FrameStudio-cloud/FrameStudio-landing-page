@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  /* The brand is light-on-ink by design. Declaring light stops a dark-mode OS
+     from restyling form controls, which is how typed text can go invisible. */
+  color-scheme: light;
+
   /* ---- accent -----------------------------------------------------------
      Channels, not hex, because Tailwind needs `<alpha-value>` to build
      bg-accent/10, border-accent/70… To re-theme a subtree, override both
@@ -39,6 +43,32 @@ body {
   outline: 2px solid rgb(var(--fs-accent));
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Form controls
+   A dark-mode OS or a password manager can restyle inputs behind our backs:
+   Chrome paints autofilled text with `-webkit-text-fill-color`, which ignores
+   `color`, so ink text on paper could render as white on white. Force the
+   brand pair back, and keep the caret visible.
+   ------------------------------------------------------------------------- */
+input,
+select,
+textarea {
+  color-scheme: light;
+  caret-color: #0b0b0b;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #0b0b0b;
+  -webkit-box-shadow: 0 0 0 1000px #fbf8f0 inset;
+  box-shadow: 0 0 0 1000px #fbf8f0 inset;
+  /* Chrome animates its blue autofill background in; push it past any session. */
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 @layer utilities {
