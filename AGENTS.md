@@ -107,9 +107,11 @@ HTML the server returns.
 - `npm run og` rebuilds `public/og-image.png` from `scripts/og-card.html`
   (HTML → Puppeteer, so the card uses the real fonts and tokens). Edit the HTML,
   not the PNG.
-- `npm run build:prerender` must log `24/24 routes written with real head tags`.
-  If it logs `PRERENDER SKIPPED`, deploys fall back to the shell tags and Google
-  gets an empty page — fix the browser launch, don't ignore it.
+- `npm run build:prerender` must log `<N>/<N> routes written with real head tags`.
+  N grows with blog posts and portfolio projects, so check that the count matches
+  the route list rather than memorising a number. If it logs `PRERENDER SKIPPED`,
+  deploys fall back to the shell tags and Google gets an empty page — fix the
+  browser launch, don't ignore it.
 - After changing the image, re-scrape: Facebook Sharing Debugger, X Card
   Validator, and WhatsApp (which caches aggressively — bump the filename or add
   a query string to force a new fetch).
@@ -122,6 +124,8 @@ HTML the server returns.
 | `/services` | Services | `src/pages/Services.jsx` |
 | `/about` | About | `src/pages/About.jsx` |
 | `/portfolio` | Portfolio | `src/pages/Portfolio.jsx` (only Keel project) |
+| `/developers` | Developers | `src/pages/Developers.jsx` — cite-ui showcase (see below) |
+| `/developer` | redirect | `Navigate` to `/developers` for singular-URL typos |
 | `/pricing` | Pricing | `src/pages/Pricing.jsx` |
 | `/contact` | Contact | `src/pages/Contact.jsx` |
 | `/faq` | FAQ | `src/pages/FAQ.jsx` |
@@ -132,6 +136,47 @@ HTML the server returns.
 | `/cookies` | Cookies | `src/pages/Cookies.jsx` |
 | `/invoice/:token` | Public Invoice | `src/pages/Invoice.jsx` — outside `Layout` (no nav/footer) |
 | `/invoice/demo` | Public Invoice (demo) | same page, `?state=sent\|partial\|paid\|overdue\|cancelled\|draft\|just-paid\|not-found` |
+
+## Developers Page (`/developers`)
+
+A developer-facing page whose product is **cite-ui**, the React component library
+FrameStudio publishes (`npm install cite-ui`, docs at `cite-ui.framestudio.co.ke`,
+repo `FrameStudio-cloud/cite-ui`). It is a marketing page, not a second docs site.
+
+Rules that keep it honest:
+
+- **Only link what exists.** npm, the docs, the GitHub repo. Do not add an install
+  badge, a download count or a "v1.3 coming" claim that is not true on the day.
+- **The demos are rebuilt, not imported.** `src/components/developers/` re-creates
+  Toast, `useForm` validation and Drawer with this site's tokens. Installing the
+  package would add a React 18 peer to a React 19 app, require scanning
+  `node_modules` in `tailwind.config.js`, and drop grey defaults into a
+  vermilion/paper page. Each tab's code panel shows the package's real API and
+  links to that component's readme section.
+- **Status numbers live in `Developers.jsx`.** `39`, `18 kB gzip`, `v2.0.0` in the
+  hero terminal. The count is the number of component exports in cite-ui's
+  `src/index.jsx` (plus 4 hooks, 6 utilities). Update them with the package, or
+  drop the number.
+- **The docs preview is a real capture**, `public/developers/cite-ui-docs.png`,
+  taken by `npm run docs:shot` from `DOCS` in `Developers.jsx`. The script opens
+  `/components/toast`, waits for the page's own heading, then hides the docs'
+  sticky header so the landing page's browser chrome is the only nav in the
+  image. Re-run it after a docs redesign; the address bar is rendered in React
+  from `DOCS`, so a domain move does not need a new image.
+- **The docs domain is `cite-ui.framestudio.co.ke`** (Vercel, CNAME via
+  host-ww.net). `DOCS` in `Developers.jsx` is the single source for every docs
+  link and the screenshot's address bar. `cite-ui.vercel.app` still serves the
+  app; set it to redirect in Vercel so the custom domain is canonical. The
+  readme and npm `homepage` should match.
+- **Toasts and drawer are interactive**, so they carry the same obligations as
+  `LiveDemo`: Escape closes the drawer and returns focus to the trigger, toasts
+  sit in an `aria-live` region, and `prefers-reduced-motion` skips the GSAP
+  entrance (the page is written as the final state, so nothing hides).
+- **The team list is local.** `src/lib/team.js` holds the roster; the dashboard's
+  `team_members` is RLS-locked and `get_team_roster()` is revoked from anon. Swap
+  the body of `fetchTeam()` for a public view/RPC when one exists — the shape is
+  already the shape it would return. Open seats are invitations, not people.
+- The singular `/developer` redirects, because people type it that way.
 
 ## Public Invoice Page (`/invoice/:token`)
 

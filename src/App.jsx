@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import About from './pages/About'
 import Portfolio from './pages/Portfolio'
 import ProjectDetail from './pages/ProjectDetail'
+import Developers from './pages/Developers'
 import Pricing from './pages/Pricing'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
@@ -26,6 +27,9 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<ProjectDetail />} />
+          <Route path="/developers" element={<Developers />} />
+          {/* The page is called "Developers", but people type the singular. */}
+          <Route path="/developer" element={<Navigate to="/developers" replace />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />

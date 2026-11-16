@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 const links = [
   { to: '/services', label: 'Services' },
   { to: '/portfolio', label: 'Portfolio' },
+  { to: '/developers', label: 'Developers' },
   { to: '/blog', label: 'Blog' },
   { to: '/pricing', label: 'Pricing' },
   { to: '/about', label: 'About' },
@@ -101,7 +102,7 @@ export default function Nav() {
             Frame<span className={transparent ? 'text-paper/45' : 'text-ink/40'}>Studio</span>
           </NavLink>
 
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <div className="hidden lg:flex items-center gap-5 xl:gap-7">
             {links.map((link) => (
               <NavLink key={link.to} to={link.to} className={linkClass}>
                 {link.label}

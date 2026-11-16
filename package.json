@@ -10,6 +10,7 @@
     "build:prerender": "vite build && node prerender.js",
     "prerender": "node prerender.js",
     "og": "node scripts/og-image.mjs",
+    "docs:shot": "node scripts/docs-shot.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

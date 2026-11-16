@@ -94,6 +94,55 @@ select:-webkit-autofill {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Developers page: live component demos
+   The toasts and drawers on /developers are real elements, so their motion is
+   written once here instead of being duplicated in every demo. Enter is a
+   transform + opacity only; the life bar is a scaleX so it can tween on the
+   compositor while the toast is on screen.
+   ------------------------------------------------------------------------- */
+@keyframes fs-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fs-toast-life {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.lab-toast-in {
+  animation: fs-toast-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lab-toast-life {
+  transform-origin: left center;
+  animation-name: fs-toast-life;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-toast-in {
+    animation: none;
+  }
+
+  .lab-toast-life {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none !important;

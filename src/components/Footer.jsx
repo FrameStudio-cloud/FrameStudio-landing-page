@@ -93,6 +93,7 @@ export default function Footer() {
               <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Bots & Automation</Link></li>
               <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Dashboards</Link></li>
               <li><Link to="/services" className="text-paper/50 hover:text-accent transition-colors">Automation</Link></li>
+              <li><Link to="/developers" className="text-paper/50 hover:text-accent transition-colors">Developers</Link></li>
               <li><Link to="/blog" className="text-paper/50 hover:text-accent transition-colors">Blog</Link></li>
             </ul>
           </div>
