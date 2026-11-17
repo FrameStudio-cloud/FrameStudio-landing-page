@@ -21,7 +21,7 @@ const EMAIL = 'email.framestudio@gmail.com'
 const STATS = [
   { value: '39', label: 'components' },
   { value: '0', label: 'runtime deps' },
-  { value: '18 kB', label: 'gzip, ESM' },
+  { value: '21 kB', label: 'gzip, ESM' },
   { value: 'MIT', label: 'license' },
 ]
 
@@ -197,7 +197,7 @@ export default function Developers() {
                     <span className="text-paper/30">$ </span>
                     <span className="text-paper/85">npm install cite-ui</span>
                   </span>
-                  <span className="block text-accent">+ cite-ui@2.0.0</span>
+                  <span className="block text-accent">+ cite-ui@2.0.2</span>
                   <span className="block">added 1 package · 0 dependencies</span>
                   <span className="block">{' '}</span>
                   <span className="block">

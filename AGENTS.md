@@ -153,7 +153,7 @@ Rules that keep it honest:
   `node_modules` in `tailwind.config.js`, and drop grey defaults into a
   vermilion/paper page. Each tab's code panel shows the package's real API and
   links to that component's readme section.
-- **Status numbers live in `Developers.jsx`.** `39`, `18 kB gzip`, `v2.0.0` in the
+- **Status numbers live in `Developers.jsx`.** `39`, `21 kB gzip`, `v2.0.2` in the
   hero terminal. The count is the number of component exports in cite-ui's
   `src/index.jsx` (plus 4 hooks, 6 utilities). Update them with the package, or
   drop the number.
