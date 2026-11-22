@@ -191,7 +191,7 @@ export default function Pricing() {
                   'Service orders & expenses',
                   'Customer management',
                   'Stock alerts & reports',
-                  'Invoicing & marketing',
+                  'Invoicing, QR codes & marketing',
                 ],
               },
               {
@@ -202,11 +202,11 @@ export default function Pricing() {
                 desc: 'Everything in Free plus a website, bots, and advanced tools.',
                 features: [
                   'Custom website & storefront',
-                  'Telegram bot',
+                  'Keel Assistant',
+                  'M-Pesa STK push & reconciliation',
                   'Online invoice payments',
                   'P&L reports & data export',
-                  'M-Pesa reconciliation',
-                  'QR codes & print catalogue',
+                  'AI captions & Telegram bot',
                   'Website analytics',
                 ],
                 featured: true,
