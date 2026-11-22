@@ -181,17 +181,17 @@ export default function Pricing() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
             {[
               {
-                id: 'basic',
-                name: 'Basic',
-                price: '500',
+                id: 'free',
+                name: 'Free',
+                price: '0',
                 icon: Shield,
                 desc: 'Everything you need to run your shop day-to-day.',
                 features: [
                   'Sales & inventory tracking',
                   'Service orders & expenses',
                   'Customer management',
-                  'Stock alerts & basic reports',
-                  'Social media management',
+                  'Stock alerts & reports',
+                  'Invoicing & marketing',
                 ],
               },
               {
@@ -199,11 +199,11 @@ export default function Pricing() {
                 name: 'Pro',
                 price: '1,000',
                 icon: Star,
-                desc: 'Everything in Basic plus a website, bots, and advanced tools.',
+                desc: 'Everything in Free plus a website, bots, and advanced tools.',
                 features: [
                   'Custom website & storefront',
-                  'WhatsApp & Telegram bots',
-                  'AI caption generator',
+                  'Telegram bot',
+                  'Online invoice payments',
                   'P&L reports & data export',
                   'M-Pesa reconciliation',
                   'QR codes & print catalogue',
@@ -228,8 +228,10 @@ export default function Pricing() {
                     <h3 className="font-display text-lg font-semibold text-paper">{plan.name}</h3>
                   </div>
                   <div className="mt-4 flex items-baseline gap-1.5">
-                    <span className="font-display text-[2rem] font-semibold text-paper tracking-[-0.03em] leading-none">KSh {plan.price}</span>
-                    <span className="font-mono text-[11px] text-paper/40">/month</span>
+                    <span className="font-display text-[2rem] font-semibold text-paper tracking-[-0.03em] leading-none">
+                      {plan.price === '0' ? 'Free' : `KSh ${plan.price}`}
+                    </span>
+                    <span className="font-mono text-[11px] text-paper/40">{plan.price === '0' ? 'forever' : '/month'}</span>
                   </div>
                   <p className="text-sm text-paper/55 mt-3 leading-relaxed">{plan.desc}</p>
                   <ul className="mt-6 space-y-3 flex-1">
