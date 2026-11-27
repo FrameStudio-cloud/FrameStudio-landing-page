@@ -67,7 +67,7 @@ export default function WhyUs() {
         }
       )
 
-      gsap.fromTo(statsRef.current?.children,
+      gsap.fromTo(gsap.utils.toArray(statsRef.current?.children || []),
         { y: 30, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: 'power3.out',

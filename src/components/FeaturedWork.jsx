@@ -26,7 +26,7 @@ export default function FeaturedWork() {
         }
       )
 
-      gsap.fromTo(gridRef.current?.children,
+      gsap.fromTo(gsap.utils.toArray(gridRef.current?.children || []),
         { y: 30, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out',

@@ -50,7 +50,7 @@ export default function Hero() {
         { y: 0, opacity: 1, duration: 0.8 },
         '-=0.4'
       )
-      .fromTo(ctaRef.current.children,
+      .fromTo(gsap.utils.toArray(ctaRef.current.children),
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
         '-=0.3'

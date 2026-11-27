@@ -36,7 +36,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (!gridRef.current) return
-    gsap.fromTo(gridRef.current.children,
+    gsap.fromTo(gsap.utils.toArray(gridRef.current.children),
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
     )
