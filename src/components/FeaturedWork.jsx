@@ -26,13 +26,20 @@ export default function FeaturedWork() {
         }
       )
 
-      gsap.fromTo(gsap.utils.toArray(gridRef.current?.children || []),
-        { y: 30, opacity: 0 },
-        {
-          y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out',
-          scrollTrigger: { trigger: gridRef.current, start: 'top 90%', toggleActions: 'play none none reverse' },
-        }
-      )
+      // `projects` arrives asynchronously, so on the first pass the grid has no
+      // children. Tweening an empty list makes GSAP log "target not found" and
+      // ScrollTrigger re-render it on every scroll frame — twelve warnings from
+      // one guard that was missing.
+      const cards = gsap.utils.toArray(gridRef.current?.children || [])
+      if (cards.length) {
+        gsap.fromTo(cards,
+          { y: 30, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out',
+            scrollTrigger: { trigger: gridRef.current, start: 'top 90%', toggleActions: 'play none none reverse' },
+          }
+        )
+      }
     }, sectionRef)
 
     return () => ctx.revert()
