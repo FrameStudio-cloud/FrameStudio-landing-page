@@ -252,10 +252,22 @@ async function prerender() {
     console.error('')
     server.close()
     writeSitemap(blogPosts, projectPosts)
-    return
+
+    // A skipped prerender is a broken deploy, not a warning: every route ships
+    // an empty shell with no title, description or OG tags. Google and every
+    // link-preview crawler read that. Fail the build so it cannot go unnoticed.
+    if (String(process.env.PRERENDER_OPTIONAL || '') === '1') {
+      console.error('  PRERENDER_OPTIONAL=1 — shipping the shell on purpose.')
+      return
+    }
+
+    console.error('  Failing the build. Set PRERENDER_OPTIONAL=1 to ship the shell')
+    console.error('  anyway (e.g. a provider outage you cannot wait out).')
+    process.exit(1)
   }
 
   let written = 0
+  let failed = 0
   for (const route of allRoutes) {
     console.log(`Prerendering ${route}...`)
     const page = await browser.newPage()
@@ -293,7 +305,8 @@ async function prerender() {
       written++
       console.log(`  -> ${path.relative(distDir, outputPath)}`)
     } catch (err) {
-      console.error(`  Failed: ${err.message}`)
+      failed += 1
+      console.error(`  Failed ${route}: ${err.message}`)
     } finally {
       await page.close()
     }
@@ -305,13 +318,29 @@ async function prerender() {
   writeSitemap(blogPosts, projectPosts)
 
   // A prerender that "succeeds" without writing anything is the exact failure
-  // that shipped an empty shell for weeks. Say it out loud in the build log.
+  // that shipped an empty shell for weeks. The build only passes when every
+  // route was written and the sample has a real <title>.
   const samplePath = path.join(distDir, 'pricing', 'index.html')
   const sampleHtml = fs.existsSync(samplePath) ? fs.readFileSync(samplePath, 'utf8') : ''
-  if (written > 0 && /<title>/i.test(sampleHtml)) {
+  const hasHead = /<title>/i.test(sampleHtml)
+  const complete = written === allRoutes.length && failed === 0 && hasHead
+
+  if (complete) {
     console.log(`[prerender] ${written}/${allRoutes.length} routes written with real head tags ✓`)
   } else {
-    console.error(`[prerender] WARNING: only ${written}/${allRoutes.length} routes written — crawlers may get the shell.`)
+    console.error(
+      `[prerender] ${written}/${allRoutes.length} routes written, ${failed} failed, head tags ${
+        hasHead ? 'present' : 'MISSING'
+      }`
+    )
+
+    if (String(process.env.PRERENDER_OPTIONAL || '') === '1') {
+      console.error('[prerender] PRERENDER_OPTIONAL=1 — shipping a partial prerender.')
+    } else {
+      console.error('[prerender] Failing the build: a partial prerender ships shells.')
+      console.error('[prerender] Set PRERENDER_OPTIONAL=1 only if you accept that.')
+      process.exit(1)
+    }
   }
 
   console.log('Prerendering complete!')
