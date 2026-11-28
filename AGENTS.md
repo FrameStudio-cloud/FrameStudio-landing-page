@@ -122,7 +122,7 @@ HTML the server returns.
 |---|---|---|
 | `/` | Home | `src/pages/Home.jsx` (Hero + Services + WhyUs + CTA) |
 | `/services` | Services | `src/pages/Services.jsx` |
-| `/seo` | SEO | `src/pages/Seo.jsx` (not in the nav yet — see below) |
+| `/seo` | SEO | `src/pages/Seo.jsx` — in the Services dropdown |
 | `/about` | About | `src/pages/About.jsx` |
 | `/portfolio` | Portfolio | `src/pages/Portfolio.jsx` (only Keel project) |
 | `/developers` | Developers | `src/pages/Developers.jsx` — cite-ui showcase (see below) |
@@ -193,9 +193,8 @@ Reads as a studio, not a menu: breadth (capabilities), proof (live objects), the
 
 ## SEO Page (`/seo`)
 
-Not in the nav yet — the nav becomes a dropdown first. Until then it is reached
-from the band on the home page, the footer, and the SEO row in `/services`'
-capability index.
+Reached from the **Services** dropdown in the nav, the band on the home page, the
+footer, and the SEO row in `/services`' capability index.
 
 - `src/pages/Seo.jsx` — hero, five doors, three readers, the report, the close.
 - `src/components/seo/Surfaces.jsx` — the five marks (Search, Maps, ChatGPT,
@@ -326,9 +325,34 @@ Gotchas:
 
 - `src/App.jsx` — BrowserRouter, Layout wrapper, 12 routes
 - `src/components/Layout.jsx` — Nav + Outlet + Footer
-- `src/components/Nav.jsx` — Links: Services, Portfolio, Blog, Pricing, About, Contact + "Get Started" mailto
+- `src/components/Nav.jsx` — Links: Services (dropdown), Portfolio, Developers, Blog, Pricing, About, Contact + "Get Started"
 - `src/components/Footer.jsx` — 4-column footer with social icons (WhatsApp, Instagram, LinkedIn, Facebook, X/Twitter, YouTube, TikTok, GitHub)
 - `src/pages/Home.jsx` — Imports Hero, Services, WhyUs, CTA components
+
+### Nav dropdown (`src/components/Nav.jsx`, `src/components/NavDropdown.jsx`)
+
+`navItems` in `Nav.jsx` is the single source for the nav. A flat
+`{ to, label }` is a link; an item with a `children` array opens a panel, and
+its first child is the parent page itself.
+
+To add a page: one entry in `navItems`, or one child under Services. To add one
+that is planned but not built, give the child `soon: true` and no `to` — it
+renders as text with a **Soon** chip rather than a dead link, so the nav can
+announce what is coming without anyone landing on a 404.
+
+Rules that must survive edits:
+
+- The trigger is a `<button>` with `aria-expanded`/`aria-controls`, not a link.
+  Hover *and* click both open it (touch has no hover), `ArrowDown` jumps to the
+  first link, `Escape` closes and returns focus to the trigger, and tabbing out
+  of the panel closes it. Remove any one and it stops working for keyboard users.
+- `soon` children must never become `<Link>`s. The whole point is that the nav
+  cannot produce a 404.
+- The panel is `bg-paper` even when the nav is transparent over the hero —
+  a see-through panel over a dark photo is unreadable.
+- Mobile does not repeat the dropdown chrome: the overlay shows the parent
+  link and its children as a smaller row beneath it, and every entry keeps the
+  `mobile-link` class so the GSAP stagger still covers it.
 
 ## Build & Lint
 

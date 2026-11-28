@@ -27,8 +27,8 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
-          {/* Not in the nav yet — the nav becomes a dropdown first. Until then the
-              page is reached from the home band and the footer. */}
+          {/* Inside Layout but under the Services dropdown in the nav, because it
+              is a service page reached from the menu rather than a top-level one. */}
           <Route path="/seo" element={<Seo />} />
           <Route path="/about" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />

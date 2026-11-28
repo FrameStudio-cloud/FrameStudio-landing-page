@@ -4,11 +4,38 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Menu, X } from 'lucide-react'
 import LogoMark from './LogoMark'
+import NavDropdown from './NavDropdown'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const links = [
-  { to: '/services', label: 'Services' },
+/**
+ * The nav's single source. A flat item is `{ to, label }`. An item with a
+ * `children` list becomes a dropdown, and its first child should be the parent
+ * page itself.
+ *
+ * To add a page: a flat link here, and if it lands under Services, a child
+ * entry. To add one that is planned but not built, give it `soon: true` and no
+ * `to` — it renders as text with a "Soon" chip instead of a dead link to a 404.
+ */
+const navItems = [
+  {
+    label: 'Services',
+    to: '/services',
+    children: [
+      {
+        to: '/services',
+        label: 'Everything we build',
+        desc: 'Sites, bots and dashboards, priced by scope',
+      },
+      {
+        to: '/seo',
+        label: 'SEO & visibility',
+        desc: 'Search, Maps and what the AI answers say',
+      },
+      // Planned — flip a `soon` entry into a `to` the day its route ships.
+      // { label: 'Care plans', desc: 'Monthly work after launch', soon: true },
+    ],
+  },
   { to: '/portfolio', label: 'Portfolio' },
   { to: '/developers', label: 'Developers' },
   { to: '/blog', label: 'Blog' },
@@ -88,6 +115,13 @@ export default function Nav() {
         : transparent ? 'text-paper/65 hover:text-accent' : 'text-ink/55 hover:text-ink'
     }`
 
+  /** True when the current page is one of an item's children, so the parent
+   *  still reads as the section you are standing in. */
+  const sectionActive = (item) =>
+    item.children?.some(
+      (child) => child.to && (location.pathname === child.to || location.pathname.startsWith(`${child.to}/`)),
+    ) ?? false
+
   return (<>
     <nav
       ref={navRef}
@@ -103,11 +137,15 @@ export default function Nav() {
           </NavLink>
 
           <div className="hidden lg:flex items-center gap-5 xl:gap-7">
-            {links.map((link) => (
-              <NavLink key={link.to} to={link.to} className={linkClass}>
-                {link.label}
-              </NavLink>
-            ))}
+            {navItems.map((item) =>
+              item.children ? (
+                <NavDropdown key={item.label} items={item.children} label={item.label} transparent={transparent} />
+              ) : (
+                <NavLink key={item.to} to={item.to} className={linkClass}>
+                  {item.label}
+                </NavLink>
+              ),
+            )}
             <NavLink
               to="/contact"
               className="text-sm font-semibold px-5 py-2.5 rounded-full whitespace-nowrap transition-all bg-accent text-ink hover:bg-accent-deep"
@@ -136,19 +174,51 @@ export default function Nav() {
       <div className="absolute inset-0 bg-ink/95 backdrop-blur-md" />
       <div className="absolute -top-24 -left-20 w-80 h-80 bg-accent/[0.12] rounded-full blur-[120px] pointer-events-none" />
       <div className="relative z-10 flex flex-col items-center justify-center h-full gap-7 px-6">
-        {links.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            className={({ isActive }) =>
-              `mobile-link font-display text-3xl sm:text-4xl font-semibold tracking-[-0.02em] transition-colors ${
-                isActive ? 'text-accent' : 'text-paper/55 hover:text-paper'
-              }`
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
+        {navItems.map((item) =>
+          item.children ? (
+            <div key={item.label} className="flex flex-col items-center gap-3">
+              <NavLink
+                to={item.to}
+                className={({ isActive }) =>
+                  `mobile-link font-display text-3xl sm:text-4xl font-semibold tracking-[-0.02em] transition-colors ${
+                    isActive || sectionActive(item) ? 'text-accent' : 'text-paper/55 hover:text-paper'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+                {item.children
+                  .filter((child) => child.to && child.to !== item.to)
+                  .map((child) => (
+                    <NavLink
+                      key={child.to}
+                      to={child.to}
+                      className={({ isActive }) =>
+                        `mobile-link text-sm transition-colors ${
+                          isActive ? 'text-accent' : 'text-paper/40 hover:text-paper/75'
+                        }`
+                      }
+                    >
+                      {child.label}
+                    </NavLink>
+                  ))}
+              </div>
+            </div>
+          ) : (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `mobile-link font-display text-3xl sm:text-4xl font-semibold tracking-[-0.02em] transition-colors ${
+                  isActive ? 'text-accent' : 'text-paper/55 hover:text-paper'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ),
+        )}
         <NavLink
           to="/contact"
           className="mobile-link mt-6 bg-accent text-ink font-semibold px-10 py-4 rounded-full text-lg hover:bg-accent-deep transition-all"
