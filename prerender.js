@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.join(__dirname, 'dist')
 
 const routes = [
-  '/', '/services', '/about', '/portfolio', '/developers', '/pricing',
+  '/', '/services', '/seo', '/about', '/portfolio', '/developers', '/pricing',
   '/contact', '/faq', '/blog', '/terms', '/privacy',
   '/refund', '/cookies',
 ]
@@ -134,6 +134,7 @@ function writeSitemap(blogPosts, projectPosts) {
   const staticRoutes = [
     { path: '/', priority: '1.0' },
     { path: '/services', priority: '0.9' },
+    { path: '/seo', priority: '0.9' },
     { path: '/about', priority: '0.7' },
     { path: '/portfolio', priority: '0.8' },
     { path: '/developers', priority: '0.8' },
