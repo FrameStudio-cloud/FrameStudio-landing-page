@@ -1,0 +1,187 @@
+/* ============================================================================
+   FrameStudio design tokens
+   The one file every demo imports. Change a value here, all ten sites follow.
+   Rules that are not negotiable live in ./README.md.
+   ========================================================================== */
+
+:root {
+  /* --- ink & surface ------------------------------------------------------ */
+  --fs-ink: #0b0f14;
+  --fs-ink-soft: #4b5563;
+  --fs-ink-faint: #8b95a5;
+  --fs-surface: #ffffff;
+  --fs-surface-2: #f4f6fa;
+  --fs-surface-3: #e9edf4;
+
+  /* --- accent (override per demo) ----------------------------------------- */
+  --fs-accent: #4f46e5;
+  --fs-accent-ink: #ffffff;
+  --fs-accent-soft: rgba(79, 70, 229, 0.12);
+
+  /* --- radii: the squircle scale ------------------------------------------ */
+  --fs-r-sm: 16px;
+  --fs-r-md: 20px;
+  --fs-r-lg: 24px;
+  --fs-r-xl: 32px;
+  --fs-r-pill: 999px;
+
+  /* --- glass -------------------------------------------------------------- */
+  /* blur is capped at 16px on purpose. see README. */
+  --fs-glass-blur: 16px;
+  --fs-glass-blur-lite: 8px;
+  --fs-glass-tint: rgba(255, 255, 255, 0.07);
+  --fs-glass-tint-strong: rgba(255, 255, 255, 0.14);
+  --fs-glass-border: rgba(255, 255, 255, 0.18);
+  --fs-glass-border-soft: rgba(255, 255, 255, 0.1);
+
+  /* --- elevation ---------------------------------------------------------- */
+  --fs-edge: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  --fs-edge-dark: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --fs-shadow-tight: 0 1px 2px rgba(11, 15, 20, 0.08);
+  --fs-shadow-ambient: 0 18px 48px -20px rgba(11, 15, 20, 0.35);
+  --fs-glow: 0 0 0 1px var(--fs-accent-soft),
+    0 24px 64px -24px color-mix(in srgb, var(--fs-accent) 55%, transparent);
+
+  /* --- hairlines ---------------------------------------------------------- */
+  --fs-hairline: rgba(11, 15, 20, 0.08);
+  --fs-hairline-dark: rgba(255, 255, 255, 0.12);
+
+  /* --- motion ------------------------------------------------------------- */
+  --fs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fs-dur-1: 220ms;
+  --fs-dur-2: 280ms;
+  --fs-dur-3: 320ms;
+}
+
+/* ============================================================================
+   Glass
+   Use on a surface that already has a solid scrim behind it. Never on a photo
+   with text inside. Never more than two on screen at once.
+   ========================================================================== */
+
+.fs-glass {
+  background: var(--fs-glass-tint);
+  border: 1px solid var(--fs-glass-border);
+  backdrop-filter: blur(var(--fs-glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--fs-glass-blur)) saturate(140%);
+}
+
+.fs-glass-strong {
+  background: var(--fs-glass-tint-strong);
+  border: 1px solid var(--fs-glass-border);
+  backdrop-filter: blur(var(--fs-glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--fs-glass-blur)) saturate(160%);
+}
+
+/* Light-mode glass over a light page: the tint has to go white, not transparent,
+   or the panel disappears and the hairline is all that is left. */
+.fs-glass-light {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(11, 15, 20, 0.07);
+  backdrop-filter: blur(var(--fs-glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--fs-glass-blur)) saturate(120%);
+}
+
+/* ============================================================================
+   Elevation
+   ========================================================================== */
+
+.fs-edge {
+  box-shadow: var(--fs-edge), var(--fs-shadow-tight), var(--fs-shadow-ambient);
+}
+
+.fs-edge-flat {
+  box-shadow: var(--fs-edge), var(--fs-shadow-tight);
+}
+
+.fs-glow {
+  box-shadow: var(--fs-edge), var(--fs-glow);
+}
+
+/* ============================================================================
+   Interaction
+   ========================================================================== */
+
+.fs-press {
+  transition: transform 140ms var(--fs-ease), box-shadow var(--fs-dur-1) var(--fs-ease);
+  will-change: transform;
+  touch-action: manipulation;
+}
+
+.fs-press:active {
+  transform: scale(0.985);
+}
+
+.fs-lift {
+  transition: transform var(--fs-dur-2) var(--fs-ease),
+    box-shadow var(--fs-dur-2) var(--fs-ease);
+}
+
+@media (hover: hover) {
+  .fs-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--fs-edge), var(--fs-shadow-tight),
+      0 28px 64px -24px rgba(11, 15, 20, 0.4);
+  }
+}
+
+/* remove the grey box every mobile browser paints on tap */
+.fs-tap-clear {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================================
+   Reveal (IntersectionObserver drives the class, so zero JS animation cost)
+   ========================================================================== */
+
+.fs-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--fs-dur-3) var(--fs-ease),
+    transform var(--fs-dur-3) var(--fs-ease);
+}
+
+.fs-reveal[data-shown='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================================
+   Fallbacks — cheap Android is the default device, not the edge case
+   ========================================================================== */
+
+/* Low-end devices: halve the blur rather than dropping the effect entirely. */
+@media (max-width: 640px) {
+  :root {
+    --fs-glass-blur: var(--fs-glass-blur-lite);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-press,
+  .fs-lift,
+  .fs-reveal {
+    transition: none !important;
+  }
+  .fs-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .fs-lift:hover {
+    transform: none;
+  }
+}
+
+/* No backdrop-filter (old WebView, some Tecno builds): tint must carry the
+   panel on its own, so raise opacity instead of blurring. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .fs-glass {
+    background: rgba(17, 24, 39, 0.82);
+  }
+  .fs-glass-strong {
+    background: rgba(17, 24, 39, 0.9);
+  }
+  .fs-glass-light {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}

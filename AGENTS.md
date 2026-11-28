@@ -122,6 +122,7 @@ HTML the server returns.
 |---|---|---|
 | `/` | Home | `src/pages/Home.jsx` (Hero + Services + WhyUs + CTA) |
 | `/services` | Services | `src/pages/Services.jsx` |
+| `/seo` | SEO | `src/pages/Seo.jsx` (not in the nav yet — see below) |
 | `/about` | About | `src/pages/About.jsx` |
 | `/portfolio` | Portfolio | `src/pages/Portfolio.jsx` (only Keel project) |
 | `/developers` | Developers | `src/pages/Developers.jsx` — cite-ui showcase (see below) |
@@ -177,6 +178,67 @@ Rules that keep it honest:
   the body of `fetchTeam()` for a public view/RPC when one exists — the shape is
   already the shape it would return. Open seats are invitations, not people.
 - The singular `/developer` redirects, because people type it that way.
+
+## Services Page (`/services`)
+
+Reads as a studio, not a menu: breadth (capabilities), proof (live objects), then three deep dives.
+
+- `src/lib/services.js` — the single source: `SERVICES`, `CAPABILITY_GROUPS`, `INTEGRATIONS`, `AI_WORK`, `PROCESS`. **No prices in this file.** When figures are settled they go in `plans.js` and both this page and `/pricing` read from there; the page currently prints none, only "fixed quote in writing" → `/pricing`.
+- `src/components/services/` — `HeroDeck` (tilted cards + floating chips), `ServiceBento` (the 7/5/12 bento: label, headline, one line, and a DOM object), `ServiceConsole` (tablist → `DeviceFrame` / `BotChatDemo` / `DashboardPanel`), `CapabilityIndex` (icon rail + a mechanic card per group), `BrandWall` (the recognition wall, shared with the home page), `objects.jsx` (the shared `DottedGrid` / `FloatChip` / `StatBubble`). `IntegrationsOrbit.jsx` is no longer rendered — see its header.
+- **Only the demos sit behind tabs.** All written copy — promises, deliverables, exclusions — is in normal sections, because `prerender.js` captures the open tab and a crawler never sees the others.
+- `CapabilityIndex` fragments and the bot chat are **sample data**, labelled as such. No client names, no real phone numbers, nothing that charges.
+- `public/logos/` holds real integration marks (downloaded, not hotlinked). The wall is logo-only by design — names live in `sr-only` text, and the Daraja mention stays in the section copy because it has no mark. Only show tools that have actually shipped.
+- Tilt is decoration: `sm:` only, hover straightens, and `prefers-reduced-motion` removes the orbit spin and every lift. Rotation is capped at ±6°.
+- The three `services-*.jpg/png` mockups are gone — do not reintroduce screenshots of imagined products.
+
+## SEO Page (`/seo`)
+
+Not in the nav yet — the nav becomes a dropdown first. Until then it is reached
+from the band on the home page, the footer, and the SEO row in `/services`'
+capability index.
+
+- `src/pages/Seo.jsx` — hero, five doors, three readers, the report, the close.
+- `src/components/seo/Surfaces.jsx` — the five marks (Search, Maps, ChatGPT,
+  Gemini, Perplexity) as hairline rows. Marks are real files in `public/logos/`,
+  downloaded from simple-icons, monochrome ink: a row of five full-colour logos
+  would fight the accent and imply a partnership we do not have.
+- `src/components/seo/ReaderPanels.jsx` — the Search / Maps / AI tabs: three
+  different artefacts (source rows, a map record, a chat answer), not three
+  cards. Arrow keys move the tablist; the written copy stays outside the tabs so
+  a crawler sees it.
+- `src/components/seo/VisibilityPanel.jsx`, `SalesPanel.jsx`,
+  `EngagementPanel.jsx` — the report triptych: a **line**, **columns**, and a
+  **ring**, deliberately three different forms. Do not normalise them into three
+  identical panels; the variety is the point.
+- `src/lib/seo.js` — the surfaces list and their one-line fixes. No prices.
+
+Rules that must survive edits:
+
+- **No section label above a section.** No "Why us ·" pills, no eyebrow with a
+  dot. The headline does that job; a label above it is the thing this page was
+  asked not to look like.
+- **No 3-up or 6-up feature cards.** Sections are a headline, one or two lines,
+  and one object. If a section needs four bullet cards, the copy is wrong.
+- **Every number is sample data and says so** — panel header, section note, and
+  `figcaption`. A growth chart is exactly what a visitor screenshots and
+  believes.
+- The `/seo` hero uses the search illustration (`public/seo/google-result.webp`,
+  transparent cut, 1200×800 WebP) with an "Illustration · not a live search
+  result" caption — keep it.
+- The home band is **not** an image: `src/components/SeoBand.jsx` is a working
+  search field — type what you sell and it becomes the top result, domain and
+  all, with "Preview · nothing is sent" beneath it. Nothing is submitted and
+  nothing is queried; the field drives one line of text in a mock. Keep the note
+  and the sample footer, or a visitor will read it as a real ranking.
+- Discoverability is deliberate: the field types its example out once when 50%
+  of the panel is on screen (skipped under `prefers-reduced-motion`), any focus
+  stops it and hands over the finished sentence, and the whole pill is the
+  `<label>` with `cursor-text` so a tap anywhere in it lands the caret. Remove
+  any one of those and it reads as a screenshot again.
+- `public/seo/google-search-light.webp` is the light cut of the same artwork,
+  kept in case the static band is ever wanted back. It is not rendered today.
+- Charts are SVG/DOM with GSAP entrances that skip under `prefers-reduced-motion`;
+  no chart library, no screenshot of a dashboard.
 
 ## Public Invoice Page (`/invoice/:token`)
 
