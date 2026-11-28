@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Services from './pages/Services'
+import Seo from './pages/Seo'
 import About from './pages/About'
 import Portfolio from './pages/Portfolio'
 import ProjectDetail from './pages/ProjectDetail'
@@ -16,6 +17,8 @@ import Privacy from './pages/Privacy'
 import Refund from './pages/Refund'
 import Cookies from './pages/Cookies'
 import Invoice from './pages/Invoice'
+import Start from './pages/Start'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -24,6 +27,9 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          {/* Not in the nav yet — the nav becomes a dropdown first. Until then the
+              page is reached from the home band and the footer. */}
+          <Route path="/seo" element={<Seo />} />
           <Route path="/about" element={<About />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<ProjectDetail />} />
@@ -39,6 +45,10 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/refund" element={<Refund />} />
           <Route path="/cookies" element={<Cookies />} />
+          {/* Catch-all. Must stay last: it swallows every marketing URL we don't
+              have, and it lives inside Layout so a lost visitor still gets nav
+              and footer to leave by. */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* Outside Layout on purpose: an invoice is a transactional page, not a
@@ -46,6 +56,12 @@ export default function App() {
             the pay button. */}
         <Route path="/invoice" element={<Invoice />} />
         <Route path="/invoice/:token" element={<Invoice />} />
+
+        {/* Also outside Layout: a scope request is a form a client was sent, not
+            a page they browsed to. Nav and footer are noise between them and
+            the next question. */}
+        <Route path="/start" element={<Start />} />
+        <Route path="/start/:token" element={<Start />} />
       </Routes>
     </BrowserRouter>
   )
