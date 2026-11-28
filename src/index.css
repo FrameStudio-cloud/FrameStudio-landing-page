@@ -143,6 +143,77 @@ select:-webkit-autofill {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Details rows on /services: native <details> so the accordion works without
+   JS, stays keyboard operable, and is open to find-in-page and crawlers.
+   ------------------------------------------------------------------------- */
+.fs-details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.fs-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fs-details[open] .fs-chev {
+  transform: rotate(180deg);
+}
+
+/* A plus that becomes a close when the details open. */
+.fs-details[open] .fs-plus {
+  transform: rotate(45deg);
+}
+
+/* ---------------------------------------------------------------------------
+   Services page: the integration orbit
+   Two rings turn in opposite directions; every badge counter-rotates at the same
+   speed so the logos stay upright. Keep the durations matched per ring — a
+   mismatched pair makes the marks slowly tumble.
+   ------------------------------------------------------------------------- */
+@keyframes fs-spin-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fs-spin-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.fs-orbit-a {
+  animation: fs-spin-cw 90s linear infinite;
+}
+
+.fs-orbit-a-badge {
+  animation: fs-spin-ccw 90s linear infinite;
+}
+
+.fs-orbit-b {
+  animation: fs-spin-ccw 120s linear infinite;
+}
+
+.fs-orbit-b-badge {
+  animation: fs-spin-cw 120s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-orbit-a,
+  .fs-orbit-b,
+  .fs-orbit-a-badge,
+  .fs-orbit-b-badge {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none !important;
