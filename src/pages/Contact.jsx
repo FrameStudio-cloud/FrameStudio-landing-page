@@ -336,6 +336,7 @@ export default function Contact() {
                         >
                           <option value="">Select a service</option>
                           <option value="Website">Website</option>
+                          <option value="WhatsApp Bot">WhatsApp Bot</option>
                           <option value="Telegram Bot">Telegram Bot</option>
                           <option value="Business Dashboard">Business Dashboard</option>
                           <option value="Custom Automation">Custom Automation</option>
