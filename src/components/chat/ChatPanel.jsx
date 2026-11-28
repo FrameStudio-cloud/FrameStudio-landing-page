@@ -3,6 +3,10 @@ import { gsap } from 'gsap'
 import { ArrowUp, Check, MessageCircle, X } from 'lucide-react'
 import ChatMessage from './ChatMessage'
 
+const scrollToBottom = (el) => {
+  if (el) el.scrollTop = el.scrollHeight
+}
+
 /**
  * The panel itself. Presentational — the conversation lives in useChat and the
  * mascot's flight lives in ChatWidget.
@@ -37,9 +41,58 @@ export default function ChatPanel({
   }, [panelRef])
 
   useEffect(() => {
-    const el = scrollRef.current
-    if (el) el.scrollTop = el.scrollHeight
+    scrollToBottom(scrollRef.current)
   }, [messages, status])
+
+  // The on-screen keyboard shrinks the *visual* viewport, not the layout one, so
+  // a `bottom-0` sheet of a fixed height gets panned up whole — header, close
+  // button and all — the moment the input takes focus. Pin the sheet to the
+  // visual viewport instead: the keyboard eats the message list and the input
+  // stays exactly where it was.
+  useEffect(() => {
+    const panel = panelRef.current
+    const vv = typeof window === 'undefined' ? null : window.visualViewport
+    if (!panel || !vv) return undefined
+
+    const wide = window.matchMedia('(min-width: 640px)')
+    let full = 0
+
+    const apply = () => {
+      if (wide.matches) {
+        panel.style.top = ''
+        panel.style.bottom = ''
+        panel.style.height = ''
+        return
+      }
+      // Remember the tallest viewport seen without a keyboard: 85% of that is
+      // the normal sheet. With the keyboard open the visible height is smaller
+      // than that, so the sheet simply takes the room it has left.
+      full = Math.max(full, vv.height)
+      panel.style.top = `${Math.round(vv.offsetTop)}px`
+      panel.style.bottom = 'auto'
+      panel.style.height = `${Math.round(Math.min(vv.height, full * 0.85))}px`
+      requestAnimationFrame(() => scrollToBottom(scrollRef.current))
+    }
+
+    // A rotation can make the viewport taller, so the baseline has to be re-read
+    // or the sheet would stay at the old, shorter height.
+    const reset = () => {
+      full = 0
+      apply()
+    }
+
+    apply()
+    vv.addEventListener('resize', apply)
+    vv.addEventListener('scroll', apply)
+    wide.addEventListener('change', apply)
+    window.addEventListener('orientationchange', reset)
+    return () => {
+      vv.removeEventListener('resize', apply)
+      vv.removeEventListener('scroll', apply)
+      wide.removeEventListener('change', apply)
+      window.removeEventListener('orientationchange', reset)
+    }
+  }, [panelRef])
 
   useEffect(() => {
     const panel = panelRef.current
@@ -166,7 +219,8 @@ export default function ChatPanel({
             }}
             placeholder="Type a message…"
             autoComplete="off"
-            className="h-11 min-w-0 flex-1 rounded-full border border-ink/15 bg-white/60 px-4 text-[13.5px] text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none"
+            enterKeyHint="send"
+            className="h-11 min-w-0 flex-1 rounded-full border border-ink/15 bg-white/60 px-4 text-[16px] text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none sm:text-[13.5px]"
           />
           <button
             type="submit"

@@ -65,7 +65,9 @@ export default function ChatWidget() {
     else gsap.to(wrap, { ...target, duration: 0.55, ease: 'power3.inOut', overwrite: true })
   }, [open])
 
-  // Keep it aligned if the viewport changes underneath it.
+  // Keep it aligned if the viewport changes underneath it — and if the panel
+  // itself resizes, which is what happens when the on-screen keyboard opens and
+  // the sheet takes its height from the visual viewport.
   useEffect(() => {
     const onResize = () => {
       const wrap = wrapRef.current
@@ -78,8 +80,39 @@ export default function ChatWidget() {
         gsap.set(wrap, { x, y, scale: 1 })
       }
     }
+
+    // The observer fires once on attach, before the flight has started; ignore
+    // that read or the mascot would snap into place instead of flying.
+    let size = null
+    const onPanelResize = (entries) => {
+      const box = entries[entries.length - 1].contentRect
+      const next = `${Math.round(box.width)}x${Math.round(box.height)}`
+      if (size === null) {
+        size = next
+        return
+      }
+      if (next === size) return
+      size = next
+      onResize()
+    }
+
     window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    const vv = window.visualViewport
+    vv?.addEventListener('resize', onResize)
+    vv?.addEventListener('scroll', onResize)
+
+    let observer
+    if (open && panelRef.current && typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(onPanelResize)
+      observer.observe(panelRef.current)
+    }
+
+    return () => {
+      window.removeEventListener('resize', onResize)
+      vv?.removeEventListener('resize', onResize)
+      vv?.removeEventListener('scroll', onResize)
+      observer?.disconnect()
+    }
   }, [open, launcherXY])
 
   // Status → face. The timed decays are here, not in the package, because the
