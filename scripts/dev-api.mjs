@@ -1,4 +1,5 @@
 import http from 'node:http'
+import fs from 'node:fs'
 import path from 'node:path'
 import { Readable } from 'node:stream'
 import { pathToFileURL } from 'node:url'
@@ -23,13 +24,36 @@ const ROUTES = {
   '/api/invoice-pay-verify': 'invoice-pay-verify.js',
   '/api/paystack-webhook': 'paystack-webhook.js',
   '/api/invoice-send': 'invoice-send.js',
+  // The scope request's "email me a copy". Mounted here for the same reason as
+  // the invoice ones: `vite dev` does not run the Vercel functions.
+  '/api/intake-copy': 'intake-copy.js',
+  // The site chat adapter, which streams. It needs `write` on the response shim
+  // below; without it the whole answer would arrive at once.
+  '/api/chat': 'chat.js',
 }
 
-try {
-  process.loadEnvFile(path.resolve(process.cwd(), '.env'))
-} catch {
-  console.warn('[dev-api] no .env found — using the ambient environment')
+/**
+ * Read a .env file by hand rather than with `process.loadEnvFile`, whose
+ * overwrite behaviour differs between Node versions. `.env.local` is applied
+ * last and wins, which is how the local gateway URL stays out of the file that
+ * gets imported into Vercel.
+ */
+function loadEnvFile(file, override) {
+  try {
+    const text = fs.readFileSync(path.resolve(process.cwd(), file), 'utf8')
+    for (const line of text.split(/\r?\n/)) {
+      const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/)
+      if (!match) continue
+      if (!override && process.env[match[1]] !== undefined) continue
+      process.env[match[1]] = match[2]
+    }
+  } catch {
+    // Missing files are normal: .env.local only exists on a developer machine.
+  }
 }
+
+loadEnvFile('.env', false)
+loadEnvFile('.env.local', true)
 
 function readAll(stream) {
   return new Promise((resolve, reject) => {
@@ -42,11 +66,21 @@ function readAll(stream) {
 
 function makeRes(nodeRes) {
   let statusCode = 200
+  let started = false
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-paystack-signature',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
   }
+
+  const start = () => {
+    if (!started) {
+      started = true
+      nodeRes.writeHead(statusCode, headers)
+    }
+    return nodeRes
+  }
+
   return {
     setHeader(key, value) {
       headers[key] = value
@@ -55,19 +89,25 @@ function makeRes(nodeRes) {
       statusCode = code
       return this
     },
+    // Streaming routes need this. `json`/`send`/`end` still finish the response
+    // in one go, so the invoice handlers are unaffected.
+    write(chunk) {
+      start()
+      return nodeRes.write(chunk)
+    },
     json(body) {
       headers['Content-Type'] = 'application/json'
-      nodeRes.writeHead(statusCode, headers)
+      start()
       nodeRes.end(JSON.stringify(body))
       return this
     },
-    end() {
-      nodeRes.writeHead(statusCode, headers)
-      nodeRes.end()
+    end(chunk) {
+      start()
+      nodeRes.end(chunk)
       return this
     },
     send(text) {
-      nodeRes.writeHead(statusCode, headers)
+      start()
       nodeRes.end(text)
       return this
     },
